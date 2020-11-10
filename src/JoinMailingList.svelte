@@ -42,15 +42,22 @@
         const templateParams = { name: 'James', notes: 'Check this out!' };
         sending = true;
         emailjs
-          .send(process.env.service_id, process.env.template_id,
-
-            { from_name: $user.name, message: $user.email }, process.env.emailjs_user_id)
-          .then( (response) => {
+          .send(
+            process.env.service_id,
+            process.env.template_id,
+            { from_name: $user.name, message: $user.email },
+            process.env.emailjs_user_id
+          )
+          .then(
+            (response) => {
               sending = false;
               console.log('SUCCESS!', response.status, response.text);
-            }, (err) => {
+            },
+            (err) => {
+              sending = false;
               console.log('FAILED...', err);
-            } );
+            }
+          );
       }}
       class="button is-primary">Join Mailing List</button>
   </div>
