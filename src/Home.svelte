@@ -1,10 +1,15 @@
 <script>
-
+  import JoinMailingList from "./JoinMailingList.svelte";
 </script>
 
 <style>
   main {
     text-align: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
   }
 
   h1 {
@@ -12,7 +17,7 @@
     text-transform: uppercase;
     font-size: 4em;
     font-weight: 100;
-	}
+  }
 
   @media (min-width: 640px) {
     main {
@@ -21,13 +26,12 @@
   }
 </style>
 
-
 <main>
-  <br>
-  <br>
-  <h1>Lumina Wines</h1>
-  <h2>Pressin' Dat Juice since 2019</h2>
-  
-  
+  <div>
+    <br>
+    <br>
+    <h1>Lumina Wines</h1>
+    <h2>Pressin' Dat Juice since 2019</h2>
+  </div>
+  <JoinMailingList />
 </main>
-
