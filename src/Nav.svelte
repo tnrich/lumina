@@ -77,7 +77,7 @@
     top: 20px;
     left: 0;
   }
-  
+
   #menu-toggle:checked + #trigger + #burger {
     top: 35px;
     transform: rotate(180deg);
@@ -98,7 +98,9 @@
     transform: rotate(-45deg) translateX(-5px);
     transition: transform 0.2s ease;
   }
-  #menu-toggle, #burger, #trigger {
+  #menu-toggle,
+  #burger,
+  #trigger {
     z-index: 11;
   }
   #menu {
@@ -137,5 +139,6 @@
     <li><a href="/story">Story</a></li>
     <li><a href="/shop">Shop</a></li>
     <li><a href="/gallery">Gallery</a></li>
+    <li><a href="https://www.instagram.com/luminawines/">Instagram</a></li>
   </ul>
 </div>

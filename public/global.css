@@ -5,7 +5,7 @@ body {
   height: 100%;
 }
 html {
-	  overflow-y: unset;
+  overflow-y: unset !important;
 }
 
 body {
@@ -24,6 +24,12 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+.header-top {
+  color: black;
+  text-transform: uppercase;
+  font-size: 4em;
+  font-weight: 100;
 }
 
 a {
@@ -79,10 +85,9 @@ button:focus {
   border-color: #666;
 }
 
-
-html, body {
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
-

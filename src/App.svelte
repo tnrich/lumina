@@ -3,6 +3,8 @@
   import Home from "./Home.svelte";
   import Story from "./Story.svelte";
   import Nav from "./Nav.svelte";
+  import Shop from "./Shop.svelte";
+  import Gallery from "./Gallery.svelte";
 
   // import About from "./About.svelte";
   // import Blog from "./Blog.svelte";
@@ -25,4 +27,11 @@
   <Route path="/story">
     <Story />
   </Route>
+  <Route path="/shop">
+    <Shop />
+  </Route>
+  <Route path="/gallery">
+    <Gallery />
+  </Route>
 </Router>
+

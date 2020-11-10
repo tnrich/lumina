@@ -12,12 +12,6 @@
     align-items: center;
   }
 
-  h1 {
-    color: black;
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-  }
 
   @media (min-width: 640px) {
     main {
@@ -30,7 +24,7 @@
   <div>
     <br>
     <br>
-    <h1>Lumina Wines</h1>
+    <h1 class="header-top">Lumina Wines</h1>
     <h2>Pressin' Dat Juice since 2019</h2>
   </div>
   <JoinMailingList />
