@@ -15,6 +15,12 @@
 </script>
 
 <style>
+  .page-container {
+    text-align: center;
+    height: 100%;
+    overflow-y: auto;
+    
+  }
 </style>
 
 <Notifications>
@@ -24,17 +30,20 @@
     <!-- <Route path="blog/:id" component="{BlogPost}" />
     <Route path="blog" component="{Blog}" />
     <Route path="about" component="{About}" /> -->
-    <Route path="/">
-      <Home />
-    </Route>
-    <Route path="/story">
-      <Story />
-    </Route>
-    <Route path="/shop">
-      <Shop />
-    </Route>
-    <Route path="/gallery">
-      <Gallery />
-    </Route>
+    <div class="page-container">
+
+      <Route path="/">
+        <Home />
+      </Route>
+      <Route path="/story">
+        <Story />
+      </Route>
+      <Route path="/shop">
+        <Shop />
+      </Route>
+      <Route path="/gallery">
+        <Gallery />
+      </Route>
+    </div>
   </Router>
 </Notifications>

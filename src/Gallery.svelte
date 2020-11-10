@@ -1,47 +1,71 @@
 <script>
-  import Carousel from '@beyonk/svelte-carousel'
+  import Carousel from "@beyonk/svelte-carousel";
+  import Header from "./Header.svelte";
 </script>
 
 <style>
-  main {
-    text-align: center;
-    overflow-y: scroll;
-    height: 100%;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
-  }
   /* .photoholder {
     color: white;
   } */
   .slide-content {
-      width: 100%;
-    }
+    width: 100%;
+  }
 </style>
 
-<main>
-  <br />
-  <br />
-  <h1 class="header-top">Gallery</h1>
-  <h2>I'm only selling 2 varietals of wine at the momement. Swag will arrive soon!</h2>
-  
-  <Carousel perPage={1}>
-    <div class="slide-content">
-      <img src="//placekitten.com/400" alt="Kitten 1"/>
-    </div>
-    <div class="slide-content">
-      <img src="//placekitten.com/401" alt="Kitten 1"/>
-    </div>
-    <div class="slide-content">
-      <img src="//placekitten.com/402" alt="Kitten 1"/>
-    </div>
-    <div class="slide-content">
-      <img src="//placekitten.com/403" alt="Kitten 1"/>
-    </div>
-  </Carousel>
-  
+<Header subtext={'A few of my favorite photos'} title={'Gallery'} />
+<br />
+<br />
+<Carousel perPage={1}>
+  <div class="slide-content">
+    <img
+      src="gallery_photos/1.jpg"
+      alt="Kitten 1" />
+  </div>
 
-</main>
+  <div class="slide-content">
+    <img
+      src="gallery_photos/2.jpg"
+      alt="Kitten 1" />
+  </div>
+
+  <div class="slide-content">
+    <img
+      src="gallery_photos/3.jpg"
+      alt="Kitten 1" />
+  </div>
+
+  <div class="slide-content">
+    <img
+      src="gallery_photos/4.jpg"
+      alt="Kitten 1" />
+  </div>
+
+  <div class="slide-content">
+    <img
+      src="gallery_photos/5.jpg"
+      alt="Kitten 1" />
+  </div>
+
+  <div class="slide-content">
+    <img
+      src="gallery_photos/6.jpg"
+      alt="Kitten 1" />
+  </div>
+
+  <div class="slide-content">
+    <img
+      src="gallery_photos/7.jpg"
+      alt="Kitten 1" />
+  </div>
+  <div class="slide-content">
+    <img
+      src="gallery_photos/8.jpg"
+      alt="Kitten 1" />
+  </div>
+  <div class="slide-content">
+    <img
+      src="gallery_photos/9.jpg"
+      alt="Kitten 1" />
+  </div>
+
+</Carousel>

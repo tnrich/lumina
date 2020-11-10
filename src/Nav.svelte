@@ -28,7 +28,7 @@
   li,
   a {
     margin: 75px 0 -55px 0;
-    color: black;
+    color: #498184;
     font: 14pt "Roboto", sans-serif;
     font-weight: 700;
     line-height: 1.8;
@@ -56,7 +56,7 @@
     position: absolute;
     top: 25px;
     left: 25px;
-    background: black;
+    background: #498184;
     width: 30px;
     height: 5px;
     transition: 0.2s ease;
@@ -118,7 +118,8 @@
   }
   #menu-toggle:checked + #trigger + #burger + #menu {
     animation: checked-anim 1s ease both;
-    background: wheat;
+    background: #e6a683
+    
   }
   #menu-toggle:checked + #trigger ~ #menu > li,
   a {
