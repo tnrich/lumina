@@ -621,6 +621,11 @@ supports-color@^7.0.0:
   dependencies:
     has-flag "^4.0.0"
 
+svelte-notifications@^0.9.9:
+  version "0.9.9"
+  resolved "https://registry.yarnpkg.com/svelte-notifications/-/svelte-notifications-0.9.9.tgz#3d19c48ff5f6624c31ebca476309a5516dfc4bb7"
+  integrity sha512-UMcjqzuNeUGHd3ZzSzRFXn22Z06VlPrTS8CJwFkkE+qKWn2tVRgsG4b62zZBcR/7SMcufT/Ouxpv/gbA8LaQcQ==
+
 svelte-routing@^1.4.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/svelte-routing/-/svelte-routing-1.4.2.tgz#291160b537c9c73e711731eb099c48bb24cc3419"

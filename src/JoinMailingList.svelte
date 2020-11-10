@@ -1,6 +1,9 @@
 <script>
   import { writable } from "svelte/store";
   import emailjs from "emailjs-com";
+  import { getNotificationsContext } from "svelte-notifications";
+
+  const { addNotification } = getNotificationsContext();
 
   export const user = writable({
     name: "",
@@ -51,9 +54,19 @@
           .then(
             (response) => {
               sending = false;
+              addNotification({
+                text: `You've been added you to the mailing list!`,
+                position: 'top-center',
+                type: 'success',
+              });
               console.log('SUCCESS!', response.status, response.text);
             },
             (err) => {
+              addNotification({
+                text: `That didn't work for some reason. Email me to make sure I get you on the list!`,
+                position: 'top-center',
+                type: 'warning',
+              });
               sending = false;
               console.log('FAILED...', err);
             }
