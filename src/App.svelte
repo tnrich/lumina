@@ -7,10 +7,6 @@
   import Gallery from "./Gallery.svelte";
   import Notifications from "svelte-notifications";
 
-  import App from "./App.svelte";
-  // import About from "./About.svelte";
-  // import Blog from "./Blog.svelte";
-
   export let url = "";
 </script>
 

@@ -1,6 +1,8 @@
 <script>
   import Carousel from "@beyonk/svelte-carousel";
   import Header from "./Header.svelte";
+
+	import { ChevronLeftIcon, ChevronRightIcon } from 'svelte-feather-icons'
 </script>
 
 <style>
@@ -16,6 +18,13 @@
 <br />
 <br />
 <Carousel perPage={1}>
+  <span class="control" slot="left-control">
+    <ChevronLeftIcon />
+  </span>
+  
+  <span class="control" slot="right-control">
+    <ChevronRightIcon />
+  </span>
   <div class="slide-content">
     <img
       src="gallery_photos/1.jpg"

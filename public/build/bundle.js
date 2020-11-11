@@ -149,6 +149,9 @@ var app = (function () {
     function element(name) {
         return document.createElement(name);
     }
+    function svg_element(name) {
+        return document.createElementNS('http://www.w3.org/2000/svg', name);
+    }
     function text(data) {
         return document.createTextNode(data);
     }
@@ -3719,7 +3722,7 @@ var app = (function () {
     const { console: console_1 } = globals;
     const file$4 = "src/JoinMailingList.svelte";
 
-    // (77:0) {:else}
+    // (84:0) {:else}
     function create_else_block$1(ctx) {
     	let button;
     	let mounted;
@@ -3729,8 +3732,8 @@ var app = (function () {
     		c: function create() {
     			button = element("button");
     			button.textContent = "Join Mailing List";
-    			attr_dev(button, "class", "button is-primary");
-    			add_location(button, file$4, 77, 2, 1969);
+    			attr_dev(button, "class", "button is-primary svelte-c6u7yb");
+    			add_location(button, file$4, 84, 2, 2099);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, button, anchor);
@@ -3752,14 +3755,14 @@ var app = (function () {
     		block,
     		id: create_else_block$1.name,
     		type: "else",
-    		source: "(77:0) {:else}",
+    		source: "(84:0) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (30:0) {#if isOpen}
+    // (37:0) {#if isOpen}
     function create_if_block$3(ctx) {
     	let div;
     	let input0;
@@ -3780,19 +3783,19 @@ var app = (function () {
     			t1 = space();
     			button = element("button");
     			t2 = text("Join Mailing List");
-    			attr_dev(input0, "class", "input is-primary svelte-1vqeijs");
+    			attr_dev(input0, "class", "input is-primary svelte-c6u7yb");
     			attr_dev(input0, "type", "name");
     			attr_dev(input0, "placeholder", "Name");
-    			add_location(input0, file$4, 31, 4, 561);
-    			attr_dev(input1, "class", "input is-primary svelte-1vqeijs");
+    			add_location(input0, file$4, 38, 4, 691);
+    			attr_dev(input1, "class", "input is-primary svelte-c6u7yb");
     			attr_dev(input1, "type", "email");
     			attr_dev(input1, "placeholder", "Email");
-    			add_location(input1, file$4, 36, 4, 679);
+    			add_location(input1, file$4, 43, 4, 809);
     			button.disabled = /*sending*/ ctx[2];
-    			attr_dev(button, "class", "button is-primary");
-    			add_location(button, file$4, 41, 4, 800);
-    			attr_dev(div, "class", "bottom-holder svelte-1vqeijs");
-    			add_location(div, file$4, 30, 2, 529);
+    			attr_dev(button, "class", "button is-primary svelte-c6u7yb");
+    			add_location(button, file$4, 48, 4, 930);
+    			attr_dev(div, "class", "bottom-holder svelte-c6u7yb");
+    			add_location(div, file$4, 37, 2, 659);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -3839,7 +3842,7 @@ var app = (function () {
     		block,
     		id: create_if_block$3.name,
     		type: "if",
-    		source: "(30:0) {#if isOpen}",
+    		source: "(37:0) {#if isOpen}",
     		ctx
     	});
 
@@ -3941,13 +3944,13 @@ var app = (function () {
     		$$invalidate(2, sending = true);
 
     		source.send(
-    			{"env":{"isProd":false,"npm_package_devDependencies_rollup_plugin_terser":"^7.0.0","npm_package_devDependencies_rollup_plugin_svelte":"^6.0.0","TERM_PROGRAM":"vscode","NODE":"/usr/local/bin/node","INIT_CWD":"/Users/tnrich/Sites/lumina","npm_config_version_git_tag":"true","TERM":"xterm-256color","SHELL":"/bin/zsh","TMPDIR":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/","trc":"teselagen-react-components","npm_config_init_license":"MIT","npm_config_email":"team@teselagen.com","TERM_PROGRAM_VERSION":"1.51.0","npm_package_scripts_dev":"rollup -c -w","ORIGINAL_XDG_CURRENT_DESKTOP":"undefined","npm_package_devDependencies__rollup_plugin_replace":"^2.3.4","npm_config_registry":"https://registry.yarnpkg.com","npm_package_readmeFilename":"README.md","USER":"tnrich","npm_package_description":"This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.","npm_config_python":"/usr/bin/python","npm_package_dependencies_emailjs_com":"^2.6.3","SSH_AUTH_SOCK":"/private/tmp/com.apple.launchd.lxTJwS9WHT/Listeners","npm_package_devDependencies__rollup_plugin_commonjs":"^14.0.0","__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0","npm_execpath":"/usr/local/Cellar/yarn/1.17.3/libexec/bin/yarn.js","npm_package_devDependencies_svelte":"^3.0.0","npm_package_dependencies_sirv_cli":"^1.0.0","SENCHA_CMD_3_0_0":"/Users/tnrich/bin/Sencha/Cmd/4.0.4.84","PATH":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/yarn--1605039702028-0.8184248122709741:/Users/tnrich/Sites/lumina/node_modules/.bin:/Users/tnrich/.config/yarn/link/node_modules/.bin:/usr/local/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/bin/node_modules/npm/bin/node-gyp-bin:/Users/tnrich/Documents/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/tnrich/Documents/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/local/sbin","npm_config_argv":"{\"remain\":[],\"cooked\":[\"run\",\"dev\"],\"original\":[\"--ignore-engines\",\"dev\"]}","npm_package_devDependencies_rollup":"^2.3.4","_":"/Users/tnrich/Sites/lumina/node_modules/.bin/rollup","PWD":"/Users/tnrich/Sites/lumina","npm_package_dependencies_svelte_notifications":"^0.9.9","npm_package_devDependencies__rollup_plugin_node_resolve":"^8.0.0","npm_lifecycle_event":"dev","LANG":"en_US.UTF-8","npm_package_name":"svelte-app","npm_package_scripts_start":"sirv public --single","npm_package_scripts_build":"rollup -c","npm_config_version_commit_hooks":"true","XPC_FLAGS":"0x0","npm_config_username":"teselagen","npm_config_bin_links":"true","npm_package_dependencies__beyonk_svelte_carousel":"^2.8.0","XPC_SERVICE_NAME":"0","npm_package_version":"1.0.0","SHLVL":"2","HOME":"/Users/tnrich","VSCODE_GIT_ASKPASS_MAIN":"/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js","npm_config_save_prefix":"^","npm_config_strict_ssl":"true","npm_config_version_git_message":"v%s","NPM_CONFIG_PYTHON":"/usr/bin/python","LOGNAME":"tnrich","YARN_WRAP_OUTPUT":"false","PREFIX":"/usr/local","npm_lifecycle_script":"rollup -c -w","VSCODE_GIT_IPC_HANDLE":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/vscode-git-24b242e186.sock","npm_package_dependencies_bulma":"^0.9.1","npm_config_version_git_sign":"","npm_config_ignore_scripts":"","npm_config_user_agent":"yarn/1.17.3 npm/? node/v10.16.3 darwin x64","VSCODE_GIT_ASKPASS_NODE":"/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Renderer).app/Contents/MacOS/Code Helper (Renderer)","GIT_ASKPASS":"/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh","npm_config_init_version":"1.0.0","npm_config_ignore_optional":"","npm_package_devDependencies_rollup_plugin_livereload":"^2.0.0","COLORTERM":"truecolor","npm_node_execpath":"/usr/local/bin/node","npm_package_dependencies_svelte_routing":"^1.4.2","npm_config_version_tag_prefix":"v","ROLLUP_WATCH":"true"}}.env.service_id,
-    			{"env":{"isProd":false,"npm_package_devDependencies_rollup_plugin_terser":"^7.0.0","npm_package_devDependencies_rollup_plugin_svelte":"^6.0.0","TERM_PROGRAM":"vscode","NODE":"/usr/local/bin/node","INIT_CWD":"/Users/tnrich/Sites/lumina","npm_config_version_git_tag":"true","TERM":"xterm-256color","SHELL":"/bin/zsh","TMPDIR":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/","trc":"teselagen-react-components","npm_config_init_license":"MIT","npm_config_email":"team@teselagen.com","TERM_PROGRAM_VERSION":"1.51.0","npm_package_scripts_dev":"rollup -c -w","ORIGINAL_XDG_CURRENT_DESKTOP":"undefined","npm_package_devDependencies__rollup_plugin_replace":"^2.3.4","npm_config_registry":"https://registry.yarnpkg.com","npm_package_readmeFilename":"README.md","USER":"tnrich","npm_package_description":"This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.","npm_config_python":"/usr/bin/python","npm_package_dependencies_emailjs_com":"^2.6.3","SSH_AUTH_SOCK":"/private/tmp/com.apple.launchd.lxTJwS9WHT/Listeners","npm_package_devDependencies__rollup_plugin_commonjs":"^14.0.0","__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0","npm_execpath":"/usr/local/Cellar/yarn/1.17.3/libexec/bin/yarn.js","npm_package_devDependencies_svelte":"^3.0.0","npm_package_dependencies_sirv_cli":"^1.0.0","SENCHA_CMD_3_0_0":"/Users/tnrich/bin/Sencha/Cmd/4.0.4.84","PATH":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/yarn--1605039702028-0.8184248122709741:/Users/tnrich/Sites/lumina/node_modules/.bin:/Users/tnrich/.config/yarn/link/node_modules/.bin:/usr/local/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/bin/node_modules/npm/bin/node-gyp-bin:/Users/tnrich/Documents/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/tnrich/Documents/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/local/sbin","npm_config_argv":"{\"remain\":[],\"cooked\":[\"run\",\"dev\"],\"original\":[\"--ignore-engines\",\"dev\"]}","npm_package_devDependencies_rollup":"^2.3.4","_":"/Users/tnrich/Sites/lumina/node_modules/.bin/rollup","PWD":"/Users/tnrich/Sites/lumina","npm_package_dependencies_svelte_notifications":"^0.9.9","npm_package_devDependencies__rollup_plugin_node_resolve":"^8.0.0","npm_lifecycle_event":"dev","LANG":"en_US.UTF-8","npm_package_name":"svelte-app","npm_package_scripts_start":"sirv public --single","npm_package_scripts_build":"rollup -c","npm_config_version_commit_hooks":"true","XPC_FLAGS":"0x0","npm_config_username":"teselagen","npm_config_bin_links":"true","npm_package_dependencies__beyonk_svelte_carousel":"^2.8.0","XPC_SERVICE_NAME":"0","npm_package_version":"1.0.0","SHLVL":"2","HOME":"/Users/tnrich","VSCODE_GIT_ASKPASS_MAIN":"/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js","npm_config_save_prefix":"^","npm_config_strict_ssl":"true","npm_config_version_git_message":"v%s","NPM_CONFIG_PYTHON":"/usr/bin/python","LOGNAME":"tnrich","YARN_WRAP_OUTPUT":"false","PREFIX":"/usr/local","npm_lifecycle_script":"rollup -c -w","VSCODE_GIT_IPC_HANDLE":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/vscode-git-24b242e186.sock","npm_package_dependencies_bulma":"^0.9.1","npm_config_version_git_sign":"","npm_config_ignore_scripts":"","npm_config_user_agent":"yarn/1.17.3 npm/? node/v10.16.3 darwin x64","VSCODE_GIT_ASKPASS_NODE":"/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Renderer).app/Contents/MacOS/Code Helper (Renderer)","GIT_ASKPASS":"/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh","npm_config_init_version":"1.0.0","npm_config_ignore_optional":"","npm_package_devDependencies_rollup_plugin_livereload":"^2.0.0","COLORTERM":"truecolor","npm_node_execpath":"/usr/local/bin/node","npm_package_dependencies_svelte_routing":"^1.4.2","npm_config_version_tag_prefix":"v","ROLLUP_WATCH":"true"}}.env.template_id,
+    			{"env":{"isProd":false,"npm_package_devDependencies_rollup_plugin_terser":"^7.0.0","npm_package_devDependencies_rollup_plugin_svelte":"^6.0.0","TERM_PROGRAM":"vscode","NODE":"/usr/local/bin/node","INIT_CWD":"/Users/tnrich/Sites/lumina","npm_config_version_git_tag":"true","TERM":"xterm-256color","SHELL":"/bin/zsh","TMPDIR":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/","trc":"teselagen-react-components","npm_config_init_license":"MIT","npm_config_email":"team@teselagen.com","TERM_PROGRAM_VERSION":"1.51.0","npm_package_scripts_dev":"rollup -c -w","ORIGINAL_XDG_CURRENT_DESKTOP":"undefined","npm_package_devDependencies__rollup_plugin_replace":"^2.3.4","npm_config_registry":"https://registry.yarnpkg.com","npm_package_readmeFilename":"README.md","USER":"tnrich","npm_package_description":"This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.","npm_config_python":"/usr/bin/python","npm_package_dependencies_emailjs_com":"^2.6.3","SSH_AUTH_SOCK":"/private/tmp/com.apple.launchd.lxTJwS9WHT/Listeners","npm_package_devDependencies__rollup_plugin_commonjs":"^14.0.0","__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0","npm_execpath":"/usr/local/Cellar/yarn/1.17.3/libexec/bin/yarn.js","npm_package_devDependencies_svelte":"^3.0.0","npm_package_dependencies_sirv_cli":"^1.0.0","SENCHA_CMD_3_0_0":"/Users/tnrich/bin/Sencha/Cmd/4.0.4.84","PATH":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/yarn--1605132006847-0.6191267493105721:/Users/tnrich/Sites/lumina/node_modules/.bin:/Users/tnrich/.config/yarn/link/node_modules/.bin:/usr/local/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/bin/node_modules/npm/bin/node-gyp-bin:/Users/tnrich/Documents/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/tnrich/Documents/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/local/sbin","npm_config_argv":"{\"remain\":[],\"cooked\":[\"run\",\"dev\"],\"original\":[\"--ignore-engines\",\"dev\"]}","npm_package_devDependencies_rollup":"^2.3.4","_":"/Users/tnrich/Sites/lumina/node_modules/.bin/rollup","PWD":"/Users/tnrich/Sites/lumina","npm_package_dependencies_svelte_notifications":"^0.9.9","npm_package_devDependencies__rollup_plugin_node_resolve":"^8.0.0","npm_lifecycle_event":"dev","LANG":"en_US.UTF-8","npm_package_name":"svelte-app","npm_package_scripts_start":"sirv public --single","npm_package_scripts_build":"rollup -c","npm_config_version_commit_hooks":"true","XPC_FLAGS":"0x0","npm_config_username":"teselagen","npm_config_bin_links":"true","npm_package_dependencies__beyonk_svelte_carousel":"^2.8.0","XPC_SERVICE_NAME":"0","npm_package_version":"1.0.0","SHLVL":"2","HOME":"/Users/tnrich","VSCODE_GIT_ASKPASS_MAIN":"/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js","npm_config_save_prefix":"^","npm_config_strict_ssl":"true","npm_config_version_git_message":"v%s","NPM_CONFIG_PYTHON":"/usr/bin/python","LOGNAME":"tnrich","YARN_WRAP_OUTPUT":"false","PREFIX":"/usr/local","npm_lifecycle_script":"rollup -c -w","VSCODE_GIT_IPC_HANDLE":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/vscode-git-24b242e186.sock","npm_package_dependencies_bulma":"^0.9.1","npm_config_version_git_sign":"","npm_config_ignore_scripts":"","npm_config_user_agent":"yarn/1.17.3 npm/? node/v10.16.3 darwin x64","VSCODE_GIT_ASKPASS_NODE":"/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Renderer).app/Contents/MacOS/Code Helper (Renderer)","GIT_ASKPASS":"/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh","npm_config_init_version":"1.0.0","npm_config_ignore_optional":"","npm_package_devDependencies_rollup_plugin_livereload":"^2.0.0","COLORTERM":"truecolor","npm_node_execpath":"/usr/local/bin/node","npm_package_dependencies_svelte_routing":"^1.4.2","npm_config_version_tag_prefix":"v","ROLLUP_WATCH":"true"}}.env.service_id,
+    			{"env":{"isProd":false,"npm_package_devDependencies_rollup_plugin_terser":"^7.0.0","npm_package_devDependencies_rollup_plugin_svelte":"^6.0.0","TERM_PROGRAM":"vscode","NODE":"/usr/local/bin/node","INIT_CWD":"/Users/tnrich/Sites/lumina","npm_config_version_git_tag":"true","TERM":"xterm-256color","SHELL":"/bin/zsh","TMPDIR":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/","trc":"teselagen-react-components","npm_config_init_license":"MIT","npm_config_email":"team@teselagen.com","TERM_PROGRAM_VERSION":"1.51.0","npm_package_scripts_dev":"rollup -c -w","ORIGINAL_XDG_CURRENT_DESKTOP":"undefined","npm_package_devDependencies__rollup_plugin_replace":"^2.3.4","npm_config_registry":"https://registry.yarnpkg.com","npm_package_readmeFilename":"README.md","USER":"tnrich","npm_package_description":"This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.","npm_config_python":"/usr/bin/python","npm_package_dependencies_emailjs_com":"^2.6.3","SSH_AUTH_SOCK":"/private/tmp/com.apple.launchd.lxTJwS9WHT/Listeners","npm_package_devDependencies__rollup_plugin_commonjs":"^14.0.0","__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0","npm_execpath":"/usr/local/Cellar/yarn/1.17.3/libexec/bin/yarn.js","npm_package_devDependencies_svelte":"^3.0.0","npm_package_dependencies_sirv_cli":"^1.0.0","SENCHA_CMD_3_0_0":"/Users/tnrich/bin/Sencha/Cmd/4.0.4.84","PATH":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/yarn--1605132006847-0.6191267493105721:/Users/tnrich/Sites/lumina/node_modules/.bin:/Users/tnrich/.config/yarn/link/node_modules/.bin:/usr/local/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/bin/node_modules/npm/bin/node-gyp-bin:/Users/tnrich/Documents/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/tnrich/Documents/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/local/sbin","npm_config_argv":"{\"remain\":[],\"cooked\":[\"run\",\"dev\"],\"original\":[\"--ignore-engines\",\"dev\"]}","npm_package_devDependencies_rollup":"^2.3.4","_":"/Users/tnrich/Sites/lumina/node_modules/.bin/rollup","PWD":"/Users/tnrich/Sites/lumina","npm_package_dependencies_svelte_notifications":"^0.9.9","npm_package_devDependencies__rollup_plugin_node_resolve":"^8.0.0","npm_lifecycle_event":"dev","LANG":"en_US.UTF-8","npm_package_name":"svelte-app","npm_package_scripts_start":"sirv public --single","npm_package_scripts_build":"rollup -c","npm_config_version_commit_hooks":"true","XPC_FLAGS":"0x0","npm_config_username":"teselagen","npm_config_bin_links":"true","npm_package_dependencies__beyonk_svelte_carousel":"^2.8.0","XPC_SERVICE_NAME":"0","npm_package_version":"1.0.0","SHLVL":"2","HOME":"/Users/tnrich","VSCODE_GIT_ASKPASS_MAIN":"/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js","npm_config_save_prefix":"^","npm_config_strict_ssl":"true","npm_config_version_git_message":"v%s","NPM_CONFIG_PYTHON":"/usr/bin/python","LOGNAME":"tnrich","YARN_WRAP_OUTPUT":"false","PREFIX":"/usr/local","npm_lifecycle_script":"rollup -c -w","VSCODE_GIT_IPC_HANDLE":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/vscode-git-24b242e186.sock","npm_package_dependencies_bulma":"^0.9.1","npm_config_version_git_sign":"","npm_config_ignore_scripts":"","npm_config_user_agent":"yarn/1.17.3 npm/? node/v10.16.3 darwin x64","VSCODE_GIT_ASKPASS_NODE":"/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Renderer).app/Contents/MacOS/Code Helper (Renderer)","GIT_ASKPASS":"/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh","npm_config_init_version":"1.0.0","npm_config_ignore_optional":"","npm_package_devDependencies_rollup_plugin_livereload":"^2.0.0","COLORTERM":"truecolor","npm_node_execpath":"/usr/local/bin/node","npm_package_dependencies_svelte_routing":"^1.4.2","npm_config_version_tag_prefix":"v","ROLLUP_WATCH":"true"}}.env.template_id,
     			{
     				from_name: $user.name,
     				message: $user.email
     			},
-    			{"env":{"isProd":false,"npm_package_devDependencies_rollup_plugin_terser":"^7.0.0","npm_package_devDependencies_rollup_plugin_svelte":"^6.0.0","TERM_PROGRAM":"vscode","NODE":"/usr/local/bin/node","INIT_CWD":"/Users/tnrich/Sites/lumina","npm_config_version_git_tag":"true","TERM":"xterm-256color","SHELL":"/bin/zsh","TMPDIR":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/","trc":"teselagen-react-components","npm_config_init_license":"MIT","npm_config_email":"team@teselagen.com","TERM_PROGRAM_VERSION":"1.51.0","npm_package_scripts_dev":"rollup -c -w","ORIGINAL_XDG_CURRENT_DESKTOP":"undefined","npm_package_devDependencies__rollup_plugin_replace":"^2.3.4","npm_config_registry":"https://registry.yarnpkg.com","npm_package_readmeFilename":"README.md","USER":"tnrich","npm_package_description":"This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.","npm_config_python":"/usr/bin/python","npm_package_dependencies_emailjs_com":"^2.6.3","SSH_AUTH_SOCK":"/private/tmp/com.apple.launchd.lxTJwS9WHT/Listeners","npm_package_devDependencies__rollup_plugin_commonjs":"^14.0.0","__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0","npm_execpath":"/usr/local/Cellar/yarn/1.17.3/libexec/bin/yarn.js","npm_package_devDependencies_svelte":"^3.0.0","npm_package_dependencies_sirv_cli":"^1.0.0","SENCHA_CMD_3_0_0":"/Users/tnrich/bin/Sencha/Cmd/4.0.4.84","PATH":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/yarn--1605039702028-0.8184248122709741:/Users/tnrich/Sites/lumina/node_modules/.bin:/Users/tnrich/.config/yarn/link/node_modules/.bin:/usr/local/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/bin/node_modules/npm/bin/node-gyp-bin:/Users/tnrich/Documents/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/tnrich/Documents/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/local/sbin","npm_config_argv":"{\"remain\":[],\"cooked\":[\"run\",\"dev\"],\"original\":[\"--ignore-engines\",\"dev\"]}","npm_package_devDependencies_rollup":"^2.3.4","_":"/Users/tnrich/Sites/lumina/node_modules/.bin/rollup","PWD":"/Users/tnrich/Sites/lumina","npm_package_dependencies_svelte_notifications":"^0.9.9","npm_package_devDependencies__rollup_plugin_node_resolve":"^8.0.0","npm_lifecycle_event":"dev","LANG":"en_US.UTF-8","npm_package_name":"svelte-app","npm_package_scripts_start":"sirv public --single","npm_package_scripts_build":"rollup -c","npm_config_version_commit_hooks":"true","XPC_FLAGS":"0x0","npm_config_username":"teselagen","npm_config_bin_links":"true","npm_package_dependencies__beyonk_svelte_carousel":"^2.8.0","XPC_SERVICE_NAME":"0","npm_package_version":"1.0.0","SHLVL":"2","HOME":"/Users/tnrich","VSCODE_GIT_ASKPASS_MAIN":"/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js","npm_config_save_prefix":"^","npm_config_strict_ssl":"true","npm_config_version_git_message":"v%s","NPM_CONFIG_PYTHON":"/usr/bin/python","LOGNAME":"tnrich","YARN_WRAP_OUTPUT":"false","PREFIX":"/usr/local","npm_lifecycle_script":"rollup -c -w","VSCODE_GIT_IPC_HANDLE":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/vscode-git-24b242e186.sock","npm_package_dependencies_bulma":"^0.9.1","npm_config_version_git_sign":"","npm_config_ignore_scripts":"","npm_config_user_agent":"yarn/1.17.3 npm/? node/v10.16.3 darwin x64","VSCODE_GIT_ASKPASS_NODE":"/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Renderer).app/Contents/MacOS/Code Helper (Renderer)","GIT_ASKPASS":"/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh","npm_config_init_version":"1.0.0","npm_config_ignore_optional":"","npm_package_devDependencies_rollup_plugin_livereload":"^2.0.0","COLORTERM":"truecolor","npm_node_execpath":"/usr/local/bin/node","npm_package_dependencies_svelte_routing":"^1.4.2","npm_config_version_tag_prefix":"v","ROLLUP_WATCH":"true"}}.env.emailjs_user_id
+    			{"env":{"isProd":false,"npm_package_devDependencies_rollup_plugin_terser":"^7.0.0","npm_package_devDependencies_rollup_plugin_svelte":"^6.0.0","TERM_PROGRAM":"vscode","NODE":"/usr/local/bin/node","INIT_CWD":"/Users/tnrich/Sites/lumina","npm_config_version_git_tag":"true","TERM":"xterm-256color","SHELL":"/bin/zsh","TMPDIR":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/","trc":"teselagen-react-components","npm_config_init_license":"MIT","npm_config_email":"team@teselagen.com","TERM_PROGRAM_VERSION":"1.51.0","npm_package_scripts_dev":"rollup -c -w","ORIGINAL_XDG_CURRENT_DESKTOP":"undefined","npm_package_devDependencies__rollup_plugin_replace":"^2.3.4","npm_config_registry":"https://registry.yarnpkg.com","npm_package_readmeFilename":"README.md","USER":"tnrich","npm_package_description":"This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.","npm_config_python":"/usr/bin/python","npm_package_dependencies_emailjs_com":"^2.6.3","SSH_AUTH_SOCK":"/private/tmp/com.apple.launchd.lxTJwS9WHT/Listeners","npm_package_devDependencies__rollup_plugin_commonjs":"^14.0.0","__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0","npm_execpath":"/usr/local/Cellar/yarn/1.17.3/libexec/bin/yarn.js","npm_package_devDependencies_svelte":"^3.0.0","npm_package_dependencies_sirv_cli":"^1.0.0","SENCHA_CMD_3_0_0":"/Users/tnrich/bin/Sencha/Cmd/4.0.4.84","PATH":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/yarn--1605132006847-0.6191267493105721:/Users/tnrich/Sites/lumina/node_modules/.bin:/Users/tnrich/.config/yarn/link/node_modules/.bin:/usr/local/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/bin/node_modules/npm/bin/node-gyp-bin:/Users/tnrich/Documents/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/tnrich/Documents/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/local/sbin","npm_config_argv":"{\"remain\":[],\"cooked\":[\"run\",\"dev\"],\"original\":[\"--ignore-engines\",\"dev\"]}","npm_package_devDependencies_rollup":"^2.3.4","_":"/Users/tnrich/Sites/lumina/node_modules/.bin/rollup","PWD":"/Users/tnrich/Sites/lumina","npm_package_dependencies_svelte_notifications":"^0.9.9","npm_package_devDependencies__rollup_plugin_node_resolve":"^8.0.0","npm_lifecycle_event":"dev","LANG":"en_US.UTF-8","npm_package_name":"svelte-app","npm_package_scripts_start":"sirv public --single","npm_package_scripts_build":"rollup -c","npm_config_version_commit_hooks":"true","XPC_FLAGS":"0x0","npm_config_username":"teselagen","npm_config_bin_links":"true","npm_package_dependencies__beyonk_svelte_carousel":"^2.8.0","XPC_SERVICE_NAME":"0","npm_package_version":"1.0.0","SHLVL":"2","HOME":"/Users/tnrich","VSCODE_GIT_ASKPASS_MAIN":"/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js","npm_config_save_prefix":"^","npm_config_strict_ssl":"true","npm_config_version_git_message":"v%s","NPM_CONFIG_PYTHON":"/usr/bin/python","LOGNAME":"tnrich","YARN_WRAP_OUTPUT":"false","PREFIX":"/usr/local","npm_lifecycle_script":"rollup -c -w","VSCODE_GIT_IPC_HANDLE":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/vscode-git-24b242e186.sock","npm_package_dependencies_bulma":"^0.9.1","npm_config_version_git_sign":"","npm_config_ignore_scripts":"","npm_config_user_agent":"yarn/1.17.3 npm/? node/v10.16.3 darwin x64","VSCODE_GIT_ASKPASS_NODE":"/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Renderer).app/Contents/MacOS/Code Helper (Renderer)","GIT_ASKPASS":"/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh","npm_config_init_version":"1.0.0","npm_config_ignore_optional":"","npm_package_devDependencies_rollup_plugin_livereload":"^2.0.0","COLORTERM":"truecolor","npm_node_execpath":"/usr/local/bin/node","npm_package_dependencies_svelte_routing":"^1.4.2","npm_config_version_tag_prefix":"v","ROLLUP_WATCH":"true"}}.env.emailjs_user_id
     		).then(
     			response => {
     				$$invalidate(2, sending = false);
@@ -4364,43 +4367,43 @@ var app = (function () {
     			a4.textContent = "Instagram";
     			attr_dev(input, "type", "checkbox");
     			attr_dev(input, "id", "menu-toggle");
-    			attr_dev(input, "class", "svelte-j3i223");
+    			attr_dev(input, "class", "svelte-yq35rt");
     			add_location(input, file$7, 134, 2, 2556);
     			attr_dev(label0, "id", "trigger");
     			attr_dev(label0, "for", "menu-toggle");
-    			attr_dev(label0, "class", "svelte-j3i223");
+    			attr_dev(label0, "class", "svelte-yq35rt");
     			add_location(label0, file$7, 135, 2, 2601);
     			attr_dev(label1, "id", "burger");
     			attr_dev(label1, "for", "menu-toggle");
-    			attr_dev(label1, "class", "svelte-j3i223");
+    			attr_dev(label1, "class", "svelte-yq35rt");
     			add_location(label1, file$7, 136, 2, 2644);
     			attr_dev(a0, "href", "/");
-    			attr_dev(a0, "class", "svelte-j3i223");
+    			attr_dev(a0, "class", "svelte-yq35rt");
     			add_location(a0, file$7, 138, 8, 2709);
-    			attr_dev(li0, "class", "svelte-j3i223");
+    			attr_dev(li0, "class", "svelte-yq35rt");
     			add_location(li0, file$7, 138, 4, 2705);
     			attr_dev(a1, "href", "/story");
-    			attr_dev(a1, "class", "svelte-j3i223");
+    			attr_dev(a1, "class", "svelte-yq35rt");
     			add_location(a1, file$7, 139, 8, 2743);
-    			attr_dev(li1, "class", "svelte-j3i223");
+    			attr_dev(li1, "class", "svelte-yq35rt");
     			add_location(li1, file$7, 139, 4, 2739);
     			attr_dev(a2, "href", "/shop");
-    			attr_dev(a2, "class", "svelte-j3i223");
+    			attr_dev(a2, "class", "svelte-yq35rt");
     			add_location(a2, file$7, 140, 8, 2783);
-    			attr_dev(li2, "class", "svelte-j3i223");
+    			attr_dev(li2, "class", "svelte-yq35rt");
     			add_location(li2, file$7, 140, 4, 2779);
     			attr_dev(a3, "href", "/gallery");
-    			attr_dev(a3, "class", "svelte-j3i223");
+    			attr_dev(a3, "class", "svelte-yq35rt");
     			add_location(a3, file$7, 141, 8, 2821);
-    			attr_dev(li3, "class", "svelte-j3i223");
+    			attr_dev(li3, "class", "svelte-yq35rt");
     			add_location(li3, file$7, 141, 4, 2817);
     			attr_dev(a4, "href", "https://www.instagram.com/luminawines/");
-    			attr_dev(a4, "class", "svelte-j3i223");
+    			attr_dev(a4, "class", "svelte-yq35rt");
     			add_location(a4, file$7, 142, 8, 2865);
-    			attr_dev(li4, "class", "svelte-j3i223");
+    			attr_dev(li4, "class", "svelte-yq35rt");
     			add_location(li4, file$7, 142, 4, 2861);
     			attr_dev(ul, "id", "menu");
-    			attr_dev(ul, "class", "svelte-j3i223");
+    			attr_dev(ul, "class", "svelte-yq35rt");
     			add_location(ul, file$7, 137, 2, 2686);
     			add_location(div, file$7, 133, 0, 2548);
     		},
@@ -5336,166 +5339,563 @@ var app = (function () {
     	}
     }
 
-    /* src/Gallery.svelte generated by Svelte v3.29.6 */
-    const file$9 = "src/Gallery.svelte";
+    /* node_modules/svelte-feather-icons/src/icons/ChevronLeftIcon.svelte generated by Svelte v3.29.6 */
 
-    // (18:0) <Carousel perPage={1}>
+    const file$9 = "node_modules/svelte-feather-icons/src/icons/ChevronLeftIcon.svelte";
+
+    function create_fragment$d(ctx) {
+    	let svg;
+    	let polyline;
+    	let svg_class_value;
+
+    	const block = {
+    		c: function create() {
+    			svg = svg_element("svg");
+    			polyline = svg_element("polyline");
+    			attr_dev(polyline, "points", "15 18 9 12 15 6");
+    			add_location(polyline, file$9, 13, 249, 535);
+    			attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
+    			attr_dev(svg, "width", /*size*/ ctx[0]);
+    			attr_dev(svg, "height", /*size*/ ctx[0]);
+    			attr_dev(svg, "fill", "none");
+    			attr_dev(svg, "viewBox", "0 0 24 24");
+    			attr_dev(svg, "stroke", "currentColor");
+    			attr_dev(svg, "stroke-width", /*strokeWidth*/ ctx[1]);
+    			attr_dev(svg, "stroke-linecap", "round");
+    			attr_dev(svg, "stroke-linejoin", "round");
+    			attr_dev(svg, "class", svg_class_value = "feather feather-chevron-left " + /*customClass*/ ctx[2]);
+    			add_location(svg, file$9, 13, 0, 286);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, svg, anchor);
+    			append_dev(svg, polyline);
+    		},
+    		p: function update(ctx, [dirty]) {
+    			if (dirty & /*size*/ 1) {
+    				attr_dev(svg, "width", /*size*/ ctx[0]);
+    			}
+
+    			if (dirty & /*size*/ 1) {
+    				attr_dev(svg, "height", /*size*/ ctx[0]);
+    			}
+
+    			if (dirty & /*strokeWidth*/ 2) {
+    				attr_dev(svg, "stroke-width", /*strokeWidth*/ ctx[1]);
+    			}
+
+    			if (dirty & /*customClass*/ 4 && svg_class_value !== (svg_class_value = "feather feather-chevron-left " + /*customClass*/ ctx[2])) {
+    				attr_dev(svg, "class", svg_class_value);
+    			}
+    		},
+    		i: noop,
+    		o: noop,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(svg);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$d.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance$d($$self, $$props, $$invalidate) {
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots("ChevronLeftIcon", slots, []);
+    	let { size = "100%" } = $$props;
+    	let { strokeWidth = 2 } = $$props;
+    	let { class: customClass = "" } = $$props;
+
+    	if (size !== "100%") {
+    		size = size.slice(-1) === "x"
+    		? size.slice(0, size.length - 1) + "em"
+    		: parseInt(size) + "px";
+    	}
+
+    	const writable_props = ["size", "strokeWidth", "class"];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn(`<ChevronLeftIcon> was created with unknown prop '${key}'`);
+    	});
+
+    	$$self.$$set = $$props => {
+    		if ("size" in $$props) $$invalidate(0, size = $$props.size);
+    		if ("strokeWidth" in $$props) $$invalidate(1, strokeWidth = $$props.strokeWidth);
+    		if ("class" in $$props) $$invalidate(2, customClass = $$props.class);
+    	};
+
+    	$$self.$capture_state = () => ({ size, strokeWidth, customClass });
+
+    	$$self.$inject_state = $$props => {
+    		if ("size" in $$props) $$invalidate(0, size = $$props.size);
+    		if ("strokeWidth" in $$props) $$invalidate(1, strokeWidth = $$props.strokeWidth);
+    		if ("customClass" in $$props) $$invalidate(2, customClass = $$props.customClass);
+    	};
+
+    	if ($$props && "$$inject" in $$props) {
+    		$$self.$inject_state($$props.$$inject);
+    	}
+
+    	return [size, strokeWidth, customClass];
+    }
+
+    class ChevronLeftIcon extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init(this, options, instance$d, create_fragment$d, safe_not_equal, { size: 0, strokeWidth: 1, class: 2 });
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "ChevronLeftIcon",
+    			options,
+    			id: create_fragment$d.name
+    		});
+    	}
+
+    	get size() {
+    		throw new Error("<ChevronLeftIcon>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set size(value) {
+    		throw new Error("<ChevronLeftIcon>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get strokeWidth() {
+    		throw new Error("<ChevronLeftIcon>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set strokeWidth(value) {
+    		throw new Error("<ChevronLeftIcon>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get class() {
+    		throw new Error("<ChevronLeftIcon>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set class(value) {
+    		throw new Error("<ChevronLeftIcon>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+    }
+
+    /* node_modules/svelte-feather-icons/src/icons/ChevronRightIcon.svelte generated by Svelte v3.29.6 */
+
+    const file$a = "node_modules/svelte-feather-icons/src/icons/ChevronRightIcon.svelte";
+
+    function create_fragment$e(ctx) {
+    	let svg;
+    	let polyline;
+    	let svg_class_value;
+
+    	const block = {
+    		c: function create() {
+    			svg = svg_element("svg");
+    			polyline = svg_element("polyline");
+    			attr_dev(polyline, "points", "9 18 15 12 9 6");
+    			add_location(polyline, file$a, 13, 250, 536);
+    			attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
+    			attr_dev(svg, "width", /*size*/ ctx[0]);
+    			attr_dev(svg, "height", /*size*/ ctx[0]);
+    			attr_dev(svg, "fill", "none");
+    			attr_dev(svg, "viewBox", "0 0 24 24");
+    			attr_dev(svg, "stroke", "currentColor");
+    			attr_dev(svg, "stroke-width", /*strokeWidth*/ ctx[1]);
+    			attr_dev(svg, "stroke-linecap", "round");
+    			attr_dev(svg, "stroke-linejoin", "round");
+    			attr_dev(svg, "class", svg_class_value = "feather feather-chevron-right " + /*customClass*/ ctx[2]);
+    			add_location(svg, file$a, 13, 0, 286);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, svg, anchor);
+    			append_dev(svg, polyline);
+    		},
+    		p: function update(ctx, [dirty]) {
+    			if (dirty & /*size*/ 1) {
+    				attr_dev(svg, "width", /*size*/ ctx[0]);
+    			}
+
+    			if (dirty & /*size*/ 1) {
+    				attr_dev(svg, "height", /*size*/ ctx[0]);
+    			}
+
+    			if (dirty & /*strokeWidth*/ 2) {
+    				attr_dev(svg, "stroke-width", /*strokeWidth*/ ctx[1]);
+    			}
+
+    			if (dirty & /*customClass*/ 4 && svg_class_value !== (svg_class_value = "feather feather-chevron-right " + /*customClass*/ ctx[2])) {
+    				attr_dev(svg, "class", svg_class_value);
+    			}
+    		},
+    		i: noop,
+    		o: noop,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(svg);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$e.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance$e($$self, $$props, $$invalidate) {
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots("ChevronRightIcon", slots, []);
+    	let { size = "100%" } = $$props;
+    	let { strokeWidth = 2 } = $$props;
+    	let { class: customClass = "" } = $$props;
+
+    	if (size !== "100%") {
+    		size = size.slice(-1) === "x"
+    		? size.slice(0, size.length - 1) + "em"
+    		: parseInt(size) + "px";
+    	}
+
+    	const writable_props = ["size", "strokeWidth", "class"];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn(`<ChevronRightIcon> was created with unknown prop '${key}'`);
+    	});
+
+    	$$self.$$set = $$props => {
+    		if ("size" in $$props) $$invalidate(0, size = $$props.size);
+    		if ("strokeWidth" in $$props) $$invalidate(1, strokeWidth = $$props.strokeWidth);
+    		if ("class" in $$props) $$invalidate(2, customClass = $$props.class);
+    	};
+
+    	$$self.$capture_state = () => ({ size, strokeWidth, customClass });
+
+    	$$self.$inject_state = $$props => {
+    		if ("size" in $$props) $$invalidate(0, size = $$props.size);
+    		if ("strokeWidth" in $$props) $$invalidate(1, strokeWidth = $$props.strokeWidth);
+    		if ("customClass" in $$props) $$invalidate(2, customClass = $$props.customClass);
+    	};
+
+    	if ($$props && "$$inject" in $$props) {
+    		$$self.$inject_state($$props.$$inject);
+    	}
+
+    	return [size, strokeWidth, customClass];
+    }
+
+    class ChevronRightIcon extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init(this, options, instance$e, create_fragment$e, safe_not_equal, { size: 0, strokeWidth: 1, class: 2 });
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "ChevronRightIcon",
+    			options,
+    			id: create_fragment$e.name
+    		});
+    	}
+
+    	get size() {
+    		throw new Error("<ChevronRightIcon>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set size(value) {
+    		throw new Error("<ChevronRightIcon>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get strokeWidth() {
+    		throw new Error("<ChevronRightIcon>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set strokeWidth(value) {
+    		throw new Error("<ChevronRightIcon>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get class() {
+    		throw new Error("<ChevronRightIcon>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set class(value) {
+    		throw new Error("<ChevronRightIcon>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+    }
+
+    /* src/Gallery.svelte generated by Svelte v3.29.6 */
+    const file$b = "src/Gallery.svelte";
+
+    // (21:2) <span class="control" slot="left-control">
+    function create_left_control_slot(ctx) {
+    	let span;
+    	let chevronlefticon;
+    	let current;
+    	chevronlefticon = new ChevronLeftIcon({ $$inline: true });
+
+    	const block = {
+    		c: function create() {
+    			span = element("span");
+    			create_component(chevronlefticon.$$.fragment);
+    			attr_dev(span, "class", "control");
+    			attr_dev(span, "slot", "left-control");
+    			add_location(span, file$b, 20, 2, 396);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, span, anchor);
+    			mount_component(chevronlefticon, span, null);
+    			current = true;
+    		},
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(chevronlefticon.$$.fragment, local);
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			transition_out(chevronlefticon.$$.fragment, local);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(span);
+    			destroy_component(chevronlefticon);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_left_control_slot.name,
+    		type: "slot",
+    		source: "(21:2) <span class=\\\"control\\\" slot=\\\"left-control\\\">",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (25:2) <span class="control" slot="right-control">
+    function create_right_control_slot(ctx) {
+    	let span;
+    	let chevronrighticon;
+    	let current;
+    	chevronrighticon = new ChevronRightIcon({ $$inline: true });
+
+    	const block = {
+    		c: function create() {
+    			span = element("span");
+    			create_component(chevronrighticon.$$.fragment);
+    			attr_dev(span, "class", "control");
+    			attr_dev(span, "slot", "right-control");
+    			add_location(span, file$b, 24, 2, 478);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, span, anchor);
+    			mount_component(chevronrighticon, span, null);
+    			current = true;
+    		},
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(chevronrighticon.$$.fragment, local);
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			transition_out(chevronrighticon.$$.fragment, local);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(span);
+    			destroy_component(chevronrighticon);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_right_control_slot.name,
+    		type: "slot",
+    		source: "(25:2) <span class=\\\"control\\\" slot=\\\"right-control\\\">",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (20:0) <Carousel perPage={1}>
     function create_default_slot(ctx) {
+    	let t0;
+    	let t1;
     	let div0;
     	let img0;
     	let img0_src_value;
-    	let t0;
+    	let t2;
     	let div1;
     	let img1;
     	let img1_src_value;
-    	let t1;
+    	let t3;
     	let div2;
     	let img2;
     	let img2_src_value;
-    	let t2;
+    	let t4;
     	let div3;
     	let img3;
     	let img3_src_value;
-    	let t3;
+    	let t5;
     	let div4;
     	let img4;
     	let img4_src_value;
-    	let t4;
+    	let t6;
     	let div5;
     	let img5;
     	let img5_src_value;
-    	let t5;
+    	let t7;
     	let div6;
     	let img6;
     	let img6_src_value;
-    	let t6;
+    	let t8;
     	let div7;
     	let img7;
     	let img7_src_value;
-    	let t7;
+    	let t9;
     	let div8;
     	let img8;
     	let img8_src_value;
 
     	const block = {
     		c: function create() {
+    			t0 = space();
+    			t1 = space();
     			div0 = element("div");
     			img0 = element("img");
-    			t0 = space();
+    			t2 = space();
     			div1 = element("div");
     			img1 = element("img");
-    			t1 = space();
+    			t3 = space();
     			div2 = element("div");
     			img2 = element("img");
-    			t2 = space();
+    			t4 = space();
     			div3 = element("div");
     			img3 = element("img");
-    			t3 = space();
+    			t5 = space();
     			div4 = element("div");
     			img4 = element("img");
-    			t4 = space();
+    			t6 = space();
     			div5 = element("div");
     			img5 = element("img");
-    			t5 = space();
+    			t7 = space();
     			div6 = element("div");
     			img6 = element("img");
-    			t6 = space();
+    			t8 = space();
     			div7 = element("div");
     			img7 = element("img");
-    			t7 = space();
+    			t9 = space();
     			div8 = element("div");
     			img8 = element("img");
     			if (img0.src !== (img0_src_value = "gallery_photos/1.jpg")) attr_dev(img0, "src", img0_src_value);
     			attr_dev(img0, "alt", "Kitten 1");
-    			add_location(img0, file$9, 19, 4, 353);
+    			add_location(img0, file$b, 28, 4, 591);
     			attr_dev(div0, "class", "slide-content svelte-11pq3x8");
-    			add_location(div0, file$9, 18, 2, 321);
+    			add_location(div0, file$b, 27, 2, 559);
     			if (img1.src !== (img1_src_value = "gallery_photos/2.jpg")) attr_dev(img1, "src", img1_src_value);
     			attr_dev(img1, "alt", "Kitten 1");
-    			add_location(img1, file$9, 25, 4, 459);
+    			add_location(img1, file$b, 34, 4, 697);
     			attr_dev(div1, "class", "slide-content svelte-11pq3x8");
-    			add_location(div1, file$9, 24, 2, 427);
+    			add_location(div1, file$b, 33, 2, 665);
     			if (img2.src !== (img2_src_value = "gallery_photos/3.jpg")) attr_dev(img2, "src", img2_src_value);
     			attr_dev(img2, "alt", "Kitten 1");
-    			add_location(img2, file$9, 31, 4, 565);
+    			add_location(img2, file$b, 40, 4, 803);
     			attr_dev(div2, "class", "slide-content svelte-11pq3x8");
-    			add_location(div2, file$9, 30, 2, 533);
+    			add_location(div2, file$b, 39, 2, 771);
     			if (img3.src !== (img3_src_value = "gallery_photos/4.jpg")) attr_dev(img3, "src", img3_src_value);
     			attr_dev(img3, "alt", "Kitten 1");
-    			add_location(img3, file$9, 37, 4, 671);
+    			add_location(img3, file$b, 46, 4, 909);
     			attr_dev(div3, "class", "slide-content svelte-11pq3x8");
-    			add_location(div3, file$9, 36, 2, 639);
+    			add_location(div3, file$b, 45, 2, 877);
     			if (img4.src !== (img4_src_value = "gallery_photos/5.jpg")) attr_dev(img4, "src", img4_src_value);
     			attr_dev(img4, "alt", "Kitten 1");
-    			add_location(img4, file$9, 43, 4, 777);
+    			add_location(img4, file$b, 52, 4, 1015);
     			attr_dev(div4, "class", "slide-content svelte-11pq3x8");
-    			add_location(div4, file$9, 42, 2, 745);
+    			add_location(div4, file$b, 51, 2, 983);
     			if (img5.src !== (img5_src_value = "gallery_photos/6.jpg")) attr_dev(img5, "src", img5_src_value);
     			attr_dev(img5, "alt", "Kitten 1");
-    			add_location(img5, file$9, 49, 4, 883);
+    			add_location(img5, file$b, 58, 4, 1121);
     			attr_dev(div5, "class", "slide-content svelte-11pq3x8");
-    			add_location(div5, file$9, 48, 2, 851);
+    			add_location(div5, file$b, 57, 2, 1089);
     			if (img6.src !== (img6_src_value = "gallery_photos/7.jpg")) attr_dev(img6, "src", img6_src_value);
     			attr_dev(img6, "alt", "Kitten 1");
-    			add_location(img6, file$9, 55, 4, 989);
+    			add_location(img6, file$b, 64, 4, 1227);
     			attr_dev(div6, "class", "slide-content svelte-11pq3x8");
-    			add_location(div6, file$9, 54, 2, 957);
+    			add_location(div6, file$b, 63, 2, 1195);
     			if (img7.src !== (img7_src_value = "gallery_photos/8.jpg")) attr_dev(img7, "src", img7_src_value);
     			attr_dev(img7, "alt", "Kitten 1");
-    			add_location(img7, file$9, 60, 4, 1094);
+    			add_location(img7, file$b, 69, 4, 1332);
     			attr_dev(div7, "class", "slide-content svelte-11pq3x8");
-    			add_location(div7, file$9, 59, 2, 1062);
+    			add_location(div7, file$b, 68, 2, 1300);
     			if (img8.src !== (img8_src_value = "gallery_photos/9.jpg")) attr_dev(img8, "src", img8_src_value);
     			attr_dev(img8, "alt", "Kitten 1");
-    			add_location(img8, file$9, 65, 4, 1199);
+    			add_location(img8, file$b, 74, 4, 1437);
     			attr_dev(div8, "class", "slide-content svelte-11pq3x8");
-    			add_location(div8, file$9, 64, 2, 1167);
+    			add_location(div8, file$b, 73, 2, 1405);
     		},
     		m: function mount(target, anchor) {
+    			insert_dev(target, t0, anchor);
+    			insert_dev(target, t1, anchor);
     			insert_dev(target, div0, anchor);
     			append_dev(div0, img0);
-    			insert_dev(target, t0, anchor);
+    			insert_dev(target, t2, anchor);
     			insert_dev(target, div1, anchor);
     			append_dev(div1, img1);
-    			insert_dev(target, t1, anchor);
+    			insert_dev(target, t3, anchor);
     			insert_dev(target, div2, anchor);
     			append_dev(div2, img2);
-    			insert_dev(target, t2, anchor);
+    			insert_dev(target, t4, anchor);
     			insert_dev(target, div3, anchor);
     			append_dev(div3, img3);
-    			insert_dev(target, t3, anchor);
+    			insert_dev(target, t5, anchor);
     			insert_dev(target, div4, anchor);
     			append_dev(div4, img4);
-    			insert_dev(target, t4, anchor);
+    			insert_dev(target, t6, anchor);
     			insert_dev(target, div5, anchor);
     			append_dev(div5, img5);
-    			insert_dev(target, t5, anchor);
+    			insert_dev(target, t7, anchor);
     			insert_dev(target, div6, anchor);
     			append_dev(div6, img6);
-    			insert_dev(target, t6, anchor);
+    			insert_dev(target, t8, anchor);
     			insert_dev(target, div7, anchor);
     			append_dev(div7, img7);
-    			insert_dev(target, t7, anchor);
+    			insert_dev(target, t9, anchor);
     			insert_dev(target, div8, anchor);
     			append_dev(div8, img8);
     		},
+    		p: noop,
+    		i: noop,
+    		o: noop,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(div0);
     			if (detaching) detach_dev(t0);
-    			if (detaching) detach_dev(div1);
     			if (detaching) detach_dev(t1);
-    			if (detaching) detach_dev(div2);
+    			if (detaching) detach_dev(div0);
     			if (detaching) detach_dev(t2);
-    			if (detaching) detach_dev(div3);
+    			if (detaching) detach_dev(div1);
     			if (detaching) detach_dev(t3);
-    			if (detaching) detach_dev(div4);
+    			if (detaching) detach_dev(div2);
     			if (detaching) detach_dev(t4);
-    			if (detaching) detach_dev(div5);
+    			if (detaching) detach_dev(div3);
     			if (detaching) detach_dev(t5);
-    			if (detaching) detach_dev(div6);
+    			if (detaching) detach_dev(div4);
     			if (detaching) detach_dev(t6);
-    			if (detaching) detach_dev(div7);
+    			if (detaching) detach_dev(div5);
     			if (detaching) detach_dev(t7);
+    			if (detaching) detach_dev(div6);
+    			if (detaching) detach_dev(t8);
+    			if (detaching) detach_dev(div7);
+    			if (detaching) detach_dev(t9);
     			if (detaching) detach_dev(div8);
     		}
     	};
@@ -5504,14 +5904,14 @@ var app = (function () {
     		block,
     		id: create_default_slot.name,
     		type: "slot",
-    		source: "(18:0) <Carousel perPage={1}>",
+    		source: "(20:0) <Carousel perPage={1}>",
     		ctx
     	});
 
     	return block;
     }
 
-    function create_fragment$d(ctx) {
+    function create_fragment$f(ctx) {
     	let header;
     	let t0;
     	let br0;
@@ -5532,7 +5932,11 @@ var app = (function () {
     	carousel = new Carousel({
     			props: {
     				perPage: 1,
-    				$$slots: { default: [create_default_slot] },
+    				$$slots: {
+    					default: [create_default_slot],
+    					"right-control": [create_right_control_slot],
+    					"left-control": [create_left_control_slot]
+    				},
     				$$scope: { ctx }
     			},
     			$$inline: true
@@ -5547,8 +5951,8 @@ var app = (function () {
     			br1 = element("br");
     			t2 = space();
     			create_component(carousel.$$.fragment);
-    			add_location(br0, file$9, 15, 0, 282);
-    			add_location(br1, file$9, 16, 0, 289);
+    			add_location(br0, file$b, 17, 0, 357);
+    			add_location(br1, file$b, 18, 0, 364);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -5596,7 +6000,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_fragment$d.name,
+    		id: create_fragment$f.name,
     		type: "component",
     		source: "",
     		ctx
@@ -5605,7 +6009,7 @@ var app = (function () {
     	return block;
     }
 
-    function instance$d($$self, $$props, $$invalidate) {
+    function instance$f($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots("Gallery", slots, []);
     	const writable_props = [];
@@ -5614,28 +6018,34 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn(`<Gallery> was created with unknown prop '${key}'`);
     	});
 
-    	$$self.$capture_state = () => ({ Carousel, Header });
+    	$$self.$capture_state = () => ({
+    		Carousel,
+    		Header,
+    		ChevronLeftIcon,
+    		ChevronRightIcon
+    	});
+
     	return [];
     }
 
     class Gallery extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$d, create_fragment$d, safe_not_equal, {});
+    		init(this, options, instance$f, create_fragment$f, safe_not_equal, {});
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
     			tagName: "Gallery",
     			options,
-    			id: create_fragment$d.name
+    			id: create_fragment$f.name
     		});
     	}
     }
 
     /* src/App.svelte generated by Svelte v3.29.6 */
-    const file$a = "src/App.svelte";
+    const file$c = "src/App.svelte";
 
-    // (35:6) <Route path="/">
+    // (31:6) <Route path="/">
     function create_default_slot_5(ctx) {
     	let home;
     	let current;
@@ -5667,14 +6077,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_5.name,
     		type: "slot",
-    		source: "(35:6) <Route path=\\\"/\\\">",
+    		source: "(31:6) <Route path=\\\"/\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (38:6) <Route path="/story">
+    // (34:6) <Route path="/story">
     function create_default_slot_4(ctx) {
     	let story;
     	let current;
@@ -5706,14 +6116,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_4.name,
     		type: "slot",
-    		source: "(38:6) <Route path=\\\"/story\\\">",
+    		source: "(34:6) <Route path=\\\"/story\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (41:6) <Route path="/shop">
+    // (37:6) <Route path="/shop">
     function create_default_slot_3(ctx) {
     	let shop;
     	let current;
@@ -5745,14 +6155,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_3.name,
     		type: "slot",
-    		source: "(41:6) <Route path=\\\"/shop\\\">",
+    		source: "(37:6) <Route path=\\\"/shop\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (44:6) <Route path="/gallery">
+    // (40:6) <Route path="/gallery">
     function create_default_slot_2(ctx) {
     	let gallery;
     	let current;
@@ -5784,14 +6194,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_2.name,
     		type: "slot",
-    		source: "(44:6) <Route path=\\\"/gallery\\\">",
+    		source: "(40:6) <Route path=\\\"/gallery\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (27:2) <Router {url}>
+    // (23:2) <Router {url}>
     function create_default_slot_1(ctx) {
     	let nav;
     	let t0;
@@ -5855,7 +6265,7 @@ var app = (function () {
     			t3 = space();
     			create_component(route3.$$.fragment);
     			attr_dev(div, "class", "page-container svelte-xobr8f");
-    			add_location(div, file$a, 32, 4, 768);
+    			add_location(div, file$c, 28, 4, 653);
     		},
     		m: function mount(target, anchor) {
     			mount_component(nav, target, anchor);
@@ -5932,14 +6342,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_1.name,
     		type: "slot",
-    		source: "(27:2) <Router {url}>",
+    		source: "(23:2) <Router {url}>",
     		ctx
     	});
 
     	return block;
     }
 
-    // (26:0) <Notifications>
+    // (22:0) <Notifications>
     function create_default_slot$1(ctx) {
     	let router;
     	let current;
@@ -5989,14 +6399,14 @@ var app = (function () {
     		block,
     		id: create_default_slot$1.name,
     		type: "slot",
-    		source: "(26:0) <Notifications>",
+    		source: "(22:0) <Notifications>",
     		ctx
     	});
 
     	return block;
     }
 
-    function create_fragment$e(ctx) {
+    function create_fragment$g(ctx) {
     	let notifications;
     	let current;
 
@@ -6044,7 +6454,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_fragment$e.name,
+    		id: create_fragment$g.name,
     		type: "component",
     		source: "",
     		ctx
@@ -6053,7 +6463,7 @@ var app = (function () {
     	return block;
     }
 
-    function instance$e($$self, $$props, $$invalidate) {
+    function instance$g($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots("App", slots, []);
     	let { url = "" } = $$props;
@@ -6077,7 +6487,6 @@ var app = (function () {
     		Shop,
     		Gallery,
     		Notifications,
-    		App: App_1,
     		url
     	});
 
@@ -6092,16 +6501,16 @@ var app = (function () {
     	return [url];
     }
 
-    class App_1 extends SvelteComponentDev {
+    class App extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$e, create_fragment$e, safe_not_equal, { url: 0 });
+    		init(this, options, instance$g, create_fragment$g, safe_not_equal, { url: 0 });
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
-    			tagName: "App_1",
+    			tagName: "App",
     			options,
-    			id: create_fragment$e.name
+    			id: create_fragment$g.name
     		});
     	}
 
@@ -6114,11 +6523,8 @@ var app = (function () {
     	}
     }
 
-    const app = new App_1({
-    	target: document.body,
-    	props: {
-    		name: 'world'
-    	}
+    const app = new App({
+    	target: document.body
     });
 
     return app;

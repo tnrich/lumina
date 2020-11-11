@@ -101,10 +101,10 @@
   #menu-toggle,
   #burger,
   #trigger {
-    z-index: 11;
+    z-index: 61;
   }
   #menu {
-    z-index: 10;
+    z-index: 60;
     position: absolute;
     margin: 0;
     padding: 0;

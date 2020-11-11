@@ -21,6 +21,7 @@
     "bulma": "^0.9.1",
     "emailjs-com": "^2.6.3",
     "sirv-cli": "^1.0.0",
+    "svelte-feather-icons": "^3.3.0",
     "svelte-notifications": "^0.9.9",
     "svelte-routing": "^1.4.2"
   }

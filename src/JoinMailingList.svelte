@@ -23,7 +23,14 @@
   }
 
   input {
+    width: 300px;
+    border-radius: 4px;
     margin-bottom: 10px;
+  }
+  button {
+    width: 300px;
+    border-radius: 4px;
+    background-color: #e6a683;
   }
 </style>
 
