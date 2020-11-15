@@ -8,6 +8,7 @@
     margin-top: 5rem;
     object-fit: cover;
     height: 50vh;
+    border-radius: 10px;
   }
 
 
