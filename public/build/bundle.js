@@ -6242,7 +6242,7 @@ var app = (function () {
 
     	header = new Header({
     			props: {
-    				subtext: "The Wines by Year",
+    				subtext: "Wines by Year",
     				title: "Releases"
     			},
     			$$inline: true
@@ -6273,19 +6273,19 @@ var app = (function () {
     			br0 = element("br");
     			t12 = space();
     			br1 = element("br");
-    			add_location(h20, file$c, 19, 2, 272);
-    			add_location(div0, file$c, 20, 2, 288);
+    			add_location(h20, file$c, 19, 2, 268);
+    			add_location(div0, file$c, 20, 2, 284);
     			attr_dev(img, "alt", "2");
     			if (img.src !== (img_src_value = "/release_photos/1.jpg")) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "class", "svelte-1ihnhtp");
-    			add_location(img, file$c, 21, 2, 382);
-    			add_location(h21, file$c, 23, 2, 431);
-    			add_location(div1, file$c, 25, 2, 448);
-    			add_location(div2, file$c, 27, 2, 566);
-    			add_location(br0, file$c, 30, 2, 682);
-    			add_location(br1, file$c, 31, 2, 691);
+    			add_location(img, file$c, 21, 2, 378);
+    			add_location(h21, file$c, 23, 2, 427);
+    			add_location(div1, file$c, 25, 2, 444);
+    			add_location(div2, file$c, 27, 2, 562);
+    			add_location(br0, file$c, 30, 2, 678);
+    			add_location(br1, file$c, 31, 2, 687);
     			attr_dev(div3, "class", "photoholder");
-    			add_location(div3, file$c, 18, 0, 244);
+    			add_location(div3, file$c, 18, 0, 240);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");

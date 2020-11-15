@@ -13,7 +13,7 @@
 </style>
 
 <Header
-  subtext={'The Wines by Year'}
+  subtext={'Wines by Year'}
   title={'Releases'} />
 
 <div class="photoholder">
