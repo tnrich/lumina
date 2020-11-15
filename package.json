@@ -19,6 +19,7 @@
   "dependencies": {
     "@beyonk/svelte-carousel": "^2.8.0",
     "bulma": "^0.9.1",
+    "circletype": "^2.3.0",
     "emailjs-com": "^2.6.3",
     "sirv-cli": "^1.0.0",
     "svelte-feather-icons": "^3.3.0",

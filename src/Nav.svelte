@@ -44,8 +44,8 @@
   }
   a:focus {
     display: block;
-    color: #333;
-    background-color: #eee;
+    color: white;
+    /* background-color: #eee; */
     transition: all 0.5s;
   }
 

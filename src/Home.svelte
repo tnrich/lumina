@@ -21,6 +21,10 @@
 </style>
 
 <div class="home-container">
-  <Header noBackground subtext={"Pressin' Dat Juice since 2019"} title={'Lumina Wines'} />
+  <Header
+    noBackground
+    subtextColor="white"
+    subtext={''}
+    title={"Lumina Wines"} />
   <JoinMailingList />
 </div>
