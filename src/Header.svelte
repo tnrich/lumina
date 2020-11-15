@@ -6,10 +6,8 @@
   export let subtext;
   export let subtextColor;
   onMount(() => {
-    // const headerTop = document.querySelector(".header-top");
     const headerTopWords = document.querySelectorAll(".header-top div");
-    console.log(`headerTopWords:`, headerTopWords);
-    //  const toBend =  headerTopWords.length ? headerTopWords : headerTop
+
     for (const word of headerTopWords) {
       const circleType = new CircleType(word);
       // Set the text radius and direction. Note: setter methods are chainable.
@@ -27,8 +25,6 @@
     font-weight: 200;
     padding-top: 39px;
     width: 100%;
-    /* padding-left: 10vw;
-    padding-right: 10vw; */
   }
   @media only screen and (min-width: 768px) {
     /* tablets and desktop */

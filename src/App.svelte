@@ -15,7 +15,7 @@
     text-align: center;
     height: 100%;
     overflow-y: auto;
-    
+    overflow-x: hidden;
   }
 </style>
 
@@ -27,7 +27,6 @@
     <Route path="blog" component="{Blog}" />
     <Route path="about" component="{About}" /> -->
     <div class="page-container">
-
       <Route path="/">
         <Home />
       </Route>
