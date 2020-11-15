@@ -138,6 +138,7 @@
   <ul id="menu">
     <li><a href="/">Home</a></li>
     <li><a href="/story">Story</a></li>
+    <li><a href="/releases">Releases</a></li>
     <li><a href="/shop">Shop</a></li>
     <li><a href="/gallery">Gallery</a></li>
     <li><a href="https://www.instagram.com/luminawines/">Instagram</a></li>

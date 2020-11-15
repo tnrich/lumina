@@ -30,7 +30,7 @@
   button {
     width: 300px;
     border-radius: 4px;
-    
+
     background-color: #498184;
     color: #e6a683;
     /* color: white; */

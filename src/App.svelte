@@ -6,6 +6,7 @@
   import Shop from "./Shop.svelte";
   import Gallery from "./Gallery.svelte";
   import Notifications from "svelte-notifications";
+  import Releases from "./Releases.svelte";
 
   export let url = "";
 </script>
@@ -32,6 +33,9 @@
       </Route>
       <Route path="/story">
         <Story />
+      </Route>
+      <Route path="/releases">
+        <Releases />
       </Route>
       <Route path="/shop">
         <Shop />
