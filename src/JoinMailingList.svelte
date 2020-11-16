@@ -30,13 +30,14 @@
   button {
     width: 300px;
     border-radius: 4px;
-
+    
     background-color: #498184;
     color: #e6a683;
     /* color: white; */
     outline: none;
     border: none;
   }
+  
 </style>
 
 {#if isOpen}
@@ -67,7 +68,7 @@
             (response) => {
               sending = false;
               addNotification({
-                text: `You've been added you to the mailing list!`,
+                text: `You've been added to the mailing list!`,
                 position: 'top-center',
                 type: 'success',
               });
