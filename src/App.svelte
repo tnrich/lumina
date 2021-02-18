@@ -22,7 +22,7 @@
 
 <Notifications>
   <Router {url}>
-    <Nav />
+    <!-- <Nav /> -->
 
     <!-- <Route path="blog/:id" component="{BlogPost}" />
     <Route path="blog" component="{Blog}" />

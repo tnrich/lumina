@@ -26,17 +26,28 @@
     width: 300px;
     border-radius: 4px;
     margin-bottom: 10px;
+    padding-left: .6em;
+    padding-right: .6em;
+    color: #363636;
   }
+
+
   button {
     width: 300px;
     border-radius: 4px;
     
-    background-color: #498184;
-    color: #e6a683;
+    color: #ffffff;
+    background-color: #dd9828;
     /* color: white; */
     outline: none;
     border: none;
+    /* border-bottom: 1px solid #ffffff;
+    border-left: 2px solid #ffffff; */
   }
+  button:hover {
+    background-color: #db8e12;
+  }
+  
   
 </style>
 

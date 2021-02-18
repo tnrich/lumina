@@ -3837,7 +3837,7 @@ var app = (function () {
     const { console: console_1 } = globals;
     const file$4 = "src/JoinMailingList.svelte";
 
-    // (90:0) {:else}
+    // (101:0) {:else}
     function create_else_block$1(ctx) {
     	let button;
     	let mounted;
@@ -3847,8 +3847,8 @@ var app = (function () {
     		c: function create() {
     			button = element("button");
     			button.textContent = "Join Mailing List";
-    			attr_dev(button, "class", "button is-primary svelte-4zzli5");
-    			add_location(button, file$4, 90, 2, 2184);
+    			attr_dev(button, "class", "button is-primary svelte-n5cld1");
+    			add_location(button, file$4, 101, 2, 2390);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, button, anchor);
@@ -3870,14 +3870,14 @@ var app = (function () {
     		block,
     		id: create_else_block$1.name,
     		type: "else",
-    		source: "(90:0) {:else}",
+    		source: "(101:0) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (43:0) {#if isOpen}
+    // (54:0) {#if isOpen}
     function create_if_block$3(ctx) {
     	let div;
     	let input0;
@@ -3898,19 +3898,19 @@ var app = (function () {
     			t1 = space();
     			button = element("button");
     			t2 = text("Join Mailing List");
-    			attr_dev(input0, "class", "input is-primary svelte-4zzli5");
+    			attr_dev(input0, "class", "input is-primary svelte-n5cld1");
     			attr_dev(input0, "type", "name");
     			attr_dev(input0, "placeholder", "Name");
-    			add_location(input0, file$4, 44, 4, 780);
-    			attr_dev(input1, "class", "input is-primary svelte-4zzli5");
+    			add_location(input0, file$4, 55, 4, 986);
+    			attr_dev(input1, "class", "input is-primary svelte-n5cld1");
     			attr_dev(input1, "type", "email");
     			attr_dev(input1, "placeholder", "Email");
-    			add_location(input1, file$4, 49, 4, 898);
+    			add_location(input1, file$4, 60, 4, 1104);
     			button.disabled = /*sending*/ ctx[2];
-    			attr_dev(button, "class", "button is-primary svelte-4zzli5");
-    			add_location(button, file$4, 54, 4, 1019);
-    			attr_dev(div, "class", "bottom-holder svelte-4zzli5");
-    			add_location(div, file$4, 43, 2, 748);
+    			attr_dev(button, "class", "button is-primary svelte-n5cld1");
+    			add_location(button, file$4, 65, 4, 1225);
+    			attr_dev(div, "class", "bottom-holder svelte-n5cld1");
+    			add_location(div, file$4, 54, 2, 954);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -3957,7 +3957,7 @@ var app = (function () {
     		block,
     		id: create_if_block$3.name,
     		type: "if",
-    		source: "(43:0) {#if isOpen}",
+    		source: "(54:0) {#if isOpen}",
     		ctx
     	});
 
@@ -4059,13 +4059,13 @@ var app = (function () {
     		$$invalidate(2, sending = true);
 
     		source.send(
-    			{"env":{"isProd":false,"npm_package_devDependencies_rollup_plugin_terser":"^7.0.0","npm_package_devDependencies_rollup_plugin_svelte":"^6.0.0","TERM_PROGRAM":"vscode","NODE":"/usr/local/bin/node","INIT_CWD":"/Users/tnrich/Sites/lumina","npm_package_dependencies_circletype":"^2.3.0","npm_config_version_git_tag":"true","TERM":"xterm-256color","SHELL":"/bin/zsh","TMPDIR":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/","trc":"teselagen-react-components","npm_config_init_license":"MIT","npm_config_email":"team@teselagen.com","TERM_PROGRAM_VERSION":"1.51.0","npm_package_scripts_dev":"rollup -c -w","ORIGINAL_XDG_CURRENT_DESKTOP":"undefined","npm_package_devDependencies__rollup_plugin_replace":"^2.3.4","npm_config_registry":"https://registry.yarnpkg.com","npm_package_readmeFilename":"README.md","USER":"tnrich","npm_package_description":"This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.","npm_config_python":"/usr/bin/python","npm_package_dependencies_emailjs_com":"^2.6.3","SSH_AUTH_SOCK":"/private/tmp/com.apple.launchd.lxTJwS9WHT/Listeners","npm_package_devDependencies__rollup_plugin_commonjs":"^14.0.0","__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0","npm_execpath":"/usr/local/Cellar/yarn/1.17.3/libexec/bin/yarn.js","npm_package_devDependencies_svelte":"^3.0.0","npm_package_dependencies_sirv_cli":"^1.0.0","SENCHA_CMD_3_0_0":"/Users/tnrich/bin/Sencha/Cmd/4.0.4.84","PATH":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/yarn--1605566468961-0.06045154218561577:/Users/tnrich/Sites/lumina/node_modules/.bin:/Users/tnrich/.config/yarn/link/node_modules/.bin:/usr/local/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/bin/node_modules/npm/bin/node-gyp-bin:/Users/tnrich/Documents/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/tnrich/Documents/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/local/sbin","npm_config_argv":"{\"remain\":[],\"cooked\":[\"run\",\"dev\"],\"original\":[\"--ignore-engines\",\"dev\"]}","npm_package_devDependencies_rollup":"^2.3.4","_":"/Users/tnrich/Sites/lumina/node_modules/.bin/rollup","PWD":"/Users/tnrich/Sites/lumina","npm_package_dependencies_svelte_notifications":"^0.9.9","npm_package_devDependencies__rollup_plugin_node_resolve":"^8.0.0","npm_lifecycle_event":"dev","LANG":"en_US.UTF-8","npm_package_name":"svelte-app","npm_package_scripts_start":"sirv public --single","npm_package_scripts_build":"rollup -c","npm_config_version_commit_hooks":"true","XPC_FLAGS":"0x0","npm_config_username":"teselagen","npm_config_bin_links":"true","npm_package_dependencies__beyonk_svelte_carousel":"^2.8.0","XPC_SERVICE_NAME":"0","npm_package_version":"1.0.0","SHLVL":"2","HOME":"/Users/tnrich","VSCODE_GIT_ASKPASS_MAIN":"/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js","npm_config_save_prefix":"^","npm_config_strict_ssl":"true","npm_config_version_git_message":"v%s","NPM_CONFIG_PYTHON":"/usr/bin/python","LOGNAME":"tnrich","YARN_WRAP_OUTPUT":"false","PREFIX":"/usr/local","npm_lifecycle_script":"rollup -c -w","VSCODE_GIT_IPC_HANDLE":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/vscode-git-24b242e186.sock","npm_package_dependencies_bulma":"^0.9.1","npm_config_version_git_sign":"","npm_config_ignore_scripts":"","npm_config_user_agent":"yarn/1.17.3 npm/? node/v10.16.3 darwin x64","VSCODE_GIT_ASKPASS_NODE":"/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Renderer).app/Contents/MacOS/Code Helper (Renderer)","GIT_ASKPASS":"/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh","npm_config_init_version":"1.0.0","npm_config_ignore_optional":"","npm_package_devDependencies_rollup_plugin_livereload":"^2.0.0","COLORTERM":"truecolor","npm_node_execpath":"/usr/local/bin/node","npm_package_dependencies_svelte_routing":"^1.4.2","npm_package_dependencies_svelte_feather_icons":"^3.3.0","npm_config_version_tag_prefix":"v","ROLLUP_WATCH":"true"}}.env.service_id,
-    			{"env":{"isProd":false,"npm_package_devDependencies_rollup_plugin_terser":"^7.0.0","npm_package_devDependencies_rollup_plugin_svelte":"^6.0.0","TERM_PROGRAM":"vscode","NODE":"/usr/local/bin/node","INIT_CWD":"/Users/tnrich/Sites/lumina","npm_package_dependencies_circletype":"^2.3.0","npm_config_version_git_tag":"true","TERM":"xterm-256color","SHELL":"/bin/zsh","TMPDIR":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/","trc":"teselagen-react-components","npm_config_init_license":"MIT","npm_config_email":"team@teselagen.com","TERM_PROGRAM_VERSION":"1.51.0","npm_package_scripts_dev":"rollup -c -w","ORIGINAL_XDG_CURRENT_DESKTOP":"undefined","npm_package_devDependencies__rollup_plugin_replace":"^2.3.4","npm_config_registry":"https://registry.yarnpkg.com","npm_package_readmeFilename":"README.md","USER":"tnrich","npm_package_description":"This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.","npm_config_python":"/usr/bin/python","npm_package_dependencies_emailjs_com":"^2.6.3","SSH_AUTH_SOCK":"/private/tmp/com.apple.launchd.lxTJwS9WHT/Listeners","npm_package_devDependencies__rollup_plugin_commonjs":"^14.0.0","__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0","npm_execpath":"/usr/local/Cellar/yarn/1.17.3/libexec/bin/yarn.js","npm_package_devDependencies_svelte":"^3.0.0","npm_package_dependencies_sirv_cli":"^1.0.0","SENCHA_CMD_3_0_0":"/Users/tnrich/bin/Sencha/Cmd/4.0.4.84","PATH":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/yarn--1605566468961-0.06045154218561577:/Users/tnrich/Sites/lumina/node_modules/.bin:/Users/tnrich/.config/yarn/link/node_modules/.bin:/usr/local/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/bin/node_modules/npm/bin/node-gyp-bin:/Users/tnrich/Documents/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/tnrich/Documents/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/local/sbin","npm_config_argv":"{\"remain\":[],\"cooked\":[\"run\",\"dev\"],\"original\":[\"--ignore-engines\",\"dev\"]}","npm_package_devDependencies_rollup":"^2.3.4","_":"/Users/tnrich/Sites/lumina/node_modules/.bin/rollup","PWD":"/Users/tnrich/Sites/lumina","npm_package_dependencies_svelte_notifications":"^0.9.9","npm_package_devDependencies__rollup_plugin_node_resolve":"^8.0.0","npm_lifecycle_event":"dev","LANG":"en_US.UTF-8","npm_package_name":"svelte-app","npm_package_scripts_start":"sirv public --single","npm_package_scripts_build":"rollup -c","npm_config_version_commit_hooks":"true","XPC_FLAGS":"0x0","npm_config_username":"teselagen","npm_config_bin_links":"true","npm_package_dependencies__beyonk_svelte_carousel":"^2.8.0","XPC_SERVICE_NAME":"0","npm_package_version":"1.0.0","SHLVL":"2","HOME":"/Users/tnrich","VSCODE_GIT_ASKPASS_MAIN":"/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js","npm_config_save_prefix":"^","npm_config_strict_ssl":"true","npm_config_version_git_message":"v%s","NPM_CONFIG_PYTHON":"/usr/bin/python","LOGNAME":"tnrich","YARN_WRAP_OUTPUT":"false","PREFIX":"/usr/local","npm_lifecycle_script":"rollup -c -w","VSCODE_GIT_IPC_HANDLE":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/vscode-git-24b242e186.sock","npm_package_dependencies_bulma":"^0.9.1","npm_config_version_git_sign":"","npm_config_ignore_scripts":"","npm_config_user_agent":"yarn/1.17.3 npm/? node/v10.16.3 darwin x64","VSCODE_GIT_ASKPASS_NODE":"/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Renderer).app/Contents/MacOS/Code Helper (Renderer)","GIT_ASKPASS":"/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh","npm_config_init_version":"1.0.0","npm_config_ignore_optional":"","npm_package_devDependencies_rollup_plugin_livereload":"^2.0.0","COLORTERM":"truecolor","npm_node_execpath":"/usr/local/bin/node","npm_package_dependencies_svelte_routing":"^1.4.2","npm_package_dependencies_svelte_feather_icons":"^3.3.0","npm_config_version_tag_prefix":"v","ROLLUP_WATCH":"true"}}.env.template_id,
+    			{"env":{"isProd":false,"NVM_INC":"/Users/tnrich/.nvm/versions/node/v10.23.3/include/node","MANPATH":"/Users/tnrich/.nvm/versions/node/v10.23.3/share/man:/opt/homebrew/share/man:/usr/share/man:/usr/local/share/man:/Users/tnrich/.nvm/versions/node/v10.23.3/share/man:/opt/homebrew/share/man:","npm_package_devDependencies_rollup_plugin_terser":"^7.0.0","npm_package_devDependencies_rollup_plugin_svelte":"^6.0.0","TERM_PROGRAM":"vscode","NODE":"/Users/tnrich/.nvm/versions/node/v10.23.3/bin/node","INIT_CWD":"/Users/tnrich/Sites/lumina","NVM_CD_FLAGS":"-q","npm_package_dependencies_circletype":"^2.3.0","npm_config_version_git_tag":"true","TERM":"xterm-256color","SHELL":"/bin/zsh","HOMEBREW_REPOSITORY":"/opt/homebrew","TMPDIR":"/var/folders/9t/gz9jrxmd2lxfs4_g7_rjpm7w0000gn/T/","trc":"teselagen-react-components","npm_config_init_license":"MIT","TERM_PROGRAM_VERSION":"1.53.2","npm_package_scripts_dev":"rollup -c -w","ORIGINAL_XDG_CURRENT_DESKTOP":"undefined","npm_package_devDependencies__rollup_plugin_replace":"^2.3.4","TERM_SESSION_ID":"056B7713-65F0-4E2B-BA25-1F2947290676","npm_config_registry":"https://registry.yarnpkg.com","npm_package_readmeFilename":"README.md","NVM_DIR":"/Users/tnrich/.nvm","USER":"tnrich","npm_package_description":"This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.","npm_config_python":"/usr/bin/python","COMMAND_MODE":"unix2003","npm_package_dependencies_emailjs_com":"^2.6.3","SSH_AUTH_SOCK":"/private/tmp/com.apple.launchd.mzK3do1TL2/Listeners","npm_package_devDependencies__rollup_plugin_commonjs":"^14.0.0","__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0","npm_execpath":"/opt/homebrew/Cellar/yarn/1.22.10/libexec/bin/yarn.js","npm_package_devDependencies_svelte":"^3.0.0","npm_package_dependencies_sirv_cli":"^1.0.0","SENCHA_CMD_3_0_0":"/Users/tnrich/bin/Sencha/Cmd/4.0.4.84","PATH":"/var/folders/9t/gz9jrxmd2lxfs4_g7_rjpm7w0000gn/T/yarn--1613604702519-0.5157772424367608:/Users/tnrich/Sites/lumina/node_modules/.bin:/Users/tnrich/.config/yarn/link/node_modules/.bin:/Users/tnrich/.nvm/versions/node/v10.23.3/libexec/lib/node_modules/npm/bin/node-gyp-bin:/Users/tnrich/.nvm/versions/node/v10.23.3/lib/node_modules/npm/bin/node-gyp-bin:/Users/tnrich/.nvm/versions/node/v10.23.3/bin/node_modules/npm/bin/node-gyp-bin:/Users/tnrich/google-cloud-sdk/bin:/Users/tnrich/.nvm/versions/node/v10.23.3/bin:/Users/tnrich/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/tnrich/google-cloud-sdk/bin:/Users/tnrich/.nvm/versions/node/v10.23.3/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/sbin:/usr/local/bin:/usr/local/sbin","npm_config_argv":"{\"remain\":[],\"cooked\":[\"run\",\"dev\"],\"original\":[\"dev\"]}","npm_package_devDependencies_rollup":"^2.3.4","_":"/Users/tnrich/Sites/lumina/node_modules/.bin/rollup","__CFBundleIdentifier":"com.apple.Terminal","PWD":"/Users/tnrich/Sites/lumina","npm_package_dependencies_svelte_notifications":"^0.9.9","npm_package_devDependencies__rollup_plugin_node_resolve":"^8.0.0","npm_lifecycle_event":"dev","LANG":"en_US.UTF-8","npm_package_name":"svelte-app","npm_package_scripts_start":"sirv public --single","npm_package_scripts_build":"rollup -c","npm_config_version_commit_hooks":"true","XPC_FLAGS":"0x0","npm_config_bin_links":"true","npm_package_dependencies__beyonk_svelte_carousel":"^2.8.0","XPC_SERVICE_NAME":"0","npm_package_version":"1.0.0","SHLVL":"4","HOME":"/Users/tnrich","APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL":"true","npm_config_save_prefix":"^","npm_config_strict_ssl":"true","HOMEBREW_PREFIX":"/opt/homebrew","npm_config_version_git_message":"v%s","NPM_CONFIG_PYTHON":"/usr/bin/python","LOGNAME":"tnrich","YARN_WRAP_OUTPUT":"false","PREFIX":"/opt/homebrew","npm_lifecycle_script":"rollup -c -w","NVM_BIN":"/Users/tnrich/.nvm/versions/node/v10.23.3/bin","npm_package_dependencies_bulma":"^0.9.1","npm_config_version_git_sign":"","npm_config_ignore_scripts":"","npm_config_user_agent":"yarn/1.22.10 npm/? node/v10.23.3 darwin x64","HOMEBREW_CELLAR":"/opt/homebrew/Cellar","INFOPATH":"/opt/homebrew/share/info:/opt/homebrew/share/info:","npm_config_init_version":"1.0.0","npm_config_ignore_optional":"","npm_package_devDependencies_rollup_plugin_livereload":"^2.0.0","COLORTERM":"truecolor","npm_node_execpath":"/Users/tnrich/.nvm/versions/node/v10.23.3/bin/node","npm_package_dependencies_svelte_routing":"^1.4.2","npm_package_dependencies_svelte_feather_icons":"^3.3.0","npm_config_version_tag_prefix":"v","ROLLUP_WATCH":"true"}}.env.service_id,
+    			{"env":{"isProd":false,"NVM_INC":"/Users/tnrich/.nvm/versions/node/v10.23.3/include/node","MANPATH":"/Users/tnrich/.nvm/versions/node/v10.23.3/share/man:/opt/homebrew/share/man:/usr/share/man:/usr/local/share/man:/Users/tnrich/.nvm/versions/node/v10.23.3/share/man:/opt/homebrew/share/man:","npm_package_devDependencies_rollup_plugin_terser":"^7.0.0","npm_package_devDependencies_rollup_plugin_svelte":"^6.0.0","TERM_PROGRAM":"vscode","NODE":"/Users/tnrich/.nvm/versions/node/v10.23.3/bin/node","INIT_CWD":"/Users/tnrich/Sites/lumina","NVM_CD_FLAGS":"-q","npm_package_dependencies_circletype":"^2.3.0","npm_config_version_git_tag":"true","TERM":"xterm-256color","SHELL":"/bin/zsh","HOMEBREW_REPOSITORY":"/opt/homebrew","TMPDIR":"/var/folders/9t/gz9jrxmd2lxfs4_g7_rjpm7w0000gn/T/","trc":"teselagen-react-components","npm_config_init_license":"MIT","TERM_PROGRAM_VERSION":"1.53.2","npm_package_scripts_dev":"rollup -c -w","ORIGINAL_XDG_CURRENT_DESKTOP":"undefined","npm_package_devDependencies__rollup_plugin_replace":"^2.3.4","TERM_SESSION_ID":"056B7713-65F0-4E2B-BA25-1F2947290676","npm_config_registry":"https://registry.yarnpkg.com","npm_package_readmeFilename":"README.md","NVM_DIR":"/Users/tnrich/.nvm","USER":"tnrich","npm_package_description":"This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.","npm_config_python":"/usr/bin/python","COMMAND_MODE":"unix2003","npm_package_dependencies_emailjs_com":"^2.6.3","SSH_AUTH_SOCK":"/private/tmp/com.apple.launchd.mzK3do1TL2/Listeners","npm_package_devDependencies__rollup_plugin_commonjs":"^14.0.0","__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0","npm_execpath":"/opt/homebrew/Cellar/yarn/1.22.10/libexec/bin/yarn.js","npm_package_devDependencies_svelte":"^3.0.0","npm_package_dependencies_sirv_cli":"^1.0.0","SENCHA_CMD_3_0_0":"/Users/tnrich/bin/Sencha/Cmd/4.0.4.84","PATH":"/var/folders/9t/gz9jrxmd2lxfs4_g7_rjpm7w0000gn/T/yarn--1613604702519-0.5157772424367608:/Users/tnrich/Sites/lumina/node_modules/.bin:/Users/tnrich/.config/yarn/link/node_modules/.bin:/Users/tnrich/.nvm/versions/node/v10.23.3/libexec/lib/node_modules/npm/bin/node-gyp-bin:/Users/tnrich/.nvm/versions/node/v10.23.3/lib/node_modules/npm/bin/node-gyp-bin:/Users/tnrich/.nvm/versions/node/v10.23.3/bin/node_modules/npm/bin/node-gyp-bin:/Users/tnrich/google-cloud-sdk/bin:/Users/tnrich/.nvm/versions/node/v10.23.3/bin:/Users/tnrich/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/tnrich/google-cloud-sdk/bin:/Users/tnrich/.nvm/versions/node/v10.23.3/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/sbin:/usr/local/bin:/usr/local/sbin","npm_config_argv":"{\"remain\":[],\"cooked\":[\"run\",\"dev\"],\"original\":[\"dev\"]}","npm_package_devDependencies_rollup":"^2.3.4","_":"/Users/tnrich/Sites/lumina/node_modules/.bin/rollup","__CFBundleIdentifier":"com.apple.Terminal","PWD":"/Users/tnrich/Sites/lumina","npm_package_dependencies_svelte_notifications":"^0.9.9","npm_package_devDependencies__rollup_plugin_node_resolve":"^8.0.0","npm_lifecycle_event":"dev","LANG":"en_US.UTF-8","npm_package_name":"svelte-app","npm_package_scripts_start":"sirv public --single","npm_package_scripts_build":"rollup -c","npm_config_version_commit_hooks":"true","XPC_FLAGS":"0x0","npm_config_bin_links":"true","npm_package_dependencies__beyonk_svelte_carousel":"^2.8.0","XPC_SERVICE_NAME":"0","npm_package_version":"1.0.0","SHLVL":"4","HOME":"/Users/tnrich","APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL":"true","npm_config_save_prefix":"^","npm_config_strict_ssl":"true","HOMEBREW_PREFIX":"/opt/homebrew","npm_config_version_git_message":"v%s","NPM_CONFIG_PYTHON":"/usr/bin/python","LOGNAME":"tnrich","YARN_WRAP_OUTPUT":"false","PREFIX":"/opt/homebrew","npm_lifecycle_script":"rollup -c -w","NVM_BIN":"/Users/tnrich/.nvm/versions/node/v10.23.3/bin","npm_package_dependencies_bulma":"^0.9.1","npm_config_version_git_sign":"","npm_config_ignore_scripts":"","npm_config_user_agent":"yarn/1.22.10 npm/? node/v10.23.3 darwin x64","HOMEBREW_CELLAR":"/opt/homebrew/Cellar","INFOPATH":"/opt/homebrew/share/info:/opt/homebrew/share/info:","npm_config_init_version":"1.0.0","npm_config_ignore_optional":"","npm_package_devDependencies_rollup_plugin_livereload":"^2.0.0","COLORTERM":"truecolor","npm_node_execpath":"/Users/tnrich/.nvm/versions/node/v10.23.3/bin/node","npm_package_dependencies_svelte_routing":"^1.4.2","npm_package_dependencies_svelte_feather_icons":"^3.3.0","npm_config_version_tag_prefix":"v","ROLLUP_WATCH":"true"}}.env.template_id,
     			{
     				from_name: $user.name,
     				message: $user.email
     			},
-    			{"env":{"isProd":false,"npm_package_devDependencies_rollup_plugin_terser":"^7.0.0","npm_package_devDependencies_rollup_plugin_svelte":"^6.0.0","TERM_PROGRAM":"vscode","NODE":"/usr/local/bin/node","INIT_CWD":"/Users/tnrich/Sites/lumina","npm_package_dependencies_circletype":"^2.3.0","npm_config_version_git_tag":"true","TERM":"xterm-256color","SHELL":"/bin/zsh","TMPDIR":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/","trc":"teselagen-react-components","npm_config_init_license":"MIT","npm_config_email":"team@teselagen.com","TERM_PROGRAM_VERSION":"1.51.0","npm_package_scripts_dev":"rollup -c -w","ORIGINAL_XDG_CURRENT_DESKTOP":"undefined","npm_package_devDependencies__rollup_plugin_replace":"^2.3.4","npm_config_registry":"https://registry.yarnpkg.com","npm_package_readmeFilename":"README.md","USER":"tnrich","npm_package_description":"This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.","npm_config_python":"/usr/bin/python","npm_package_dependencies_emailjs_com":"^2.6.3","SSH_AUTH_SOCK":"/private/tmp/com.apple.launchd.lxTJwS9WHT/Listeners","npm_package_devDependencies__rollup_plugin_commonjs":"^14.0.0","__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0","npm_execpath":"/usr/local/Cellar/yarn/1.17.3/libexec/bin/yarn.js","npm_package_devDependencies_svelte":"^3.0.0","npm_package_dependencies_sirv_cli":"^1.0.0","SENCHA_CMD_3_0_0":"/Users/tnrich/bin/Sencha/Cmd/4.0.4.84","PATH":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/yarn--1605566468961-0.06045154218561577:/Users/tnrich/Sites/lumina/node_modules/.bin:/Users/tnrich/.config/yarn/link/node_modules/.bin:/usr/local/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/bin/node_modules/npm/bin/node-gyp-bin:/Users/tnrich/Documents/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/tnrich/Documents/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/local/sbin","npm_config_argv":"{\"remain\":[],\"cooked\":[\"run\",\"dev\"],\"original\":[\"--ignore-engines\",\"dev\"]}","npm_package_devDependencies_rollup":"^2.3.4","_":"/Users/tnrich/Sites/lumina/node_modules/.bin/rollup","PWD":"/Users/tnrich/Sites/lumina","npm_package_dependencies_svelte_notifications":"^0.9.9","npm_package_devDependencies__rollup_plugin_node_resolve":"^8.0.0","npm_lifecycle_event":"dev","LANG":"en_US.UTF-8","npm_package_name":"svelte-app","npm_package_scripts_start":"sirv public --single","npm_package_scripts_build":"rollup -c","npm_config_version_commit_hooks":"true","XPC_FLAGS":"0x0","npm_config_username":"teselagen","npm_config_bin_links":"true","npm_package_dependencies__beyonk_svelte_carousel":"^2.8.0","XPC_SERVICE_NAME":"0","npm_package_version":"1.0.0","SHLVL":"2","HOME":"/Users/tnrich","VSCODE_GIT_ASKPASS_MAIN":"/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js","npm_config_save_prefix":"^","npm_config_strict_ssl":"true","npm_config_version_git_message":"v%s","NPM_CONFIG_PYTHON":"/usr/bin/python","LOGNAME":"tnrich","YARN_WRAP_OUTPUT":"false","PREFIX":"/usr/local","npm_lifecycle_script":"rollup -c -w","VSCODE_GIT_IPC_HANDLE":"/var/folders/4x/mpwfvxr17szdw0q4pb0d59b40000gn/T/vscode-git-24b242e186.sock","npm_package_dependencies_bulma":"^0.9.1","npm_config_version_git_sign":"","npm_config_ignore_scripts":"","npm_config_user_agent":"yarn/1.17.3 npm/? node/v10.16.3 darwin x64","VSCODE_GIT_ASKPASS_NODE":"/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Renderer).app/Contents/MacOS/Code Helper (Renderer)","GIT_ASKPASS":"/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh","npm_config_init_version":"1.0.0","npm_config_ignore_optional":"","npm_package_devDependencies_rollup_plugin_livereload":"^2.0.0","COLORTERM":"truecolor","npm_node_execpath":"/usr/local/bin/node","npm_package_dependencies_svelte_routing":"^1.4.2","npm_package_dependencies_svelte_feather_icons":"^3.3.0","npm_config_version_tag_prefix":"v","ROLLUP_WATCH":"true"}}.env.emailjs_user_id
+    			{"env":{"isProd":false,"NVM_INC":"/Users/tnrich/.nvm/versions/node/v10.23.3/include/node","MANPATH":"/Users/tnrich/.nvm/versions/node/v10.23.3/share/man:/opt/homebrew/share/man:/usr/share/man:/usr/local/share/man:/Users/tnrich/.nvm/versions/node/v10.23.3/share/man:/opt/homebrew/share/man:","npm_package_devDependencies_rollup_plugin_terser":"^7.0.0","npm_package_devDependencies_rollup_plugin_svelte":"^6.0.0","TERM_PROGRAM":"vscode","NODE":"/Users/tnrich/.nvm/versions/node/v10.23.3/bin/node","INIT_CWD":"/Users/tnrich/Sites/lumina","NVM_CD_FLAGS":"-q","npm_package_dependencies_circletype":"^2.3.0","npm_config_version_git_tag":"true","TERM":"xterm-256color","SHELL":"/bin/zsh","HOMEBREW_REPOSITORY":"/opt/homebrew","TMPDIR":"/var/folders/9t/gz9jrxmd2lxfs4_g7_rjpm7w0000gn/T/","trc":"teselagen-react-components","npm_config_init_license":"MIT","TERM_PROGRAM_VERSION":"1.53.2","npm_package_scripts_dev":"rollup -c -w","ORIGINAL_XDG_CURRENT_DESKTOP":"undefined","npm_package_devDependencies__rollup_plugin_replace":"^2.3.4","TERM_SESSION_ID":"056B7713-65F0-4E2B-BA25-1F2947290676","npm_config_registry":"https://registry.yarnpkg.com","npm_package_readmeFilename":"README.md","NVM_DIR":"/Users/tnrich/.nvm","USER":"tnrich","npm_package_description":"This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.","npm_config_python":"/usr/bin/python","COMMAND_MODE":"unix2003","npm_package_dependencies_emailjs_com":"^2.6.3","SSH_AUTH_SOCK":"/private/tmp/com.apple.launchd.mzK3do1TL2/Listeners","npm_package_devDependencies__rollup_plugin_commonjs":"^14.0.0","__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0","npm_execpath":"/opt/homebrew/Cellar/yarn/1.22.10/libexec/bin/yarn.js","npm_package_devDependencies_svelte":"^3.0.0","npm_package_dependencies_sirv_cli":"^1.0.0","SENCHA_CMD_3_0_0":"/Users/tnrich/bin/Sencha/Cmd/4.0.4.84","PATH":"/var/folders/9t/gz9jrxmd2lxfs4_g7_rjpm7w0000gn/T/yarn--1613604702519-0.5157772424367608:/Users/tnrich/Sites/lumina/node_modules/.bin:/Users/tnrich/.config/yarn/link/node_modules/.bin:/Users/tnrich/.nvm/versions/node/v10.23.3/libexec/lib/node_modules/npm/bin/node-gyp-bin:/Users/tnrich/.nvm/versions/node/v10.23.3/lib/node_modules/npm/bin/node-gyp-bin:/Users/tnrich/.nvm/versions/node/v10.23.3/bin/node_modules/npm/bin/node-gyp-bin:/Users/tnrich/google-cloud-sdk/bin:/Users/tnrich/.nvm/versions/node/v10.23.3/bin:/Users/tnrich/google-cloud-sdk/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/tnrich/google-cloud-sdk/bin:/Users/tnrich/.nvm/versions/node/v10.23.3/bin:/Users/tnrich/bin/Sencha/Cmd/4.0.4.84:./node_modules/.bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/sbin:/usr/local/bin:/usr/local/sbin","npm_config_argv":"{\"remain\":[],\"cooked\":[\"run\",\"dev\"],\"original\":[\"dev\"]}","npm_package_devDependencies_rollup":"^2.3.4","_":"/Users/tnrich/Sites/lumina/node_modules/.bin/rollup","__CFBundleIdentifier":"com.apple.Terminal","PWD":"/Users/tnrich/Sites/lumina","npm_package_dependencies_svelte_notifications":"^0.9.9","npm_package_devDependencies__rollup_plugin_node_resolve":"^8.0.0","npm_lifecycle_event":"dev","LANG":"en_US.UTF-8","npm_package_name":"svelte-app","npm_package_scripts_start":"sirv public --single","npm_package_scripts_build":"rollup -c","npm_config_version_commit_hooks":"true","XPC_FLAGS":"0x0","npm_config_bin_links":"true","npm_package_dependencies__beyonk_svelte_carousel":"^2.8.0","XPC_SERVICE_NAME":"0","npm_package_version":"1.0.0","SHLVL":"4","HOME":"/Users/tnrich","APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL":"true","npm_config_save_prefix":"^","npm_config_strict_ssl":"true","HOMEBREW_PREFIX":"/opt/homebrew","npm_config_version_git_message":"v%s","NPM_CONFIG_PYTHON":"/usr/bin/python","LOGNAME":"tnrich","YARN_WRAP_OUTPUT":"false","PREFIX":"/opt/homebrew","npm_lifecycle_script":"rollup -c -w","NVM_BIN":"/Users/tnrich/.nvm/versions/node/v10.23.3/bin","npm_package_dependencies_bulma":"^0.9.1","npm_config_version_git_sign":"","npm_config_ignore_scripts":"","npm_config_user_agent":"yarn/1.22.10 npm/? node/v10.23.3 darwin x64","HOMEBREW_CELLAR":"/opt/homebrew/Cellar","INFOPATH":"/opt/homebrew/share/info:/opt/homebrew/share/info:","npm_config_init_version":"1.0.0","npm_config_ignore_optional":"","npm_package_devDependencies_rollup_plugin_livereload":"^2.0.0","COLORTERM":"truecolor","npm_node_execpath":"/Users/tnrich/.nvm/versions/node/v10.23.3/bin/node","npm_package_dependencies_svelte_routing":"^1.4.2","npm_package_dependencies_svelte_feather_icons":"^3.3.0","npm_config_version_tag_prefix":"v","ROLLUP_WATCH":"true"}}.env.emailjs_user_id
     		).then(
     			response => {
     				$$invalidate(2, sending = false);
@@ -4155,57 +4155,68 @@ var app = (function () {
 
     function create_fragment$8(ctx) {
     	let div;
-    	let header;
-    	let t;
+    	let img0;
+    	let img0_src_value;
+    	let t0;
+    	let img1;
+    	let img1_src_value;
+    	let t1;
     	let joinmailinglist;
+    	let t2;
+    	let a;
     	let current;
-
-    	header = new Header({
-    			props: {
-    				noBackground: true,
-    				subtextColor: "white",
-    				subtext: "",
-    				title: "Lumina Wines"
-    			},
-    			$$inline: true
-    		});
-
     	joinmailinglist = new JoinMailingList({ $$inline: true });
 
     	const block = {
     		c: function create() {
     			div = element("div");
-    			create_component(header.$$.fragment);
-    			t = space();
+    			img0 = element("img");
+    			t0 = space();
+    			img1 = element("img");
+    			t1 = space();
     			create_component(joinmailinglist.$$.fragment);
-    			attr_dev(div, "class", "home-container svelte-16gmhmr");
-    			add_location(div, file$5, 22, 0, 495);
+    			t2 = space();
+    			a = element("a");
+    			if (img0.src !== (img0_src_value = "luminalogo.svg")) attr_dev(img0, "src", img0_src_value);
+    			attr_dev(img0, "alt", "lumina logo");
+    			attr_dev(img0, "class", "svelte-18swbjy");
+    			add_location(img0, file$5, 7, 2, 150);
+    			attr_dev(img1, "class", "whole_img svelte-18swbjy");
+    			if (img1.src !== (img1_src_value = "wholeImg.svg")) attr_dev(img1, "src", img1_src_value);
+    			attr_dev(img1, "alt", "whole_img");
+    			add_location(img1, file$5, 9, 2, 271);
+    			attr_dev(a, "href", "https://www.instagram.com/luminawines/");
+    			attr_dev(a, "class", "fa fa-instagram svelte-18swbjy");
+    			add_location(a, file$5, 19, 0, 510);
+    			attr_dev(div, "class", "home-container svelte-18swbjy");
+    			add_location(div, file$5, 6, 0, 119);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
-    			mount_component(header, div, null);
-    			append_dev(div, t);
+    			append_dev(div, img0);
+    			append_dev(div, t0);
+    			append_dev(div, img1);
+    			append_dev(div, t1);
     			mount_component(joinmailinglist, div, null);
+    			append_dev(div, t2);
+    			append_dev(div, a);
     			current = true;
     		},
     		p: noop,
     		i: function intro(local) {
     			if (current) return;
-    			transition_in(header.$$.fragment, local);
     			transition_in(joinmailinglist.$$.fragment, local);
     			current = true;
     		},
     		o: function outro(local) {
-    			transition_out(header.$$.fragment, local);
     			transition_out(joinmailinglist.$$.fragment, local);
     			current = false;
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(div);
-    			destroy_component(header);
     			destroy_component(joinmailinglist);
     		}
     	};
@@ -6566,20 +6577,17 @@ var app = (function () {
 
     // (24:2) <Router {url}>
     function create_default_slot_1(ctx) {
-    	let nav;
-    	let t0;
     	let div;
     	let route0;
-    	let t1;
+    	let t0;
     	let route1;
-    	let t2;
+    	let t1;
     	let route2;
-    	let t3;
+    	let t2;
     	let route3;
-    	let t4;
+    	let t3;
     	let route4;
     	let current;
-    	nav = new Nav({ $$inline: true });
 
     	route0 = new Route({
     			props: {
@@ -6628,33 +6636,29 @@ var app = (function () {
 
     	const block = {
     		c: function create() {
-    			create_component(nav.$$.fragment);
-    			t0 = space();
     			div = element("div");
     			create_component(route0.$$.fragment);
-    			t1 = space();
+    			t0 = space();
     			create_component(route1.$$.fragment);
-    			t2 = space();
+    			t1 = space();
     			create_component(route2.$$.fragment);
-    			t3 = space();
+    			t2 = space();
     			create_component(route3.$$.fragment);
-    			t4 = space();
+    			t3 = space();
     			create_component(route4.$$.fragment);
     			attr_dev(div, "class", "page-container svelte-1ocwmch");
-    			add_location(div, file$d, 29, 4, 716);
+    			add_location(div, file$d, 29, 4, 725);
     		},
     		m: function mount(target, anchor) {
-    			mount_component(nav, target, anchor);
-    			insert_dev(target, t0, anchor);
     			insert_dev(target, div, anchor);
     			mount_component(route0, div, null);
-    			append_dev(div, t1);
+    			append_dev(div, t0);
     			mount_component(route1, div, null);
-    			append_dev(div, t2);
+    			append_dev(div, t1);
     			mount_component(route2, div, null);
-    			append_dev(div, t3);
+    			append_dev(div, t2);
     			mount_component(route3, div, null);
-    			append_dev(div, t4);
+    			append_dev(div, t3);
     			mount_component(route4, div, null);
     			current = true;
     		},
@@ -6697,7 +6701,6 @@ var app = (function () {
     		},
     		i: function intro(local) {
     			if (current) return;
-    			transition_in(nav.$$.fragment, local);
     			transition_in(route0.$$.fragment, local);
     			transition_in(route1.$$.fragment, local);
     			transition_in(route2.$$.fragment, local);
@@ -6706,7 +6709,6 @@ var app = (function () {
     			current = true;
     		},
     		o: function outro(local) {
-    			transition_out(nav.$$.fragment, local);
     			transition_out(route0.$$.fragment, local);
     			transition_out(route1.$$.fragment, local);
     			transition_out(route2.$$.fragment, local);
@@ -6715,8 +6717,6 @@ var app = (function () {
     			current = false;
     		},
     		d: function destroy(detaching) {
-    			destroy_component(nav, detaching);
-    			if (detaching) detach_dev(t0);
     			if (detaching) detach_dev(div);
     			destroy_component(route0);
     			destroy_component(route1);
