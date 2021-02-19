@@ -16,6 +16,9 @@
 </div>
 
 <style>
+  img {
+    z-index: -1;
+  }
   .logo {
     width: 14em;
   }

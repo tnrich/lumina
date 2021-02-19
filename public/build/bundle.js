@@ -2905,22 +2905,22 @@ var app = (function () {
     			create_component(joinmailinglist.$$.fragment);
     			t3 = space();
     			a = element("a");
-    			attr_dev(img0, "class", "logo svelte-1k09pkv");
+    			attr_dev(img0, "class", "logo svelte-1if2cbc");
     			if (img0.src !== (img0_src_value = "luminalogo.svg")) attr_dev(img0, "src", img0_src_value);
     			attr_dev(img0, "alt", "lumina logo");
     			add_location(img0, file$3, 7, 2, 150);
-    			attr_dev(img1, "class", "left_img svelte-1k09pkv");
+    			attr_dev(img1, "class", "left_img svelte-1if2cbc");
     			if (img1.src !== (img1_src_value = "left_img.svg")) attr_dev(img1, "src", img1_src_value);
     			attr_dev(img1, "alt", "left_img");
     			add_location(img1, file$3, 8, 2, 212);
-    			attr_dev(img2, "class", "bottom_img svelte-1k09pkv");
+    			attr_dev(img2, "class", "bottom_img svelte-1if2cbc");
     			if (img2.src !== (img2_src_value = "bottom_img.svg")) attr_dev(img2, "src", img2_src_value);
     			attr_dev(img2, "alt", "bottom_img");
     			add_location(img2, file$3, 9, 2, 273);
     			attr_dev(a, "href", "https://www.instagram.com/luminawines/");
-    			attr_dev(a, "class", "fa fa-instagram svelte-1k09pkv");
+    			attr_dev(a, "class", "fa fa-instagram svelte-1if2cbc");
     			add_location(a, file$3, 14, 2, 410);
-    			attr_dev(div, "class", "home-container svelte-1k09pkv");
+    			attr_dev(div, "class", "home-container svelte-1if2cbc");
     			add_location(div, file$3, 6, 0, 119);
     		},
     		l: function claim(nodes) {
