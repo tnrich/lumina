@@ -60,6 +60,7 @@
 
 <style>
   .bottom-holder {
+    z-index: 1;
     padding: 20px;
     max-width: 300px;
     align-self: center;
