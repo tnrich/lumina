@@ -1,19 +1,62 @@
-<script>
-  import { writable } from "svelte/store";
-  import emailjs from "emailjs-com";
-  import { getNotificationsContext } from "svelte-notifications";
 
-  const { addNotification } = getNotificationsContext();
+<div class="bottom-holder" id="mc_embed_signup">
+  <form
+    action="https://lumina-wines.us1.list-manage.com/subscribe/post?u=9860e2e4beec57c1ce105f22a&amp;id=83859dbd13"
+    method="post"
+    id="mc-embedded-subscribe-form"
+    name="mc-embedded-subscribe-form"
+    class="validate"
+    target="_blank"
+    novalidate
+  >
+    <div id="mc_embed_signup_scroll">
+      <input
+        placeholder="Name"
+        type="text"
+        value=""
+        name="FNAME"
+        class=""
+        id="mce-FNAME"
+      />
+      <input
+        placeholder="Email Address"
+        type="email"
+        value=""
+        name="EMAIL"
+        class="required email"
+        id="mce-EMAIL"
+      />
 
-  export const user = writable({
-    name: "",
-    // phone: "11 972393003",
-    email: "",
-  });
 
-  let isOpen = true;
-  let sending = false;
-</script>
+      <div id="mce-responses" class="clear">
+        <div class="response" id="mce-error-response" style="display:none" />
+        <div class="response" id="mce-success-response" style="display:none" />
+      </div>
+      <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+      <div style="position: absolute; left: -5000px;" aria-hidden="true">
+        <input
+          type="text"
+          name="b_9860e2e4beec57c1ce105f22a_83859dbd13"
+          tabindex="-1"
+          value=""
+        />
+      </div>
+      <div class="clear">
+        <input
+          type="submit"
+          value="Join Mailing list"
+          name="subscribe"
+          id="mc-embedded-subscribe"
+          class="button"
+        />
+      </div>
+    </div>
+  </form>
+</div>
+
+<!--End mc_embed_signup-->
+
+<!-- </main> -->
 
 <style>
   .bottom-holder {
@@ -26,16 +69,15 @@
     width: 300px;
     border-radius: 4px;
     margin-bottom: 10px;
-    padding-left: .6em;
-    padding-right: .6em;
+    padding-left: 0.6em;
+    padding-right: 0.6em;
     color: #363636;
   }
 
-
-  button {
+  .button {
     width: 300px;
     border-radius: 4px;
-    
+
     color: #ffffff;
     background-color: #dd9828;
     /* color: white; */
@@ -44,67 +86,7 @@
     /* border-bottom: 1px solid #ffffff;
     border-left: 2px solid #ffffff; */
   }
-  button:hover {
+  .button:hover {
     background-color: #db8e12;
   }
-  
-  
 </style>
-
-{#if isOpen}
-  <div class="bottom-holder">
-    <input
-      class="input is-primary"
-      type="name"
-      placeholder="Name"
-      bind:value={$user.name} />
-    <input
-      class="input is-primary"
-      type="email"
-      placeholder="Email"
-      bind:value={$user.email} />
-    <button
-      disabled={sending}
-      on:click={() => {
-        const templateParams = { name: 'James', notes: 'Check this out!' };
-        sending = true;
-        emailjs
-          .send(
-            process.env.service_id,
-            process.env.template_id,
-            { from_name: $user.name, message: $user.email },
-            process.env.emailjs_user_id
-          )
-          .then(
-            (response) => {
-              sending = false;
-              addNotification({
-                text: `You've been added to the mailing list!`,
-                position: 'top-center',
-                type: 'success',
-              });
-              console.log('SUCCESS!', response.status, response.text);
-            },
-            (err) => {
-              addNotification({
-                text: `That didn't work for some reason. Email me to make sure I get you on the list!`,
-                position: 'top-center',
-                type: 'warning',
-              });
-              sending = false;
-              console.log('FAILED...', err);
-            }
-          );
-      }}
-      class="button is-primary">Join Mailing List</button>
-  </div>
-{:else}
-  <button
-    on:click={() => {
-      isOpen = !isOpen;
-    }}
-    class="button is-primary">
-    Join Mailing List
-  </button>
-{/if}
-<!-- </main> -->

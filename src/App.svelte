@@ -31,7 +31,7 @@
       <Route path="/">
         <Home />
       </Route>
-      <Route path="/story">
+      <!-- <Route path="/story">
         <Story />
       </Route>
       <Route path="/releases">
@@ -42,7 +42,7 @@
       </Route>
       <Route path="/gallery">
         <Gallery />
-      </Route>
+      </Route> -->
     </div>
   </Router>
 </Notifications>

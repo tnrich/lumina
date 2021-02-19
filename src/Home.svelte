@@ -5,36 +5,32 @@
 </script>
 
 <div class="home-container">
-  <img src="luminalogo.svg" alt="lumina logo" />
-  <!-- <img class="sloth little_guy" src="sloth.svg" alt="sloth" /> -->
-  <img class="whole_img" src="wholeImg.svg" alt="whole_img" />
+  <img class="logo" src="luminalogo.svg" alt="lumina logo" />
+  <img class="left_img" src="left_img.svg" alt="left_img" />
+  <img class="bottom_img" src="bottom_img.svg" alt="bottom_img" />
 
-  <!-- <Header
-    noBackground
-    subtextColor="white"
-    subtext={''}
-    title={"Lumina Wines"} /> -->
   <JoinMailingList />
-  
-<!-- svelte-ignore a11y-missing-content -->
-<a href="https://www.instagram.com/luminawines/" class="fa fa-instagram"></a>
 
+  <!-- svelte-ignore a11y-missing-content -->
+  <a href="https://www.instagram.com/luminawines/" class="fa fa-instagram" />
 </div>
 
 <style>
-  .whole_img{
-    position: fixed;
-    bottom: -20em;
-    width: 150%;
+  .logo {
+    width: 14em;
   }
-  /* .little_guy {
-    filter: saturate(5);
-    opacity: .5;
+  .left_img {
     position: fixed;
-    top: 1em;
-    width: 19em;
-    left: 5em;
-  } */
+    left: 0;
+    height: 100%;
+  }
+  
+  .bottom_img {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
   .fa-instagram {
     font-size: 3em;
     color: #dd9828;
@@ -46,17 +42,21 @@
   .home-container {
     width: 100%;
     height: 100%;
-    /* Center and scale the image nicely */
-    /* background-image: url("/wedding_backdrop.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
-  img {
-    width: 8em;
+
+  @media only screen and (max-width: 700px) {
+    .left_img {
+      display: none;
+    }
+    .bottom_img {
+      display: block;
+    }
+    .logo {
+      width: 10em;
+    }
   }
 </style>
