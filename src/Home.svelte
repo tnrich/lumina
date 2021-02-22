@@ -94,6 +94,7 @@
   
   }
   .fa-instagram {
+    z-index: 1;
     font-size: 3em;
     color: #dd9828;
   }
