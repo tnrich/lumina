@@ -54,21 +54,22 @@
   .left_character,
   .left_img {
     position: fixed;
-    left: 0;
+    right: 0;
+    transform: scaleX(-1);
     height: 100%;
   }
   .left_character {
     z-index:-1;
-    left: -520px;
+    right: -520px;
 
-    -webkit-transition: left 0.8s ease-out; /* Chrome 1-25, Safari 3.2+ */
-    -webkit-transition: left 0.8s ease-in; /* Chrome 1-25, Safari 3.2+ */
-    -moz-transition: left 0.8s ease-out; /* Firefox 4-15 */
-    -moz-transition: left 0.8s ease-in; /* Firefox 4-15 */
-    -o-transition: left 0.8s ease-out; /* Opera 10.50–12.00 */
-    -o-transition: left 0.8s ease-in; /* Opera 10.50–12.00 */
-    transition: left 0.8s ease-out; /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
-    transition: left 0.8s ease-in; /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
+    -webkit-transition: right 0.8s ease-out; /* Chrome 1-25, Safari 3.2+ */
+    -webkit-transition: right 0.8s ease-in; /* Chrome 1-25, Safari 3.2+ */
+    -moz-transition: right 0.8s ease-out; /* Firefox 4-15 */
+    -moz-transition: right 0.8s ease-in; /* Firefox 4-15 */
+    -o-transition: right 0.8s ease-out; /* Opera 10.50–12.00 */
+    -o-transition: right 0.8s ease-in; /* Opera 10.50–12.00 */
+    transition: right 0.8s ease-out; /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
+    transition: right 0.8s ease-in; /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
   
   }
 

@@ -22,12 +22,13 @@
 
 <Notifications>
   <Router {url}>
-    <!-- <Nav /> -->
+    
 
     <!-- <Route path="blog/:id" component="{BlogPost}" />
     <Route path="blog" component="{Blog}" />
     <Route path="about" component="{About}" /> -->
     <div class="page-container">
+      <Nav />
       <Route path="/">
         <Home />
       </Route>
