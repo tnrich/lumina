@@ -8,11 +8,11 @@
   onMount(() => {
     const headerTopWords = document.querySelectorAll(".header-top div");
 
-    for (const word of headerTopWords) {
-      const circleType = new CircleType(word);
-      // Set the text radius and direction. Note: setter methods are chainable.
-      circleType.radius(600);
-    }
+    // for (const word of headerTopWords) {
+    //   const circleType = new CircleType(word);
+    //   // Set the text radius and direction. Note: setter methods are chainable.
+    //   circleType.radius(600);
+    // }
   });
 </script>
 

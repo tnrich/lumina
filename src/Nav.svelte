@@ -63,7 +63,7 @@
   #burger,
   #burger:before,
   #burger:after {
-    border: 3px solid white;
+    border: 1px solid white;
   }
   #trigger {
     height: 25px;
@@ -72,12 +72,12 @@
   #burger:before {
     content: " ";
     top: 9px;
-    left: -3px;
+    left: -1px;
   }
   #burger:after {
     content: " ";
     top: 20px;
-    left: -3px;
+    left: -1px;
   }
 
   #menu-toggle:checked + #trigger + #burger {
@@ -142,10 +142,12 @@
   <label id="burger" for="menu-toggle" />
   <ul id="menu">
     <li><a href="/">Home</a></li>
-    <li><a href="/story">Story</a></li>
+    <li><a href="/about">About</a></li>
     <li><a href="/releases">Releases</a></li>
-    <li><a href="/shop">Shop</a></li>
-    <li><a href="/gallery">Gallery</a></li>
+    <!-- <li><a href="/shop">Shop</a></li> -->
+    <!-- <li><a href="/gallery">Gallery</a></li> -->
     <li><a href="https://www.instagram.com/luminawines/">Instagram</a></li>
+    <!-- svelte-ignore a11y-missing-content -->
+    <!-- <li><a href="https://www.instagram.com/luminawines/" class="fa fa-instagram" /></li> -->
   </ul>
 </div>

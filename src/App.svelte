@@ -32,9 +32,10 @@
       <Route path="/">
         <Home />
       </Route>
-      <!-- <Route path="/story">
+      <Route path="/about">
         <Story />
       </Route>
+      <!-- 
       <Route path="/releases">
         <Releases />
       </Route>

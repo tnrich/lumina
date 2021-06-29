@@ -139,11 +139,119 @@ var app = (function () {
         };
     }
 
+    // Track which nodes are claimed during hydration. Unclaimed nodes can then be removed from the DOM
+    // at the end of hydration without touching the remaining nodes.
+    let is_hydrating = false;
+    function start_hydrating() {
+        is_hydrating = true;
+    }
+    function end_hydrating() {
+        is_hydrating = false;
+    }
+    function upper_bound(low, high, key, value) {
+        // Return first index of value larger than input value in the range [low, high)
+        while (low < high) {
+            const mid = low + ((high - low) >> 1);
+            if (key(mid) <= value) {
+                low = mid + 1;
+            }
+            else {
+                high = mid;
+            }
+        }
+        return low;
+    }
+    function init_hydrate(target) {
+        if (target.hydrate_init)
+            return;
+        target.hydrate_init = true;
+        // We know that all children have claim_order values since the unclaimed have been detached
+        const children = target.childNodes;
+        /*
+        * Reorder claimed children optimally.
+        * We can reorder claimed children optimally by finding the longest subsequence of
+        * nodes that are already claimed in order and only moving the rest. The longest
+        * subsequence subsequence of nodes that are claimed in order can be found by
+        * computing the longest increasing subsequence of .claim_order values.
+        *
+        * This algorithm is optimal in generating the least amount of reorder operations
+        * possible.
+        *
+        * Proof:
+        * We know that, given a set of reordering operations, the nodes that do not move
+        * always form an increasing subsequence, since they do not move among each other
+        * meaning that they must be already ordered among each other. Thus, the maximal
+        * set of nodes that do not move form a longest increasing subsequence.
+        */
+        // Compute longest increasing subsequence
+        // m: subsequence length j => index k of smallest value that ends an increasing subsequence of length j
+        const m = new Int32Array(children.length + 1);
+        // Predecessor indices + 1
+        const p = new Int32Array(children.length);
+        m[0] = -1;
+        let longest = 0;
+        for (let i = 0; i < children.length; i++) {
+            const current = children[i].claim_order;
+            // Find the largest subsequence length such that it ends in a value less than our current value
+            // upper_bound returns first greater value, so we subtract one
+            const seqLen = upper_bound(1, longest + 1, idx => children[m[idx]].claim_order, current) - 1;
+            p[i] = m[seqLen] + 1;
+            const newLen = seqLen + 1;
+            // We can guarantee that current is the smallest value. Otherwise, we would have generated a longer sequence.
+            m[newLen] = i;
+            longest = Math.max(newLen, longest);
+        }
+        // The longest increasing subsequence of nodes (initially reversed)
+        const lis = [];
+        // The rest of the nodes, nodes that will be moved
+        const toMove = [];
+        let last = children.length - 1;
+        for (let cur = m[longest] + 1; cur != 0; cur = p[cur - 1]) {
+            lis.push(children[cur - 1]);
+            for (; last >= cur; last--) {
+                toMove.push(children[last]);
+            }
+            last--;
+        }
+        for (; last >= 0; last--) {
+            toMove.push(children[last]);
+        }
+        lis.reverse();
+        // We sort the nodes being moved to guarantee that their insertion order matches the claim order
+        toMove.sort((a, b) => a.claim_order - b.claim_order);
+        // Finally, we move the nodes
+        for (let i = 0, j = 0; i < toMove.length; i++) {
+            while (j < lis.length && toMove[i].claim_order >= lis[j].claim_order) {
+                j++;
+            }
+            const anchor = j < lis.length ? lis[j] : null;
+            target.insertBefore(toMove[i], anchor);
+        }
+    }
     function append(target, node) {
-        target.appendChild(node);
+        if (is_hydrating) {
+            init_hydrate(target);
+            if ((target.actual_end_child === undefined) || ((target.actual_end_child !== null) && (target.actual_end_child.parentElement !== target))) {
+                target.actual_end_child = target.firstChild;
+            }
+            if (node !== target.actual_end_child) {
+                target.insertBefore(node, target.actual_end_child);
+            }
+            else {
+                target.actual_end_child = node.nextSibling;
+            }
+        }
+        else if (node.parentNode !== target) {
+            target.appendChild(node);
+        }
     }
     function insert(target, node, anchor) {
-        target.insertBefore(node, anchor || null);
+        if (is_hydrating && !anchor) {
+            append(target, node);
+        }
+        else if (node.parentNode !== target || (anchor && node.nextSibling !== anchor)) {
+            target.insertBefore(node, anchor || null);
+        }
     }
     function detach(node) {
         node.parentNode.removeChild(node);
@@ -734,7 +842,7 @@ var app = (function () {
             on_disconnect: [],
             before_update: [],
             after_update: [],
-            context: new Map(parent_component ? parent_component.$$.context : []),
+            context: new Map(parent_component ? parent_component.$$.context : options.context || []),
             // everything else
             callbacks: blank_object(),
             dirty,
@@ -760,6 +868,7 @@ var app = (function () {
         $$.fragment = create_fragment ? create_fragment($$.ctx) : false;
         if (options.target) {
             if (options.hydrate) {
+                start_hydrating();
                 const nodes = children(options.target);
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 $$.fragment && $$.fragment.l(nodes);
@@ -772,6 +881,7 @@ var app = (function () {
             if (options.intro)
                 transition_in(component.$$.fragment);
             mount_component(component, options.target, options.anchor, options.customElement);
+            end_hydrating();
             flush();
         }
         set_current_component(parent_component);
@@ -803,7 +913,7 @@ var app = (function () {
     }
 
     function dispatch_dev(type, detail) {
-        document.dispatchEvent(custom_event(type, Object.assign({ version: '3.35.0' }, detail)));
+        document.dispatchEvent(custom_event(type, Object.assign({ version: '3.38.3' }, detail)));
     }
     function append_dev(target, node) {
         dispatch_dev('SvelteDOMInsert', { target, node });
@@ -1425,7 +1535,7 @@ var app = (function () {
       );
     }
 
-    /* node_modules/.pnpm/svelte-routing@1.5.0_svelte@3.35.0/node_modules/svelte-routing/src/Router.svelte generated by Svelte v3.35.0 */
+    /* node_modules/svelte-routing/src/Router.svelte generated by Svelte v3.38.3 */
 
     function create_fragment$h(ctx) {
     	let current;
@@ -1448,8 +1558,8 @@ var app = (function () {
     		},
     		p: function update(ctx, [dirty]) {
     			if (default_slot) {
-    				if (default_slot.p && dirty & /*$$scope*/ 256) {
-    					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[8], dirty, null, null);
+    				if (default_slot.p && (!current || dirty & /*$$scope*/ 256)) {
+    					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[8], !current ? -1 : dirty, null, null);
     				}
     			}
     		},
@@ -1715,7 +1825,7 @@ var app = (function () {
     	}
     }
 
-    /* node_modules/.pnpm/svelte-routing@1.5.0_svelte@3.35.0/node_modules/svelte-routing/src/Route.svelte generated by Svelte v3.35.0 */
+    /* node_modules/svelte-routing/src/Route.svelte generated by Svelte v3.38.3 */
 
     const get_default_slot_changes = dirty => ({
     	params: dirty & /*routeParams*/ 4,
@@ -1826,8 +1936,8 @@ var app = (function () {
     		},
     		p: function update(ctx, dirty) {
     			if (default_slot) {
-    				if (default_slot.p && dirty & /*$$scope, routeParams, $location*/ 532) {
-    					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[9], dirty, get_default_slot_changes, get_default_slot_context);
+    				if (default_slot.p && (!current || dirty & /*$$scope, routeParams, $location*/ 532)) {
+    					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[9], !current ? -1 : dirty, get_default_slot_changes, get_default_slot_context);
     				}
     			}
     		},
@@ -2157,8 +2267,8 @@ var app = (function () {
     	}
     }
 
-    /* node_modules/.pnpm/svelte-routing@1.5.0_svelte@3.35.0/node_modules/svelte-routing/src/Link.svelte generated by Svelte v3.35.0 */
-    const file$d = "node_modules/.pnpm/svelte-routing@1.5.0_svelte@3.35.0/node_modules/svelte-routing/src/Link.svelte";
+    /* node_modules/svelte-routing/src/Link.svelte generated by Svelte v3.38.3 */
+    const file$d = "node_modules/svelte-routing/src/Link.svelte";
 
     function create_fragment$f(ctx) {
     	let a;
@@ -2207,8 +2317,8 @@ var app = (function () {
     		},
     		p: function update(ctx, [dirty]) {
     			if (default_slot) {
-    				if (default_slot.p && dirty & /*$$scope*/ 32768) {
-    					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[15], dirty, null, null);
+    				if (default_slot.p && (!current || dirty & /*$$scope*/ 32768)) {
+    					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[15], !current ? -1 : dirty, null, null);
     				}
     			}
 
@@ -2461,7 +2571,7 @@ var app = (function () {
     !function(t,e){module.exports=e();}("undefined"!=typeof self?self:commonjsGlobal,function(){return function(t){function e(r){if(n[r])return n[r].exports;var i=n[r]={i:r,l:!1,exports:{}};return t[r].call(i.exports,i,i.exports,e),i.l=!0,i.exports}var n={};return e.m=t,e.c=n,e.d=function(t,n,r){e.o(t,n)||Object.defineProperty(t,n,{configurable:!1,enumerable:!0,get:r});},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="",e(e.s=29)}([function(t,e,n){var r=n(24)("wks"),i=n(12),o=n(1).Symbol,u="function"==typeof o;(t.exports=function(t){return r[t]||(r[t]=u&&o[t]||(u?o:i)("Symbol."+t))}).store=r;},function(t,e){var n=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=n);},function(t,e){var n=t.exports={version:"2.5.6"};"number"==typeof __e&&(__e=n);},function(t,e,n){var r=n(4),i=n(11);t.exports=n(6)?function(t,e,n){return r.f(t,e,i(1,n))}:function(t,e,n){return t[e]=n,t};},function(t,e,n){var r=n(5),i=n(34),o=n(35),u=Object.defineProperty;e.f=n(6)?Object.defineProperty:function(t,e,n){if(r(t),e=o(e,!0),r(n),i)try{return u(t,e,n)}catch(t){}if("get"in n||"set"in n)throw TypeError("Accessors not supported!");return "value"in n&&(t[e]=n.value),t};},function(t,e,n){var r=n(10);t.exports=function(t){if(!r(t))throw TypeError(t+" is not an object!");return t};},function(t,e,n){t.exports=!n(17)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a});},function(t,e){var n={}.hasOwnProperty;t.exports=function(t,e){return n.call(t,e)};},function(t,e){var n=Math.ceil,r=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?r:n)(t)};},function(t,e){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t};},function(t,e){t.exports=function(t){return "object"==typeof t?null!==t:"function"==typeof t};},function(t,e){t.exports=function(t,e){return {enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:e}};},function(t,e){var n=0,r=Math.random();t.exports=function(t){return "Symbol(".concat(void 0===t?"":t,")_",(++n+r).toString(36))};},function(t,e){t.exports={};},function(t,e,n){var r=n(24)("keys"),i=n(12);t.exports=function(t){return r[t]||(r[t]=i(t))};},function(t,e){t.exports=!1;},function(t,e,n){var r=n(1),i=n(2),o=n(3),u=n(19),c=n(20),f=function(t,e,n){var a,s,l,p,h=t&f.F,d=t&f.G,v=t&f.S,y=t&f.P,_=t&f.B,m=d?r:v?r[e]||(r[e]={}):(r[e]||{}).prototype,g=d?i:i[e]||(i[e]={}),x=g.prototype||(g.prototype={});d&&(n=e);for(a in n)s=!h&&m&&void 0!==m[a],l=(s?m:n)[a],p=_&&s?c(l,r):y&&"function"==typeof l?c(Function.call,l):l,m&&u(m,a,l,t&f.U),g[a]!=l&&o(g,a,p),y&&x[a]!=l&&(x[a]=l);};r.core=i,f.F=1,f.G=2,f.S=4,f.P=8,f.B=16,f.W=32,f.U=64,f.R=128,t.exports=f;},function(t,e){t.exports=function(t){try{return !!t()}catch(t){return !0}};},function(t,e,n){var r=n(10),i=n(1).document,o=r(i)&&r(i.createElement);t.exports=function(t){return o?i.createElement(t):{}};},function(t,e,n){var r=n(1),i=n(3),o=n(7),u=n(12)("src"),c=Function.toString,f=(""+c).split("toString");n(2).inspectSource=function(t){return c.call(t)},(t.exports=function(t,e,n,c){var a="function"==typeof n;a&&(o(n,"name")||i(n,"name",e)),t[e]!==n&&(a&&(o(n,u)||i(n,u,t[e]?""+t[e]:f.join(String(e)))),t===r?t[e]=n:c?t[e]?t[e]=n:i(t,e,n):(delete t[e],i(t,e,n)));})(Function.prototype,"toString",function(){return "function"==typeof this&&this[u]||c.call(this)});},function(t,e,n){var r=n(36);t.exports=function(t,e,n){if(r(t),void 0===e)return t;switch(n){case 1:return function(n){return t.call(e,n)};case 2:return function(n,r){return t.call(e,n,r)};case 3:return function(n,r,i){return t.call(e,n,r,i)}}return function(){return t.apply(e,arguments)}};},function(t,e,n){var r=n(42),i=n(9);t.exports=function(t){return r(i(t))};},function(t,e){var n={}.toString;t.exports=function(t){return n.call(t).slice(8,-1)};},function(t,e,n){var r=n(8),i=Math.min;t.exports=function(t){return t>0?i(r(t),9007199254740991):0};},function(t,e,n){var r=n(2),i=n(1),o=i["__core-js_shared__"]||(i["__core-js_shared__"]={});(t.exports=function(t,e){return o[t]||(o[t]=void 0!==e?e:{})})("versions",[]).push({version:r.version,mode:n(15)?"pure":"global",copyright:"© 2018 Denis Pushkarev (zloirock.ru)"});},function(t,e){t.exports="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf".split(",");},function(t,e,n){var r=n(4).f,i=n(7),o=n(0)("toStringTag");t.exports=function(t,e,n){t&&!i(t=n?t:t.prototype,o)&&r(t,o,{configurable:!0,value:e});};},function(t,e,n){var r=n(9);t.exports=function(t){return Object(r(t))};},function(t,e,n){Object.defineProperty(e,"__esModule",{value:!0});var r=Math.PI/180;e.default=function(t){return t*r};},function(t,e,n){n(30);var r=n(54),i=function(t){return t&&t.__esModule?t:{default:t}}(r);t.exports=i.default;},function(t,e,n){n(31),n(47),t.exports=n(2).Array.from;},function(t,e,n){var r=n(32)(!0);n(33)(String,"String",function(t){this._t=String(t),this._i=0;},function(){var t,e=this._t,n=this._i;return n>=e.length?{value:void 0,done:!0}:(t=r(e,n),this._i+=t.length,{value:t,done:!1})});},function(t,e,n){var r=n(8),i=n(9);t.exports=function(t){return function(e,n){var o,u,c=String(i(e)),f=r(n),a=c.length;return f<0||f>=a?t?"":void 0:(o=c.charCodeAt(f),o<55296||o>56319||f+1===a||(u=c.charCodeAt(f+1))<56320||u>57343?t?c.charAt(f):o:t?c.slice(f,f+2):u-56320+(o-55296<<10)+65536)}};},function(t,e,n){var r=n(15),i=n(16),o=n(19),u=n(3),c=n(13),f=n(37),a=n(26),s=n(46),l=n(0)("iterator"),p=!([].keys&&"next"in[].keys()),h=function(){return this};t.exports=function(t,e,n,d,v,y,_){f(n,e,d);var m,g,x,b=function(t){if(!p&&t in M)return M[t];switch(t){case"keys":case"values":return function(){return new n(this,t)}}return function(){return new n(this,t)}},O=e+" Iterator",w="values"==v,j=!1,M=t.prototype,S=M[l]||M["@@iterator"]||v&&M[v],P=S||b(v),A=v?w?b("entries"):P:void 0,T="Array"==e?M.entries||S:S;if(T&&(x=s(T.call(new t)))!==Object.prototype&&x.next&&(a(x,O,!0),r||"function"==typeof x[l]||u(x,l,h)),w&&S&&"values"!==S.name&&(j=!0,P=function(){return S.call(this)}),r&&!_||!p&&!j&&M[l]||u(M,l,P),c[e]=P,c[O]=h,v)if(m={values:w?P:b("values"),keys:y?P:b("keys"),entries:A},_)for(g in m)g in M||o(M,g,m[g]);else i(i.P+i.F*(p||j),e,m);return m};},function(t,e,n){t.exports=!n(6)&&!n(17)(function(){return 7!=Object.defineProperty(n(18)("div"),"a",{get:function(){return 7}}).a});},function(t,e,n){var r=n(10);t.exports=function(t,e){if(!r(t))return t;var n,i;if(e&&"function"==typeof(n=t.toString)&&!r(i=n.call(t)))return i;if("function"==typeof(n=t.valueOf)&&!r(i=n.call(t)))return i;if(!e&&"function"==typeof(n=t.toString)&&!r(i=n.call(t)))return i;throw TypeError("Can't convert object to primitive value")};},function(t,e){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t};},function(t,e,n){var r=n(38),i=n(11),o=n(26),u={};n(3)(u,n(0)("iterator"),function(){return this}),t.exports=function(t,e,n){t.prototype=r(u,{next:i(1,n)}),o(t,e+" Iterator");};},function(t,e,n){var r=n(5),i=n(39),o=n(25),u=n(14)("IE_PROTO"),c=function(){},f=function(){var t,e=n(18)("iframe"),r=o.length;for(e.style.display="none",n(45).appendChild(e),e.src="javascript:",t=e.contentWindow.document,t.open(),t.write("<script>document.F=Object<\/script>"),t.close(),f=t.F;r--;)delete f.prototype[o[r]];return f()};t.exports=Object.create||function(t,e){var n;return null!==t?(c.prototype=r(t),n=new c,c.prototype=null,n[u]=t):n=f(),void 0===e?n:i(n,e)};},function(t,e,n){var r=n(4),i=n(5),o=n(40);t.exports=n(6)?Object.defineProperties:function(t,e){i(t);for(var n,u=o(e),c=u.length,f=0;c>f;)r.f(t,n=u[f++],e[n]);return t};},function(t,e,n){var r=n(41),i=n(25);t.exports=Object.keys||function(t){return r(t,i)};},function(t,e,n){var r=n(7),i=n(21),o=n(43)(!1),u=n(14)("IE_PROTO");t.exports=function(t,e){var n,c=i(t),f=0,a=[];for(n in c)n!=u&&r(c,n)&&a.push(n);for(;e.length>f;)r(c,n=e[f++])&&(~o(a,n)||a.push(n));return a};},function(t,e,n){var r=n(22);t.exports=Object("z").propertyIsEnumerable(0)?Object:function(t){return "String"==r(t)?t.split(""):Object(t)};},function(t,e,n){var r=n(21),i=n(23),o=n(44);t.exports=function(t){return function(e,n,u){var c,f=r(e),a=i(f.length),s=o(u,a);if(t&&n!=n){for(;a>s;)if((c=f[s++])!=c)return !0}else for(;a>s;s++)if((t||s in f)&&f[s]===n)return t||s||0;return !t&&-1}};},function(t,e,n){var r=n(8),i=Math.max,o=Math.min;t.exports=function(t,e){return t=r(t),t<0?i(t+e,0):o(t,e)};},function(t,e,n){var r=n(1).document;t.exports=r&&r.documentElement;},function(t,e,n){var r=n(7),i=n(27),o=n(14)("IE_PROTO"),u=Object.prototype;t.exports=Object.getPrototypeOf||function(t){return t=i(t),r(t,o)?t[o]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?u:null};},function(t,e,n){var r=n(20),i=n(16),o=n(27),u=n(48),c=n(49),f=n(23),a=n(50),s=n(51);i(i.S+i.F*!n(53)(function(t){Array.from(t);}),"Array",{from:function(t){var e,n,i,l,p=o(t),h="function"==typeof this?this:Array,d=arguments.length,v=d>1?arguments[1]:void 0,y=void 0!==v,_=0,m=s(p);if(y&&(v=r(v,d>2?arguments[2]:void 0,2)),void 0==m||h==Array&&c(m))for(e=f(p.length),n=new h(e);e>_;_++)a(n,_,y?v(p[_],_):p[_]);else for(l=m.call(p),n=new h;!(i=l.next()).done;_++)a(n,_,y?u(l,v,[i.value,_],!0):i.value);return n.length=_,n}});},function(t,e,n){var r=n(5);t.exports=function(t,e,n,i){try{return i?e(r(n)[0],n[1]):e(n)}catch(e){var o=t.return;throw void 0!==o&&r(o.call(t)),e}};},function(t,e,n){var r=n(13),i=n(0)("iterator"),o=Array.prototype;t.exports=function(t){return void 0!==t&&(r.Array===t||o[i]===t)};},function(t,e,n){var r=n(4),i=n(11);t.exports=function(t,e,n){e in t?r.f(t,e,i(0,n)):t[e]=n;};},function(t,e,n){var r=n(52),i=n(0)("iterator"),o=n(13);t.exports=n(2).getIteratorMethod=function(t){if(void 0!=t)return t[i]||t["@@iterator"]||o[r(t)]};},function(t,e,n){var r=n(22),i=n(0)("toStringTag"),o="Arguments"==r(function(){return arguments}()),u=function(t,e){try{return t[e]}catch(t){}};t.exports=function(t){var e,n,c;return void 0===t?"Undefined":null===t?"Null":"string"==typeof(n=u(e=Object(t),i))?n:o?r(e):"Object"==(c=r(e))&&"function"==typeof e.callee?"Arguments":c};},function(t,e,n){var r=n(0)("iterator"),i=!1;try{var o=[7][r]();o.return=function(){i=!0;},Array.from(o,function(){throw 2});}catch(t){}t.exports=function(t,e){if(!e&&!i)return !1;var n=!1;try{var o=[7],u=o[r]();u.next=function(){return {done:n=!0}},o[r]=function(){return u},t(o);}catch(t){}return n};},function(t,e,n){function r(t){return t&&t.__esModule?t:{default:t}}function i(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(e,"__esModule",{value:!0});var o=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r);}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),u=n(55),c=r(u),f=n(56),a=r(f),s=n(57),l=r(s),p=n(58),h=r(p),d=n(59),v=r(d),y=Math.PI,_=Math.max,m=Math.min,g=function(){function t(e,n){i(this,t),this.element=e,this.originalHTML=this.element.innerHTML;var r=document.createElement("div"),o=document.createDocumentFragment();r.setAttribute("aria-label",e.innerText),r.style.position="relative",this.container=r,this._letters=(0, a.default)(e,n),this._letters.forEach(function(t){return o.appendChild(t)}),r.appendChild(o),this.element.innerHTML="",this.element.appendChild(r);var u=window.getComputedStyle(this.element),f=u.fontSize,s=u.lineHeight;this._fontSize=parseFloat(f),this._lineHeight=parseFloat(s)||this._fontSize,this._metrics=this._letters.map(c.default);var l=this._metrics.reduce(function(t,e){return t+e.width},0);this._minRadius=l/y/2+this._lineHeight,this._dir=1,this._forceWidth=!1,this._forceHeight=!0,this._radius=this._minRadius,this._invalidate();}return o(t,[{key:"radius",value:function(t){return void 0!==t?(this._radius=_(this._minRadius,t),this._invalidate(),this):this._radius}},{key:"dir",value:function(t){return void 0!==t?(this._dir=t,this._invalidate(),this):this._dir}},{key:"forceWidth",value:function(t){return void 0!==t?(this._forceWidth=t,this._invalidate(),this):this._forceWidth}},{key:"forceHeight",value:function(t){return void 0!==t?(this._forceHeight=t,this._invalidate(),this):this._forceHeight}},{key:"refresh",value:function(){return this._invalidate()}},{key:"destroy",value:function(){return this.element.innerHTML=this.originalHTML,this}},{key:"_invalidate",value:function(){var t=this;return cancelAnimationFrame(this._raf),this._raf=requestAnimationFrame(function(){t._layout();}),this}},{key:"_layout",value:function(){var t=this,e=this._radius,n=this._dir,r=-1===n?-e+this._lineHeight:e,i="center "+r/this._fontSize+"em",o=e-this._lineHeight,u=(0, v.default)(this._metrics,o),c=u.rotations,f=u.θ;if(this._letters.forEach(function(e,r){var o=e.style,u=(-.5*f+c[r])*n,a=-.5*t._metrics[r].width/t._fontSize,s="translateX("+a+"em) rotate("+u+"deg)";o.position="absolute",o.bottom=-1===n?0:"auto",o.left="50%",o.transform=s,o.transformOrigin=i,o.webkitTransform=s,o.webkitTransformOrigin=i;}),this._forceHeight){var a=f>180?(0, l.default)(e,f):(0, l.default)(o,f)+this._lineHeight;this.container.style.height=a/this._fontSize+"em";}if(this._forceWidth){var s=(0, h.default)(e,m(180,f));this.container.style.width=s/this._fontSize+"em";}return this}}]),t}();e.default=g;},function(t,e,n){Object.defineProperty(e,"__esModule",{value:!0}),e.default=function(t){var e=t.getBoundingClientRect();return {height:e.height,left:e.left+window.pageXOffset,top:e.top+window.pageYOffset,width:e.width}};},function(t,e,n){function r(t){if(Array.isArray(t)){for(var e=0,n=Array(t.length);e<t.length;e++)n[e]=t[e];return n}return Array.from(t)}Object.defineProperty(e,"__esModule",{value:!0}),e.default=function(t,e){var n=document.createElement("span"),i=t.innerText.trim();return (e?e(i):[].concat(r(i))).map(function(t){var e=n.cloneNode();return e.insertAdjacentHTML("afterbegin"," "===t?"&nbsp;":t),e})};},function(t,e,n){Object.defineProperty(e,"__esModule",{value:!0});var r=n(28),i=function(t){return t&&t.__esModule?t:{default:t}}(r);e.default=function(t,e){return t*(1-Math.cos((0, i.default)(e/2)))};},function(t,e,n){Object.defineProperty(e,"__esModule",{value:!0});var r=n(28),i=function(t){return t&&t.__esModule?t:{default:t}}(r);e.default=function(t,e){return 2*t*Math.sin((0, i.default)(e/2))};},function(t,e,n){Object.defineProperty(e,"__esModule",{value:!0});var r=n(60),i=function(t){return t&&t.__esModule?t:{default:t}}(r);e.default=function(t,e){return t.reduce(function(t,n){var r=n.width,o=(0, i.default)(r/e);return {"θ":t.θ+o,rotations:t.rotations.concat([t.θ+o/2])}},{"θ":0,rotations:[]})};},function(t,e,n){Object.defineProperty(e,"__esModule",{value:!0});var r=180/Math.PI;e.default=function(t){return t*r};}])});
     });
 
-    /* src/Header.svelte generated by Svelte v3.35.0 */
+    /* src/Header.svelte generated by Svelte v3.38.3 */
     const file$c = "src/Header.svelte";
 
     function get_each_context$2(ctx, list, i) {
@@ -2480,7 +2590,7 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			t = text(t_value);
-    			add_location(div, file$c, 55, 6, 1129);
+    			add_location(div, file$c, 55, 6, 1144);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -2515,7 +2625,7 @@ var app = (function () {
     			h2 = element("h2");
     			t = text(/*subtext*/ ctx[1]);
     			set_style(h2, "color", /*subtextColor*/ ctx[2]);
-    			add_location(h2, file$c, 59, 4, 1187);
+    			add_location(h2, file$c, 59, 4, 1202);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h2, anchor);
@@ -2570,9 +2680,9 @@ var app = (function () {
     			t = space();
     			if (if_block) if_block.c();
     			attr_dev(h1, "class", "header-top svelte-1m27fdt");
-    			add_location(h1, file$c, 53, 2, 1062);
+    			add_location(h1, file$c, 53, 2, 1077);
     			attr_dev(div, "class", "header-container svelte-1m27fdt");
-    			add_location(div, file$c, 52, 0, 1029);
+    			add_location(div, file$c, 52, 0, 1044);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -2654,15 +2764,11 @@ var app = (function () {
     	let { subtextColor } = $$props;
 
     	onMount(() => {
-    		const headerTopWords = document.querySelectorAll(".header-top div");
-
-    		for (const word of headerTopWords) {
-    			const circleType = new circletype_min(word);
-
-    			// Set the text radius and direction. Note: setter methods are chainable.
-    			circleType.radius(600);
-    		}
-    	});
+    		document.querySelectorAll(".header-top div");
+    	}); // for (const word of headerTopWords) {
+    	//   const circleType = new CircleType(word);
+    	//   // Set the text radius and direction. Note: setter methods are chainable.
+    	//   circleType.radius(600);
 
     	const writable_props = ["title", "subtext", "subtextColor"];
 
@@ -2750,7 +2856,7 @@ var app = (function () {
     	}
     }
 
-    /* src/JoinMailingList.svelte generated by Svelte v3.35.0 */
+    /* src/JoinMailingList.svelte generated by Svelte v3.38.3 */
 
     const file$b = "src/JoinMailingList.svelte";
 
@@ -2916,7 +3022,7 @@ var app = (function () {
     	}
     }
 
-    /* src/Home.svelte generated by Svelte v3.35.0 */
+    /* src/Home.svelte generated by Svelte v3.38.3 */
 
     const { console: console_1 } = globals;
     const file$a = "src/Home.svelte";
@@ -3087,141 +3193,179 @@ var app = (function () {
     	}
     }
 
-    /* src/Story.svelte generated by Svelte v3.35.0 */
+    /* src/Story.svelte generated by Svelte v3.38.3 */
     const file$9 = "src/Story.svelte";
 
     function create_fragment$b(ctx) {
-    	let header;
-    	let t0;
-    	let div4;
+    	let div3;
+    	let div2;
     	let img0;
     	let img0_src_value;
-    	let t1;
+    	let t0;
+    	let h2;
+    	let t2;
     	let div0;
-    	let t3;
+    	let t4;
+    	let br0;
+    	let t5;
     	let img1;
     	let img1_src_value;
-    	let t4;
-    	let div1;
     	let t6;
+    	let br1;
+    	let t7;
+    	let br2;
+    	let t8;
     	let img2;
     	let img2_src_value;
-    	let t7;
-    	let div2;
     	let t9;
+    	let br3;
+    	let t10;
+    	let br4;
+    	let t11;
+    	let div1;
+    	let t12;
+    	let i;
+    	let t14;
+    	let t15;
+    	let br5;
+    	let t16;
     	let img3;
     	let img3_src_value;
-    	let t10;
-    	let div3;
-    	let t12;
-    	let br0;
-    	let t13;
-    	let br1;
-    	let current;
-
-    	header = new Header({
-    			props: {
-    				subtext: "A bit about where I come from and what my journey has been",
-    				title: "Story"
-    			},
-    			$$inline: true
-    		});
+    	let t17;
+    	let br6;
+    	let t18;
+    	let br7;
+    	let t19;
+    	let br8;
+    	let t20;
+    	let br9;
 
     	const block = {
     		c: function create() {
-    			create_component(header.$$.fragment);
-    			t0 = space();
-    			div4 = element("div");
-    			img0 = element("img");
-    			t1 = space();
-    			div0 = element("div");
-    			div0.textContent = "I like spicy things! I'm always using too much hot sauce..";
-    			t3 = space();
-    			img1 = element("img");
-    			t4 = space();
-    			div1 = element("div");
-    			div1.textContent = "This is my best friend Tay! She and I do everything together!";
-    			t6 = space();
-    			img2 = element("img");
-    			t7 = space();
-    			div2 = element("div");
-    			div2.textContent = "This is my soon to be hubby! Love you boo!";
-    			t9 = space();
-    			img3 = element("img");
-    			t10 = space();
     			div3 = element("div");
-    			div3.textContent = "This is the family I live with!";
-    			t12 = space();
+    			div2 = element("div");
+    			img0 = element("img");
+    			t0 = space();
+    			h2 = element("h2");
+    			h2.textContent = "About";
+    			t2 = space();
+    			div0 = element("div");
+    			div0.textContent = "Lumina is the personal project of Janie Willheim.\n      The fruit comes from organic and bio-dynamic vineyards on the central coast. \n      Janie's choice of varietals reflects her desire to encourcage bio-diversity and help move the region away from monocultures.";
+    			t4 = space();
     			br0 = element("br");
-    			t13 = space();
+    			t5 = space();
+    			img1 = element("img");
+    			t6 = space();
     			br1 = element("br");
-    			attr_dev(img0, "alt", "2");
-    			if (img0.src !== (img0_src_value = "/photos/4.jpg")) attr_dev(img0, "src", img0_src_value);
-    			attr_dev(img0, "class", "svelte-rxgnq8");
-    			add_location(img0, file$9, 24, 4, 367);
-    			add_location(div0, file$9, 25, 4, 409);
+    			t7 = space();
+    			br2 = element("br");
+    			t8 = space();
+    			img2 = element("img");
+    			t9 = space();
+    			br3 = element("br");
+    			t10 = space();
+    			br4 = element("br");
+    			t11 = space();
+    			div1 = element("div");
+    			t12 = text("Lumina aims to put lesser known grapes into the spotlight. Much like how the craft beer movement democratized \"fancy\" tastes, \n      Janie believes that ");
+    			i = element("i");
+    			i.textContent = "good";
+    			t14 = text(" wine needs to become more approachable to the masses. Lumina is her way of doing that.");
+    			t15 = space();
+    			br5 = element("br");
+    			t16 = space();
+    			img3 = element("img");
+    			t17 = space();
+    			br6 = element("br");
+    			t18 = space();
+    			br7 = element("br");
+    			t19 = space();
+    			br8 = element("br");
+    			t20 = space();
+    			br9 = element("br");
+    			attr_dev(img0, "class", "logo svelte-ukiif1");
+    			if (img0.src !== (img0_src_value = "luminalogo.svg")) attr_dev(img0, "src", img0_src_value);
+    			attr_dev(img0, "alt", "lumina logo");
+    			add_location(img0, file$9, 33, 2, 565);
+    			add_location(h2, file$9, 34, 4, 629);
+    			add_location(div0, file$9, 35, 4, 648);
+    			add_location(br0, file$9, 39, 6, 938);
+    			attr_dev(img1, "class", "photoholder-img svelte-ukiif1");
     			attr_dev(img1, "alt", "2");
-    			if (img1.src !== (img1_src_value = "/photos/2.jpg")) attr_dev(img1, "src", img1_src_value);
-    			attr_dev(img1, "class", "svelte-rxgnq8");
-    			add_location(img1, file$9, 26, 4, 483);
-    			add_location(div1, file$9, 27, 4, 525);
-    			attr_dev(img2, "alt", "1");
-    			if (img2.src !== (img2_src_value = "/photos/1.jpg")) attr_dev(img2, "src", img2_src_value);
-    			attr_dev(img2, "class", "svelte-rxgnq8");
-    			add_location(img2, file$9, 28, 4, 602);
-    			add_location(div2, file$9, 29, 4, 644);
+    			if (img1.src !== (img1_src_value = "/photos/1.png")) attr_dev(img1, "src", img1_src_value);
+    			add_location(img1, file$9, 40, 4, 948);
+    			add_location(br1, file$9, 42, 4, 1015);
+    			add_location(br2, file$9, 43, 4, 1025);
+    			attr_dev(img2, "class", "photoholder-img svelte-ukiif1");
+    			attr_dev(img2, "alt", "2");
+    			if (img2.src !== (img2_src_value = "/photos/2.png")) attr_dev(img2, "src", img2_src_value);
+    			add_location(img2, file$9, 44, 4, 1035);
+    			add_location(br3, file$9, 45, 4, 1101);
+    			add_location(br4, file$9, 46, 4, 1111);
+    			add_location(i, file$9, 48, 26, 1279);
+    			add_location(div1, file$9, 47, 4, 1121);
+    			add_location(br5, file$9, 49, 6, 1390);
+    			attr_dev(img3, "class", "photoholder-img svelte-ukiif1");
     			attr_dev(img3, "alt", "2");
-    			if (img3.src !== (img3_src_value = "/photos/3.jpg")) attr_dev(img3, "src", img3_src_value);
-    			attr_dev(img3, "class", "svelte-rxgnq8");
-    			add_location(img3, file$9, 30, 4, 702);
-    			add_location(div3, file$9, 31, 4, 744);
-    			add_location(br0, file$9, 32, 4, 791);
-    			add_location(br1, file$9, 33, 4, 801);
-    			attr_dev(div4, "class", "photoholder");
-    			add_location(div4, file$9, 23, 2, 337);
+    			if (img3.src !== (img3_src_value = "/photos/3.png")) attr_dev(img3, "src", img3_src_value);
+    			add_location(img3, file$9, 50, 6, 1402);
+    			add_location(br6, file$9, 51, 4, 1468);
+    			add_location(br7, file$9, 52, 4, 1478);
+    			add_location(br8, file$9, 53, 4, 1488);
+    			add_location(br9, file$9, 54, 4, 1498);
+    			attr_dev(div2, "class", "photoholder svelte-ukiif1");
+    			add_location(div2, file$9, 32, 2, 537);
+    			attr_dev(div3, "class", "main svelte-ukiif1");
+    			add_location(div3, file$9, 30, 0, 515);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			mount_component(header, target, anchor);
-    			insert_dev(target, t0, anchor);
-    			insert_dev(target, div4, anchor);
-    			append_dev(div4, img0);
-    			append_dev(div4, t1);
-    			append_dev(div4, div0);
-    			append_dev(div4, t3);
-    			append_dev(div4, img1);
-    			append_dev(div4, t4);
-    			append_dev(div4, div1);
-    			append_dev(div4, t6);
-    			append_dev(div4, img2);
-    			append_dev(div4, t7);
-    			append_dev(div4, div2);
-    			append_dev(div4, t9);
-    			append_dev(div4, img3);
-    			append_dev(div4, t10);
-    			append_dev(div4, div3);
-    			append_dev(div4, t12);
-    			append_dev(div4, br0);
-    			append_dev(div4, t13);
-    			append_dev(div4, br1);
-    			current = true;
+    			insert_dev(target, div3, anchor);
+    			append_dev(div3, div2);
+    			append_dev(div2, img0);
+    			append_dev(div2, t0);
+    			append_dev(div2, h2);
+    			append_dev(div2, t2);
+    			append_dev(div2, div0);
+    			append_dev(div2, t4);
+    			append_dev(div2, br0);
+    			append_dev(div2, t5);
+    			append_dev(div2, img1);
+    			append_dev(div2, t6);
+    			append_dev(div2, br1);
+    			append_dev(div2, t7);
+    			append_dev(div2, br2);
+    			append_dev(div2, t8);
+    			append_dev(div2, img2);
+    			append_dev(div2, t9);
+    			append_dev(div2, br3);
+    			append_dev(div2, t10);
+    			append_dev(div2, br4);
+    			append_dev(div2, t11);
+    			append_dev(div2, div1);
+    			append_dev(div1, t12);
+    			append_dev(div1, i);
+    			append_dev(div1, t14);
+    			append_dev(div2, t15);
+    			append_dev(div2, br5);
+    			append_dev(div2, t16);
+    			append_dev(div2, img3);
+    			append_dev(div2, t17);
+    			append_dev(div2, br6);
+    			append_dev(div2, t18);
+    			append_dev(div2, br7);
+    			append_dev(div2, t19);
+    			append_dev(div2, br8);
+    			append_dev(div2, t20);
+    			append_dev(div2, br9);
     		},
     		p: noop,
-    		i: function intro(local) {
-    			if (current) return;
-    			transition_in(header.$$.fragment, local);
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			transition_out(header.$$.fragment, local);
-    			current = false;
-    		},
+    		i: noop,
+    		o: noop,
     		d: function destroy(detaching) {
-    			destroy_component(header, detaching);
-    			if (detaching) detach_dev(t0);
-    			if (detaching) detach_dev(div4);
+    			if (detaching) detach_dev(div3);
     		}
     	};
 
@@ -3263,7 +3407,7 @@ var app = (function () {
     	}
     }
 
-    /* src/Nav.svelte generated by Svelte v3.35.0 */
+    /* src/Nav.svelte generated by Svelte v3.38.3 */
 
     const file$8 = "src/Nav.svelte";
 
@@ -3287,12 +3431,6 @@ var app = (function () {
     	let t8;
     	let li3;
     	let a3;
-    	let t10;
-    	let li4;
-    	let a4;
-    	let t12;
-    	let li5;
-    	let a5;
 
     	const block = {
     		c: function create() {
@@ -3310,7 +3448,7 @@ var app = (function () {
     			t4 = space();
     			li1 = element("li");
     			a1 = element("a");
-    			a1.textContent = "Story";
+    			a1.textContent = "About";
     			t6 = space();
     			li2 = element("li");
     			a2 = element("a");
@@ -3318,59 +3456,41 @@ var app = (function () {
     			t8 = space();
     			li3 = element("li");
     			a3 = element("a");
-    			a3.textContent = "Shop";
-    			t10 = space();
-    			li4 = element("li");
-    			a4 = element("a");
-    			a4.textContent = "Gallery";
-    			t12 = space();
-    			li5 = element("li");
-    			a5 = element("a");
-    			a5.textContent = "Instagram";
+    			a3.textContent = "Instagram";
     			attr_dev(input, "type", "checkbox");
     			attr_dev(input, "id", "menu-toggle");
-    			attr_dev(input, "class", "svelte-11qmgr7");
+    			attr_dev(input, "class", "svelte-kd2pp");
     			add_location(input, file$8, 139, 2, 2490);
     			attr_dev(label0, "id", "trigger");
     			attr_dev(label0, "for", "menu-toggle");
-    			attr_dev(label0, "class", "svelte-11qmgr7");
+    			attr_dev(label0, "class", "svelte-kd2pp");
     			add_location(label0, file$8, 140, 2, 2535);
     			attr_dev(label1, "id", "burger");
     			attr_dev(label1, "for", "menu-toggle");
-    			attr_dev(label1, "class", "svelte-11qmgr7");
+    			attr_dev(label1, "class", "svelte-kd2pp");
     			add_location(label1, file$8, 141, 2, 2578);
     			attr_dev(a0, "href", "/");
-    			attr_dev(a0, "class", "svelte-11qmgr7");
+    			attr_dev(a0, "class", "svelte-kd2pp");
     			add_location(a0, file$8, 143, 8, 2643);
-    			attr_dev(li0, "class", "svelte-11qmgr7");
+    			attr_dev(li0, "class", "svelte-kd2pp");
     			add_location(li0, file$8, 143, 4, 2639);
-    			attr_dev(a1, "href", "/story");
-    			attr_dev(a1, "class", "svelte-11qmgr7");
+    			attr_dev(a1, "href", "/about");
+    			attr_dev(a1, "class", "svelte-kd2pp");
     			add_location(a1, file$8, 144, 8, 2677);
-    			attr_dev(li1, "class", "svelte-11qmgr7");
+    			attr_dev(li1, "class", "svelte-kd2pp");
     			add_location(li1, file$8, 144, 4, 2673);
     			attr_dev(a2, "href", "/releases");
-    			attr_dev(a2, "class", "svelte-11qmgr7");
+    			attr_dev(a2, "class", "svelte-kd2pp");
     			add_location(a2, file$8, 145, 8, 2717);
-    			attr_dev(li2, "class", "svelte-11qmgr7");
+    			attr_dev(li2, "class", "svelte-kd2pp");
     			add_location(li2, file$8, 145, 4, 2713);
-    			attr_dev(a3, "href", "/shop");
-    			attr_dev(a3, "class", "svelte-11qmgr7");
-    			add_location(a3, file$8, 146, 8, 2763);
-    			attr_dev(li3, "class", "svelte-11qmgr7");
-    			add_location(li3, file$8, 146, 4, 2759);
-    			attr_dev(a4, "href", "/gallery");
-    			attr_dev(a4, "class", "svelte-11qmgr7");
-    			add_location(a4, file$8, 147, 8, 2801);
-    			attr_dev(li4, "class", "svelte-11qmgr7");
-    			add_location(li4, file$8, 147, 4, 2797);
-    			attr_dev(a5, "href", "https://www.instagram.com/luminawines/");
-    			attr_dev(a5, "class", "svelte-11qmgr7");
-    			add_location(a5, file$8, 148, 8, 2845);
-    			attr_dev(li5, "class", "svelte-11qmgr7");
-    			add_location(li5, file$8, 148, 4, 2841);
+    			attr_dev(a3, "href", "https://www.instagram.com/luminawines/");
+    			attr_dev(a3, "class", "svelte-kd2pp");
+    			add_location(a3, file$8, 148, 8, 2863);
+    			attr_dev(li3, "class", "svelte-kd2pp");
+    			add_location(li3, file$8, 148, 4, 2859);
     			attr_dev(ul, "id", "menu");
-    			attr_dev(ul, "class", "svelte-11qmgr7");
+    			attr_dev(ul, "class", "svelte-kd2pp");
     			add_location(ul, file$8, 142, 2, 2620);
     			attr_dev(div, "class", "lu-navigation");
     			add_location(div, file$8, 137, 0, 2459);
@@ -3398,12 +3518,6 @@ var app = (function () {
     			append_dev(ul, t8);
     			append_dev(ul, li3);
     			append_dev(li3, a3);
-    			append_dev(ul, t10);
-    			append_dev(ul, li4);
-    			append_dev(li4, a4);
-    			append_dev(ul, t12);
-    			append_dev(ul, li5);
-    			append_dev(li5, a5);
     		},
     		p: noop,
     		i: noop,
@@ -3450,7 +3564,7 @@ var app = (function () {
     	}
     }
 
-    /* src/Shop.svelte generated by Svelte v3.35.0 */
+    /* src/Shop.svelte generated by Svelte v3.38.3 */
 
     function create_fragment$9(ctx) {
     	let header;
@@ -3532,8 +3646,8 @@ var app = (function () {
     !function(e,t){module.exports=t();}("undefined"!=typeof self?self:commonjsGlobal,function(){return function(e){function t(r){if(i[r])return i[r].exports;var n=i[r]={i:r,l:!1,exports:{}};return e[r].call(n.exports,n,n.exports,t),n.l=!0,n.exports}var i={};return t.m=e,t.c=i,t.d=function(e,i,r){t.o(e,i)||Object.defineProperty(e,i,{configurable:!1,enumerable:!0,get:r});},t.n=function(e){var i=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(i,"a",i),i},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=0)}([function(e,t,i){function r(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(t,"__esModule",{value:!0});var n="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},s=function(){function e(e,t){for(var i=0;i<t.length;i++){var r=t[i];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r);}}return function(t,i,r){return i&&e(t.prototype,i),r&&e(t,r),t}}(),l=function(){function e(t){var i=this;if(r(this,e),this.config=e.mergeSettings(t),this.selector="string"==typeof this.config.selector?document.querySelector(this.config.selector):this.config.selector,null===this.selector)throw new Error("Something wrong with your selector 😭");this.resolveSlidesNumber(),this.selectorWidth=this.selector.offsetWidth,this.innerElements=[].slice.call(this.selector.children),this.currentSlide=this.config.loop?this.config.startIndex%this.innerElements.length:Math.max(0,Math.min(this.config.startIndex,this.innerElements.length-this.perPage)),this.transformProperty=e.webkitOrNot(),["resizeHandler","touchstartHandler","touchendHandler","touchmoveHandler","mousedownHandler","mouseupHandler","mouseleaveHandler","mousemoveHandler","clickHandler"].forEach(function(e){i[e]=i[e].bind(i);}),this.init();}return s(e,[{key:"attachEvents",value:function(){window.addEventListener("resize",this.resizeHandler),this.config.draggable&&(this.pointerDown=!1,this.drag={startX:0,endX:0,startY:0,letItGo:null,preventClick:!1},this.selector.addEventListener("touchstart",this.touchstartHandler),this.selector.addEventListener("touchend",this.touchendHandler),this.selector.addEventListener("touchmove",this.touchmoveHandler),this.selector.addEventListener("mousedown",this.mousedownHandler),this.selector.addEventListener("mouseup",this.mouseupHandler),this.selector.addEventListener("mouseleave",this.mouseleaveHandler),this.selector.addEventListener("mousemove",this.mousemoveHandler),this.selector.addEventListener("click",this.clickHandler));}},{key:"detachEvents",value:function(){window.removeEventListener("resize",this.resizeHandler),this.selector.removeEventListener("touchstart",this.touchstartHandler),this.selector.removeEventListener("touchend",this.touchendHandler),this.selector.removeEventListener("touchmove",this.touchmoveHandler),this.selector.removeEventListener("mousedown",this.mousedownHandler),this.selector.removeEventListener("mouseup",this.mouseupHandler),this.selector.removeEventListener("mouseleave",this.mouseleaveHandler),this.selector.removeEventListener("mousemove",this.mousemoveHandler),this.selector.removeEventListener("click",this.clickHandler);}},{key:"init",value:function(){this.attachEvents(),this.selector.style.overflow="hidden",this.selector.style.direction=this.config.rtl?"rtl":"ltr",this.buildSliderFrame(),this.config.onInit.call(this);}},{key:"buildSliderFrame",value:function(){var e=this.selectorWidth/this.perPage,t=this.config.loop?this.innerElements.length+2*this.perPage:this.innerElements.length;this.sliderFrame=document.createElement("div"),this.sliderFrame.style.width=e*t+"px",this.enableTransition(),this.config.draggable&&(this.selector.style.cursor="-webkit-grab");var i=document.createDocumentFragment();if(this.config.loop)for(var r=this.innerElements.length-this.perPage;r<this.innerElements.length;r++){var n=this.buildSliderFrameItem(this.innerElements[r].cloneNode(!0));i.appendChild(n);}for(var s=0;s<this.innerElements.length;s++){var l=this.buildSliderFrameItem(this.innerElements[s]);i.appendChild(l);}if(this.config.loop)for(var o=0;o<this.perPage;o++){var a=this.buildSliderFrameItem(this.innerElements[o].cloneNode(!0));i.appendChild(a);}this.sliderFrame.appendChild(i),this.selector.innerHTML="",this.selector.appendChild(this.sliderFrame),this.slideToCurrent();}},{key:"buildSliderFrameItem",value:function(e){var t=document.createElement("div");return t.style.cssFloat=this.config.rtl?"right":"left",t.style.float=this.config.rtl?"right":"left",t.style.width=(this.config.loop?100/(this.innerElements.length+2*this.perPage):100/this.innerElements.length)+"%",t.appendChild(e),t}},{key:"resolveSlidesNumber",value:function(){if("number"==typeof this.config.perPage)this.perPage=this.config.perPage;else if("object"===n(this.config.perPage)){this.perPage=1;for(var e in this.config.perPage)window.innerWidth>=e&&(this.perPage=this.config.perPage[e]);}}},{key:"prev",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:1,t=arguments[1];if(!(this.innerElements.length<=this.perPage)){var i=this.currentSlide;if(this.config.loop){if(this.currentSlide-e<0){this.disableTransition();var r=this.currentSlide+this.innerElements.length,n=this.perPage,s=r+n,l=(this.config.rtl?1:-1)*s*(this.selectorWidth/this.perPage),o=this.config.draggable?this.drag.endX-this.drag.startX:0;this.sliderFrame.style[this.transformProperty]="translate3d("+(l+o)+"px, 0, 0)",this.currentSlide=r-e;}else this.currentSlide=this.currentSlide-e;}else this.currentSlide=Math.max(this.currentSlide-e,0);i!==this.currentSlide&&(this.slideToCurrent(this.config.loop),this.config.onChange.call(this),t&&t.call(this));}}},{key:"next",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:1,t=arguments[1];if(!(this.innerElements.length<=this.perPage)){var i=this.currentSlide;if(this.config.loop){if(this.currentSlide+e>this.innerElements.length-this.perPage){this.disableTransition();var r=this.currentSlide-this.innerElements.length,n=this.perPage,s=r+n,l=(this.config.rtl?1:-1)*s*(this.selectorWidth/this.perPage),o=this.config.draggable?this.drag.endX-this.drag.startX:0;this.sliderFrame.style[this.transformProperty]="translate3d("+(l+o)+"px, 0, 0)",this.currentSlide=r+e;}else this.currentSlide=this.currentSlide+e;}else this.currentSlide=Math.min(this.currentSlide+e,this.innerElements.length-this.perPage);i!==this.currentSlide&&(this.slideToCurrent(this.config.loop),this.config.onChange.call(this),t&&t.call(this));}}},{key:"disableTransition",value:function(){this.sliderFrame.style.webkitTransition="all 0ms "+this.config.easing,this.sliderFrame.style.transition="all 0ms "+this.config.easing;}},{key:"enableTransition",value:function(){this.sliderFrame.style.webkitTransition="all "+this.config.duration+"ms "+this.config.easing,this.sliderFrame.style.transition="all "+this.config.duration+"ms "+this.config.easing;}},{key:"goTo",value:function(e,t){if(!(this.innerElements.length<=this.perPage)){var i=this.currentSlide;this.currentSlide=this.config.loop?e%this.innerElements.length:Math.min(Math.max(e,0),this.innerElements.length-this.perPage),i!==this.currentSlide&&(this.slideToCurrent(),this.config.onChange.call(this),t&&t.call(this));}}},{key:"slideToCurrent",value:function(e){var t=this,i=this.config.loop?this.currentSlide+this.perPage:this.currentSlide,r=(this.config.rtl?1:-1)*i*(this.selectorWidth/this.perPage);e?requestAnimationFrame(function(){requestAnimationFrame(function(){t.enableTransition(),t.sliderFrame.style[t.transformProperty]="translate3d("+r+"px, 0, 0)";});}):this.sliderFrame.style[this.transformProperty]="translate3d("+r+"px, 0, 0)";}},{key:"updateAfterDrag",value:function(){var e=(this.config.rtl?-1:1)*(this.drag.endX-this.drag.startX),t=Math.abs(e),i=this.config.multipleDrag?Math.ceil(t/(this.selectorWidth/this.perPage)):1,r=e>0&&this.currentSlide-i<0,n=e<0&&this.currentSlide+i>this.innerElements.length-this.perPage;e>0&&t>this.config.threshold&&this.innerElements.length>this.perPage?this.prev(i):e<0&&t>this.config.threshold&&this.innerElements.length>this.perPage&&this.next(i),this.slideToCurrent(r||n);}},{key:"resizeHandler",value:function(){this.resolveSlidesNumber(),this.currentSlide+this.perPage>this.innerElements.length&&(this.currentSlide=this.innerElements.length<=this.perPage?0:this.innerElements.length-this.perPage),this.selectorWidth=this.selector.offsetWidth,this.buildSliderFrame();}},{key:"clearDrag",value:function(){this.drag={startX:0,endX:0,startY:0,letItGo:null,preventClick:this.drag.preventClick};}},{key:"touchstartHandler",value:function(e){-1!==["TEXTAREA","OPTION","INPUT","SELECT"].indexOf(e.target.nodeName)||(e.stopPropagation(),this.pointerDown=!0,this.drag.startX=e.touches[0].pageX,this.drag.startY=e.touches[0].pageY);}},{key:"touchendHandler",value:function(e){e.stopPropagation(),this.pointerDown=!1,this.enableTransition(),this.drag.endX&&this.updateAfterDrag(),this.clearDrag();}},{key:"touchmoveHandler",value:function(e){if(e.stopPropagation(),null===this.drag.letItGo&&(this.drag.letItGo=Math.abs(this.drag.startY-e.touches[0].pageY)<Math.abs(this.drag.startX-e.touches[0].pageX)),this.pointerDown&&this.drag.letItGo){e.preventDefault(),this.drag.endX=e.touches[0].pageX,this.sliderFrame.style.webkitTransition="all 0ms "+this.config.easing,this.sliderFrame.style.transition="all 0ms "+this.config.easing;var t=this.config.loop?this.currentSlide+this.perPage:this.currentSlide,i=t*(this.selectorWidth/this.perPage),r=this.drag.endX-this.drag.startX,n=this.config.rtl?i+r:i-r;this.sliderFrame.style[this.transformProperty]="translate3d("+(this.config.rtl?1:-1)*n+"px, 0, 0)";}}},{key:"mousedownHandler",value:function(e){-1!==["TEXTAREA","OPTION","INPUT","SELECT"].indexOf(e.target.nodeName)||(e.preventDefault(),e.stopPropagation(),this.pointerDown=!0,this.drag.startX=e.pageX);}},{key:"mouseupHandler",value:function(e){e.stopPropagation(),this.pointerDown=!1,this.selector.style.cursor="-webkit-grab",this.enableTransition(),this.drag.endX&&this.updateAfterDrag(),this.clearDrag();}},{key:"mousemoveHandler",value:function(e){if(e.preventDefault(),this.pointerDown){"A"===e.target.nodeName&&(this.drag.preventClick=!0),this.drag.endX=e.pageX,this.selector.style.cursor="-webkit-grabbing",this.sliderFrame.style.webkitTransition="all 0ms "+this.config.easing,this.sliderFrame.style.transition="all 0ms "+this.config.easing;var t=this.config.loop?this.currentSlide+this.perPage:this.currentSlide,i=t*(this.selectorWidth/this.perPage),r=this.drag.endX-this.drag.startX,n=this.config.rtl?i+r:i-r;this.sliderFrame.style[this.transformProperty]="translate3d("+(this.config.rtl?1:-1)*n+"px, 0, 0)";}}},{key:"mouseleaveHandler",value:function(e){this.pointerDown&&(this.pointerDown=!1,this.selector.style.cursor="-webkit-grab",this.drag.endX=e.pageX,this.drag.preventClick=!1,this.enableTransition(),this.updateAfterDrag(),this.clearDrag());}},{key:"clickHandler",value:function(e){this.drag.preventClick&&e.preventDefault(),this.drag.preventClick=!1;}},{key:"remove",value:function(e,t){if(e<0||e>=this.innerElements.length)throw new Error("Item to remove doesn't exist 😭");var i=e<this.currentSlide,r=this.currentSlide+this.perPage-1===e;(i||r)&&this.currentSlide--,this.innerElements.splice(e,1),this.buildSliderFrame(),t&&t.call(this);}},{key:"insert",value:function(e,t,i){if(t<0||t>this.innerElements.length+1)throw new Error("Unable to inset it at this index 😭");if(-1!==this.innerElements.indexOf(e))throw new Error("The same item in a carousel? Really? Nope 😭");var r=t<=this.currentSlide>0&&this.innerElements.length;this.currentSlide=r?this.currentSlide+1:this.currentSlide,this.innerElements.splice(t,0,e),this.buildSliderFrame(),i&&i.call(this);}},{key:"prepend",value:function(e,t){this.insert(e,0),t&&t.call(this);}},{key:"append",value:function(e,t){this.insert(e,this.innerElements.length+1),t&&t.call(this);}},{key:"destroy",value:function(){var e=arguments.length>0&&void 0!==arguments[0]&&arguments[0],t=arguments[1];if(this.detachEvents(),this.selector.style.cursor="auto",e){for(var i=document.createDocumentFragment(),r=0;r<this.innerElements.length;r++)i.appendChild(this.innerElements[r]);this.selector.innerHTML="",this.selector.appendChild(i),this.selector.removeAttribute("style");}t&&t.call(this);}}],[{key:"mergeSettings",value:function(e){var t={selector:".siema",duration:200,easing:"ease-out",perPage:1,startIndex:0,draggable:!0,multipleDrag:!0,threshold:20,loop:!1,rtl:!1,onInit:function(){},onChange:function(){}},i=e;for(var r in i)t[r]=i[r];return t}},{key:"webkitOrNot",value:function(){return "string"==typeof document.documentElement.style.transform?"transform":"WebkitTransform"}}]),e}();t.default=l,e.exports=t.default;}])});
     });
 
-    /* node_modules/.pnpm/@beyonk/svelte-carousel@2.8.0/node_modules/@beyonk/svelte-carousel/src/Carousel.svelte generated by Svelte v3.35.0 */
-    const file$7 = "node_modules/.pnpm/@beyonk/svelte-carousel@2.8.0/node_modules/@beyonk/svelte-carousel/src/Carousel.svelte";
+    /* node_modules/@beyonk/svelte-carousel/src/Carousel.svelte generated by Svelte v3.38.3 */
+    const file$7 = "node_modules/@beyonk/svelte-carousel/src/Carousel.svelte";
 
     function get_each_context$1(ctx, list, i) {
     	const child_ctx = ctx.slice();
@@ -3601,14 +3715,14 @@ var app = (function () {
     		},
     		p: function update(ctx, dirty) {
     			if (left_control_slot) {
-    				if (left_control_slot.p && dirty[0] & /*$$scope*/ 8388608) {
-    					update_slot(left_control_slot, left_control_slot_template, ctx, /*$$scope*/ ctx[23], dirty, get_left_control_slot_changes, get_left_control_slot_context);
+    				if (left_control_slot.p && (!current || dirty[0] & /*$$scope*/ 8388608)) {
+    					update_slot(left_control_slot, left_control_slot_template, ctx, /*$$scope*/ ctx[23], !current ? [-1, -1] : dirty, get_left_control_slot_changes, get_left_control_slot_context);
     				}
     			}
 
     			if (right_control_slot) {
-    				if (right_control_slot.p && dirty[0] & /*$$scope*/ 8388608) {
-    					update_slot(right_control_slot, right_control_slot_template, ctx, /*$$scope*/ ctx[23], dirty, get_right_control_slot_changes, get_right_control_slot_context);
+    				if (right_control_slot.p && (!current || dirty[0] & /*$$scope*/ 8388608)) {
+    					update_slot(right_control_slot, right_control_slot_template, ctx, /*$$scope*/ ctx[23], !current ? [-1, -1] : dirty, get_right_control_slot_changes, get_right_control_slot_context);
     				}
     			}
     		},
@@ -3817,8 +3931,8 @@ var app = (function () {
     		},
     		p: function update(ctx, dirty) {
     			if (default_slot) {
-    				if (default_slot.p && dirty[0] & /*$$scope*/ 8388608) {
-    					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[23], dirty, null, null);
+    				if (default_slot.p && (!current || dirty[0] & /*$$scope*/ 8388608)) {
+    					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[23], !current ? [-1, -1] : dirty, null, null);
     				}
     			}
 
@@ -4310,9 +4424,9 @@ var app = (function () {
     	}
     }
 
-    /* node_modules/.pnpm/svelte-feather-icons@3.3.0/node_modules/svelte-feather-icons/src/icons/ChevronLeftIcon.svelte generated by Svelte v3.35.0 */
+    /* node_modules/svelte-feather-icons/src/icons/ChevronLeftIcon.svelte generated by Svelte v3.38.3 */
 
-    const file$6 = "node_modules/.pnpm/svelte-feather-icons@3.3.0/node_modules/svelte-feather-icons/src/icons/ChevronLeftIcon.svelte";
+    const file$6 = "node_modules/svelte-feather-icons/src/icons/ChevronLeftIcon.svelte";
 
     function create_fragment$7(ctx) {
     	let svg;
@@ -4457,9 +4571,9 @@ var app = (function () {
     	}
     }
 
-    /* node_modules/.pnpm/svelte-feather-icons@3.3.0/node_modules/svelte-feather-icons/src/icons/ChevronRightIcon.svelte generated by Svelte v3.35.0 */
+    /* node_modules/svelte-feather-icons/src/icons/ChevronRightIcon.svelte generated by Svelte v3.38.3 */
 
-    const file$5 = "node_modules/.pnpm/svelte-feather-icons@3.3.0/node_modules/svelte-feather-icons/src/icons/ChevronRightIcon.svelte";
+    const file$5 = "node_modules/svelte-feather-icons/src/icons/ChevronRightIcon.svelte";
 
     function create_fragment$6(ctx) {
     	let svg;
@@ -4604,7 +4718,7 @@ var app = (function () {
     	}
     }
 
-    /* src/Gallery.svelte generated by Svelte v3.35.0 */
+    /* src/Gallery.svelte generated by Svelte v3.38.3 */
     const file$4 = "src/Gallery.svelte";
 
     // (22:0) <Carousel perPage={1}>
@@ -5044,16 +5158,6 @@ var app = (function () {
     	}
     }
 
-    function fade(node, { delay = 0, duration = 400, easing = identity } = {}) {
-        const o = +getComputedStyle(node).opacity;
-        return {
-            delay,
-            duration,
-            easing,
-            css: t => `opacity: ${t * o}`
-        };
-    }
-
     const context = {
       subscribe: null,
       addNotification: null,
@@ -5063,7 +5167,7 @@ var app = (function () {
 
     const getNotificationsContext = () => getContext(context);
 
-    /* node_modules/.pnpm/svelte-notifications@0.9.9/node_modules/svelte-notifications/src/components/Notification.svelte generated by Svelte v3.35.0 */
+    /* node_modules/svelte-notifications/src/components/Notification.svelte generated by Svelte v3.38.3 */
 
     function create_fragment$4(ctx) {
     	let switch_instance;
@@ -5164,7 +5268,7 @@ var app = (function () {
     	let { notification = {} } = $$props;
     	let { withoutStyles = false } = $$props;
     	const { removeNotification } = getNotificationsContext();
-    	const { id, removeAfter, customClass = "" } = notification;
+    	const { id, removeAfter } = notification;
     	const removeNotificationHandler = () => removeNotification(id);
     	let timeout = null;
 
@@ -5190,7 +5294,6 @@ var app = (function () {
 
     	$$self.$capture_state = () => ({
     		onDestroy,
-    		fade,
     		getNotificationsContext,
     		item,
     		notification,
@@ -5198,7 +5301,6 @@ var app = (function () {
     		removeNotification,
     		id,
     		removeAfter,
-    		customClass,
     		removeNotificationHandler,
     		timeout
     	});
@@ -5267,8 +5369,18 @@ var app = (function () {
     	}
     }
 
-    /* node_modules/.pnpm/svelte-notifications@0.9.9/node_modules/svelte-notifications/src/components/DefaultNotification.svelte generated by Svelte v3.35.0 */
-    const file$3 = "node_modules/.pnpm/svelte-notifications@0.9.9/node_modules/svelte-notifications/src/components/DefaultNotification.svelte";
+    function fade(node, { delay = 0, duration = 400, easing = identity } = {}) {
+        const o = +getComputedStyle(node).opacity;
+        return {
+            delay,
+            duration,
+            easing,
+            css: t => `opacity: ${t * o}`
+        };
+    }
+
+    /* node_modules/svelte-notifications/src/components/DefaultNotification.svelte generated by Svelte v3.38.3 */
+    const file$3 = "node_modules/svelte-notifications/src/components/DefaultNotification.svelte";
 
     // (102:10) {text}
     function fallback_block(ctx) {
@@ -5321,15 +5433,15 @@ var app = (function () {
     			t0 = space();
     			button = element("button");
     			t1 = text("×");
-    			attr_dev(div0, "class", "" + (null_to_empty(/*getClass*/ ctx[2]("content")) + " svelte-4t58gn"));
-    			add_location(div0, file$3, 100, 2, 2227);
-    			attr_dev(button, "class", "" + (null_to_empty(/*getClass*/ ctx[2]("button")) + " svelte-4t58gn"));
+    			attr_dev(div0, "class", "" + (null_to_empty(/*getClass*/ ctx[2]("content")) + " svelte-1ajc4e5"));
+    			add_location(div0, file$3, 100, 2, 2214);
+    			attr_dev(button, "class", "" + (null_to_empty(/*getClass*/ ctx[2]("button")) + " svelte-1ajc4e5"));
     			attr_dev(button, "aria-label", "delete notification");
-    			add_location(button, file$3, 103, 2, 2296);
-    			attr_dev(div1, "class", "" + (null_to_empty(/*getClass*/ ctx[2]()) + " svelte-4t58gn"));
+    			add_location(button, file$3, 103, 2, 2283);
+    			attr_dev(div1, "class", "" + (null_to_empty(/*getClass*/ ctx[2]()) + " svelte-1ajc4e5"));
     			attr_dev(div1, "role", "status");
     			attr_dev(div1, "aria-live", "polite");
-    			add_location(div1, file$3, 93, 0, 2139);
+    			add_location(div1, file$3, 93, 0, 2126);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -5366,8 +5478,8 @@ var app = (function () {
     			ctx = new_ctx;
 
     			if (default_slot) {
-    				if (default_slot.p && dirty & /*$$scope*/ 32) {
-    					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[5], dirty, null, null);
+    				if (default_slot.p && (!current || dirty & /*$$scope*/ 32)) {
+    					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[5], !current ? -1 : dirty, null, null);
     				}
     			}
     		},
@@ -5415,7 +5527,7 @@ var app = (function () {
     	let { notification = {} } = $$props;
     	let { withoutStyles = false } = $$props;
     	let { onRemove = null } = $$props;
-    	const { id, text, type } = notification;
+    	const { text, type } = notification;
 
     	const getClass = suffix => {
     		const defaultSuffix = suffix ? `-${suffix}` : "";
@@ -5442,7 +5554,6 @@ var app = (function () {
     		notification,
     		withoutStyles,
     		onRemove,
-    		id,
     		text,
     		type,
     		getClass
@@ -5562,8 +5673,8 @@ var app = (function () {
 
     var store = createNotificationsStore();
 
-    /* node_modules/.pnpm/svelte-notifications@0.9.9/node_modules/svelte-notifications/src/components/Notifications.svelte generated by Svelte v3.35.0 */
-    const file$2 = "node_modules/.pnpm/svelte-notifications@0.9.9/node_modules/svelte-notifications/src/components/Notifications.svelte";
+    /* node_modules/svelte-notifications/src/components/Notifications.svelte generated by Svelte v3.38.3 */
+    const file$2 = "node_modules/svelte-notifications/src/components/Notifications.svelte";
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
@@ -5586,7 +5697,7 @@ var app = (function () {
     			props: {
     				notification: /*notification*/ ctx[9],
     				withoutStyles: /*withoutStyles*/ ctx[1],
-    				item: /*item*/ ctx[0] ? /*item*/ ctx[0] : DefaultNotification
+    				item: /*item*/ ctx[0] || DefaultNotification
     			},
     			$$inline: true
     		});
@@ -5603,7 +5714,7 @@ var app = (function () {
     			const notification_changes = {};
     			if (dirty & /*$store*/ 4) notification_changes.notification = /*notification*/ ctx[9];
     			if (dirty & /*withoutStyles*/ 2) notification_changes.withoutStyles = /*withoutStyles*/ ctx[1];
-    			if (dirty & /*item*/ 1) notification_changes.item = /*item*/ ctx[0] ? /*item*/ ctx[0] : DefaultNotification;
+    			if (dirty & /*item*/ 1) notification_changes.item = /*item*/ ctx[0] || DefaultNotification;
     			notification.$set(notification_changes);
     		},
     		i: function intro(local) {
@@ -5842,8 +5953,8 @@ var app = (function () {
     		},
     		p: function update(ctx, [dirty]) {
     			if (default_slot) {
-    				if (default_slot.p && dirty & /*$$scope*/ 16) {
-    					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[4], dirty, null, null);
+    				if (default_slot.p && (!current || dirty & /*$$scope*/ 16)) {
+    					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[4], !current ? -1 : dirty, null, null);
     				}
     			}
 
@@ -5996,7 +6107,7 @@ var app = (function () {
     	}
     }
 
-    /* src/Releases.svelte generated by Svelte v3.35.0 */
+    /* src/Releases.svelte generated by Svelte v3.38.3 */
     const file$1 = "src/Releases.svelte";
 
     function create_fragment$1(ctx) {
@@ -6147,11 +6258,11 @@ var app = (function () {
     	}
     }
 
-    /* src/App.svelte generated by Svelte v3.35.0 */
+    /* src/App.svelte generated by Svelte v3.38.3 */
     const file = "src/App.svelte";
 
     // (32:6) <Route path="/">
-    function create_default_slot_2(ctx) {
+    function create_default_slot_3(ctx) {
     	let home;
     	let current;
     	home = new Home({ $$inline: true });
@@ -6180,9 +6291,48 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_default_slot_2.name,
+    		id: create_default_slot_3.name,
     		type: "slot",
     		source: "(32:6) <Route path=\\\"/\\\">",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (35:6) <Route path="/about">
+    function create_default_slot_2(ctx) {
+    	let story;
+    	let current;
+    	story = new Story({ $$inline: true });
+
+    	const block = {
+    		c: function create() {
+    			create_component(story.$$.fragment);
+    		},
+    		m: function mount(target, anchor) {
+    			mount_component(story, target, anchor);
+    			current = true;
+    		},
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(story.$$.fragment, local);
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			transition_out(story.$$.fragment, local);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			destroy_component(story, detaching);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_default_slot_2.name,
+    		type: "slot",
+    		source: "(35:6) <Route path=\\\"/about\\\">",
     		ctx
     	});
 
@@ -6193,14 +6343,25 @@ var app = (function () {
     function create_default_slot_1(ctx) {
     	let div;
     	let nav;
-    	let t;
-    	let route;
+    	let t0;
+    	let route0;
+    	let t1;
+    	let route1;
     	let current;
     	nav = new Nav({ $$inline: true });
 
-    	route = new Route({
+    	route0 = new Route({
     			props: {
     				path: "/",
+    				$$slots: { default: [create_default_slot_3] },
+    				$$scope: { ctx }
+    			},
+    			$$inline: true
+    		});
+
+    	route1 = new Route({
+    			props: {
+    				path: "/about",
     				$$slots: { default: [create_default_slot_2] },
     				$$scope: { ctx }
     			},
@@ -6211,42 +6372,56 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			create_component(nav.$$.fragment);
-    			t = space();
-    			create_component(route.$$.fragment);
+    			t0 = space();
+    			create_component(route0.$$.fragment);
+    			t1 = space();
+    			create_component(route1.$$.fragment);
     			attr_dev(div, "class", "page-container svelte-1ocwmch");
     			add_location(div, file, 29, 4, 709);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
     			mount_component(nav, div, null);
-    			append_dev(div, t);
-    			mount_component(route, div, null);
+    			append_dev(div, t0);
+    			mount_component(route0, div, null);
+    			append_dev(div, t1);
+    			mount_component(route1, div, null);
     			current = true;
     		},
     		p: function update(ctx, dirty) {
-    			const route_changes = {};
+    			const route0_changes = {};
 
     			if (dirty & /*$$scope*/ 2) {
-    				route_changes.$$scope = { dirty, ctx };
+    				route0_changes.$$scope = { dirty, ctx };
     			}
 
-    			route.$set(route_changes);
+    			route0.$set(route0_changes);
+    			const route1_changes = {};
+
+    			if (dirty & /*$$scope*/ 2) {
+    				route1_changes.$$scope = { dirty, ctx };
+    			}
+
+    			route1.$set(route1_changes);
     		},
     		i: function intro(local) {
     			if (current) return;
     			transition_in(nav.$$.fragment, local);
-    			transition_in(route.$$.fragment, local);
+    			transition_in(route0.$$.fragment, local);
+    			transition_in(route1.$$.fragment, local);
     			current = true;
     		},
     		o: function outro(local) {
     			transition_out(nav.$$.fragment, local);
-    			transition_out(route.$$.fragment, local);
+    			transition_out(route0.$$.fragment, local);
+    			transition_out(route1.$$.fragment, local);
     			current = false;
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(div);
     			destroy_component(nav);
-    			destroy_component(route);
+    			destroy_component(route0);
+    			destroy_component(route1);
     		}
     	};
 
