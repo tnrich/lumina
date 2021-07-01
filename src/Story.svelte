@@ -11,10 +11,6 @@ import ContentPageShell from "./ContentPageShell.svelte";
   }
 
 </style>
-
-  <!-- <Header
-    subtext={'A bit about where I come from and what my journey has been'}
-    title={'About'} /> -->
 <ContentPageShell>
   <h2>About</h2>
   <div>Lumina is the personal project of Janie Willheim.

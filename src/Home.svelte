@@ -1,6 +1,4 @@
 <script>
-  import Header from "./Header.svelte";
-
   import JoinMailingList from "./JoinMailingList.svelte";
 </script>
 
