@@ -3,6 +3,7 @@
 </script>
 
 <div class="home-container">
+  <meta name="Lumina wines Paso Robles Janie Willheim Home Page sign up email">
   <img class="logo" src="luminalogo.svg" alt="lumina logo" />
   <img
     

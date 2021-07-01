@@ -12,6 +12,7 @@ import ContentPageShell from "./ContentPageShell.svelte";
 </style>
 
 <ContentPageShell>
+  <meta name="Lumina wines Paso Robles Janie Willheim Release Page 2020 Reisling Valdiguié">
   <h1>Releases</h1>
   <h2>2020</h2>
 

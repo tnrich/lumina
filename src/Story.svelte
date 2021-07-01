@@ -12,6 +12,7 @@ import ContentPageShell from "./ContentPageShell.svelte";
 
 </style>
 <ContentPageShell>
+  <meta name="Lumina wines Paso Robles Janie Willheim About Page Organic Bio-dynamic">
   <h2>About</h2>
   <div>Lumina is the personal project of Janie Willheim.
     The fruit comes from organic and bio-dynamic vineyards on the central coast. 
