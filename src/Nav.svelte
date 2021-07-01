@@ -24,7 +24,7 @@
   a {
     margin: 75px 0 -55px 0;
     color: #498184;
-    font: 14pt "Roboto", sans-serif;
+    font: 14pt "BrandonText", "Roboto", sans-serif;
     font-weight: 700;
     line-height: 1.8;
     text-decoration: none;
