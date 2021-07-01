@@ -18,7 +18,7 @@ import ContentPageShell from "./ContentPageShell.svelte";
     Janie's choice of varietals reflects her desire to encourcage bio-diversity and help move the region away from monocultures. 
     </div>
     <br/>
-  <img class="photoholder-img" alt="2" src={'/photos/1.png'} />
+    <img class="photoholder-img" alt="2" src={'/photos/3.jpg'} />
 
   <br/>
   <br/>
@@ -28,7 +28,7 @@ import ContentPageShell from "./ContentPageShell.svelte";
   <div>Lumina aims to put lesser known grapes into the spotlight. Much like how the craft beer movement democratized "fancy" tastes, 
     Janie believes that <i>good</i> wine needs to become more approachable to the masses. Lumina is her way of doing that.</div>
     <br/>
-    <img class="photoholder-img" alt="2" src={'/photos/3.jpg'} />
+    <img class="photoholder-img" alt="bart-simpson-with-lumina" src={'/photos/1.png'} />
   <br/>
   <br/>
   <br/>
