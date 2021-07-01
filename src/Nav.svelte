@@ -1,9 +1,4 @@
-<script>
-  // import { Router, Link, Route } from "svelte-routing";
-  // import Home from "./Home.svelte";
-  // import About from "./About.svelte";
-  // import Blog from "./Blog.svelte";
-</script>
+
 
 <style>
   @import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
@@ -56,12 +51,19 @@
     position: absolute;
     top: 25px;
     left: 25px;
-    background: #498184;
+    background: #dd9828;
+    
     width: 30px;
     height: 5px;
     transition: 0.2s ease;
     cursor: pointer;
     z-index: 1;
+  }
+  
+  #burger,
+  #burger:before,
+  #burger:after {
+    border: 1px solid white;
   }
   #trigger {
     height: 25px;
@@ -69,13 +71,13 @@
   }
   #burger:before {
     content: " ";
-    top: 10px;
-    left: 0;
+    top: 9px;
+    left: -1px;
   }
   #burger:after {
     content: " ";
     top: 20px;
-    left: 0;
+    left: -1px;
   }
 
   #menu-toggle:checked + #trigger + #burger {
@@ -102,7 +104,9 @@
   #burger,
   #trigger {
     z-index: 61;
+    
   }
+  
   #menu {
     z-index: 60;
     position: absolute;
@@ -111,7 +115,7 @@
     width: 110px;
     height: 110px;
 
-    border-bottom-right-radius: 100%;
+    border-bottom-left-radius: 100%;
     /* box-shadow: 0 2px 5px rgba(0,0,0,0.26); */
     animation: not-checked-anim 0.2s both;
     transition: 0.2s;
@@ -131,16 +135,19 @@
   }
 </style>
 
-<div>
+<div class="lu-navigation">
+
   <input type="checkbox" id="menu-toggle" />
   <label id="trigger" for="menu-toggle" />
   <label id="burger" for="menu-toggle" />
   <ul id="menu">
     <li><a href="/">Home</a></li>
-    <li><a href="/story">Story</a></li>
+    <li><a href="/about">About</a></li>
     <li><a href="/releases">Releases</a></li>
-    <li><a href="/shop">Shop</a></li>
-    <li><a href="/gallery">Gallery</a></li>
+    <!-- <li><a href="/shop">Shop</a></li> -->
+    <!-- <li><a href="/gallery">Gallery</a></li> -->
     <li><a href="https://www.instagram.com/luminawines/">Instagram</a></li>
+    <!-- svelte-ignore a11y-missing-content -->
+    <!-- <li><a href="https://www.instagram.com/luminawines/" class="fa fa-instagram" /></li> -->
   </ul>
 </div>

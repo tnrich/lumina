@@ -1,35 +1,37 @@
 <script>
-  import Header from "./Header.svelte";
+import ContentPageShell from "./ContentPageShell.svelte";
 </script>
 
 <style>
 
-  img {
-    margin-top: 5rem;
+  .photoholder-img {
     object-fit: cover;
-    height: 50vh;
-    border-radius: 10px;
+    width: 97vw;
+    max-width: 600px;
   }
 
-
-  /* .photoholder {
-    color: white;
-  } */
 </style>
-
-  <Header
-    subtext={'A bit about where I come from and what my journey has been'}
-    title={'Story'} />
-
-  <div class="photoholder">
-    <img alt="2" src={'/photos/4.jpg'} />
-    <div>I like spicy things! I'm always using too much hot sauce..</div>
-    <img alt="2" src={'/photos/2.jpg'} />
-    <div>This is my best friend Tay! She and I do everything together!</div>
-    <img alt="1" src={'/photos/1.jpg'} />
-    <div>This is my soon to be hubby! Love you boo!</div>
-    <img alt="2" src={'/photos/3.jpg'} />
-    <div>This is the family I live with!</div>
+<ContentPageShell>
+  <h2>About</h2>
+  <div>Lumina is the personal project of Janie Willheim.
+    The fruit comes from organic and bio-dynamic vineyards on the central coast. 
+    Janie's choice of varietals reflects her desire to encourcage bio-diversity and help move the region away from monocultures. 
+    </div>
     <br/>
+  <img class="photoholder-img" alt="2" src={'/photos/1.png'} />
+
+  <br/>
+  <br/>
+  <img class="photoholder-img" alt="2" src={'/photos/2.png'} />
+  <br/>
+  <br/>
+  <div>Lumina aims to put lesser known grapes into the spotlight. Much like how the craft beer movement democratized "fancy" tastes, 
+    Janie believes that <i>good</i> wine needs to become more approachable to the masses. Lumina is her way of doing that.</div>
     <br/>
-  </div>
+    <img class="photoholder-img" alt="2" src={'/photos/3.jpg'} />
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+</ContentPageShell>
+ 
