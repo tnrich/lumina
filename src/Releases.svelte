@@ -1,33 +1,43 @@
 <script>
-  import Header from "./Header.svelte";
+import ContentPageShell from "./ContentPageShell.svelte";
 </script>
 
 <style>
-  img {
-    margin-top: 1rem;
+  .photoholder-img {
     object-fit: cover;
-    height: 50vh;
-    border-radius: 10px;
+    width: 97vw;
+    max-width: 600px;
   }
 
 </style>
 
-<Header
-  subtext={'Wines by Year'}
-  title={'Releases'} />
-
-<div class="photoholder">
-  <h2>2019</h2>
-  <div>Lumina Dry Reisling from Oliver's Vineyard in Paso. Bottled at Desparada Winery.</div>
-  <img alt="2" src={'/release_photos/1.jpg'} />
-
+<ContentPageShell>
+  <h1>Releases</h1>
   <h2>2020</h2>
 
   <div>Lumina Dry Reisling from Oliver's Vineyard in Paso Robles. Bottled at Desparada Winery.</div>
-  --Photo here--
+  <br />
+  <br />
+  <img class="photoholder-img" alt="2020 reisling" src={'/release_photos/2020reis_front.png'} />
+  <img class="photoholder-img" alt="2020 reisling" src={'/release_photos/2020reis_back.png'} />
+  <br />
+  <br />
   <div>Lumina Valdiguié from Oliver's Vineyard in Paso Robles. Bottled at Desparada Winery.</div>
-  --Photo here--
-
   <br />
   <br />
-</div>
+  <img class="photoholder-img" alt="2020 valdiguie" src={'/release_photos/2020val_front.png'} />
+  <img class="photoholder-img" alt="2020 valdiguie" src={'/release_photos/2020val_back.png'} />
+  <br />
+  <br />
+  <h2>2019</h2>
+  <div>Lumina Dry Reisling from Oliver's Vineyard in Paso. Bottled at Desparada Winery.</div>
+  <br />
+  <br />
+  <img class="photoholder-img" alt="2019 reisling" src={'/release_photos/2019reis_front.png'} />
+  <img class="photoholder-img" alt="2019 reisling" src={'/release_photos/2019reis_back.png'} />
+  <br />
+  <br />
+  <br />
+  <br />
+ 
+</ContentPageShell>

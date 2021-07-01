@@ -3,8 +3,8 @@
   import Home from "./Home.svelte";
   import Story from "./Story.svelte";
   import Nav from "./Nav.svelte";
-  import Shop from "./Shop.svelte";
-  import Gallery from "./Gallery.svelte";
+  // import Shop from "./Shop.svelte";
+  // import Gallery from "./Gallery.svelte";
   import Notifications from "svelte-notifications";
   import Releases from "./Releases.svelte";
 
@@ -35,10 +35,10 @@
       <Route path="/about">
         <Story />
       </Route>
-      <!-- 
       <Route path="/releases">
         <Releases />
       </Route>
+      <!-- 
       <Route path="/shop">
         <Shop />
       </Route>
