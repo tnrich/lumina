@@ -5,6 +5,7 @@
   import Nav from "./Nav.svelte";
   import Notifications from "svelte-notifications";
   import Releases from "./Releases.svelte";
+  import Contact from "./Contact.svelte";
 
   export let url = "";
 </script>
@@ -30,6 +31,9 @@
       </Route>
       <Route path="/releases">
         <Releases />
+      </Route>
+      <Route path="/contact-me">
+        <Contact/>
       </Route>
     </div>
   </Router>
